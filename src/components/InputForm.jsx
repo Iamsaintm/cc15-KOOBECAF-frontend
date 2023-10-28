@@ -1,13 +1,17 @@
-export default function InputForm({
-    type = "text",
-    placeholder,
-    onChange,
-    value,
-    className = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
-}) {
+export default function InputForm({ type = "text", placeholder, onChange, value, styles, isError = false }) {
     return (
-        <div className="w-96">
-            <input type={type} placeholder={placeholder} onChange={onChange} value={value} className={className} />
+        <div className="w-96 text-lg py-3 font-light ">
+            <input
+                type={type}
+                placeholder={placeholder}
+                onChange={onChange}
+                value={value}
+                className={` ${styles} ${
+                    isError
+                        ? "w-full rounded-full outline-none border-1 px-4 py-2  focus:border-2  border-error-light-soft ring-2 ring-error-light focus:ring-error-light  "
+                        : "w-full rounded-full outline-none border-1 px-4 py-2  focus:border-2 border-main ring-2 ring-main-dark focus:ring-main-dark"
+                }`}
+            />
         </div>
     );
 }
