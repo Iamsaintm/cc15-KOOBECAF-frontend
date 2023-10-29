@@ -1,11 +1,14 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 import { addAccessToken, removeAccessToken } from "../../utils/local-storage";
+import axios from "../../config/axios";
+import { toast } from "react-toastify";
 
 export const registerUser = createAsyncThunk("auths/registerUsers", async(payload, thunkAPI) => {
     try {
         const res = await axios.post("/auth/register", payload);
         return res.data;
     }catch (error) {
+        toast.error(error.response.data.message);
         return thunkAPI.rejectWithValue(error.message);
     };
 });
@@ -15,6 +18,7 @@ export const loginUser = createAsyncThunk("auths/loginUsers", async(payload, thu
         const res = await axios.post("/auth/login", payload);
         return res.data;
     }catch (error) {
+        toast.error(error.response.data.message);
         return thunkAPI.rejectWithValue(error.message);
     };
 });
@@ -39,10 +43,10 @@ const authSlice = createSlice({
     reducers: {
         logout: (state, {payload}) => {
             removeAccessToken();
-            authUserData = null;
-            loading = false;
-            error = "";
-            success = false;
+            state.authUserData = null;
+            state.loading = false;
+            state.error = "";
+            state.success = false;
         },
     },
     extraReducers: (builder) => {
@@ -51,7 +55,7 @@ const authSlice = createSlice({
             state.error = "";
         }).addCase(registerUser.fulfilled, (state, {payload}) => {
             addAccessToken(payload.accessToken);
-            state.authUserData = payload; 
+            state.authUserData = payload.user; 
             state.loading = false;
             state.success = true;
         }).addCase(registerUser.rejected, (state, {payload}) => {
@@ -63,8 +67,9 @@ const authSlice = createSlice({
             state.loading = true;
             state.error = "";
         }).addCase(loginUser.fulfilled, (state, {payload}) => {
+            console.log(payload);
             addAccessToken(payload.accessToken);
-            state.authUserData = payload; 
+            state.authUserData = payload.user; 
             state.loading = false;
         }).addCase(loginUser.rejected, (state, {payload}) => {
             state.loading = false;
@@ -75,7 +80,7 @@ const authSlice = createSlice({
             state.loading = true;
             state.error = "";
         }).addCase(fetchDataUser.fulfilled, (state, {payload}) => {
-            state.authUserData = payload; 
+            state.authUserData = payload.user; 
             state.loading = false;
         }).addCase(fetchDataUser.rejected, (state, {payload}) => {
             state.loading = false;
