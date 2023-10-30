@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux"
-import Button from "../../components/Button"
-import InputForm from "../../components/InputForm"
+import { useDispatch } from "react-redux";
+import Button from "../../components/Button";
+import InputForm from "../../components/InputForm";
 import { useState } from "react";
 import { loginUser } from "../../stores/slices/authSlice";
 
@@ -11,33 +11,37 @@ function LoginForm() {
         password: "",
     });
 
-    const onChangeInput = e => setInput({...input, [e.target.name]: e.target.value});
+    const onChangeInput = (e) => setInput({ ...input, [e.target.name]: e.target.value });
 
-    const handleSubmitForm = e => {
+    const handleSubmitForm = (e) => {
         e.preventDefault();
         dispatch(loginUser(input));
     };
 
-  return (
-    <>
-        <form onSubmit={handleSubmitForm} className="flex flex-col">
-            <InputForm
-                name={"emailOrMobile"} 
-                placeholder={"Email address or phone number"} 
-                value={input.emailOrMobile} 
-                onChange={onChangeInput} 
-            /> 
-            <InputForm 
-                name={"password"} 
-                type="password"
-                placeholder={"Password"} 
-                value={input.password} 
-                onChange={onChangeInput} 
-            /> 
-            <Button type={"submit"} text={"Log in"} /> 
-        </form> 
-    </>
-  )
+    return (
+        <>
+            <form onSubmit={handleSubmitForm} className="flex flex-col">
+                <div className="w-72">
+                    <InputForm
+                        name={"emailOrMobile"}
+                        placeholder={"Email address or phone number"}
+                        value={input.emailOrMobile}
+                        onChange={onChangeInput}
+                    />
+                    <InputForm
+                        name={"password"}
+                        type="password"
+                        placeholder={"Password"}
+                        value={input.password}
+                        onChange={onChangeInput}
+                    />
+                </div>
+                <div className="flex self-center w-48 py-3">
+                    <Button type={"submit"} text={"Log in"} />
+                </div>
+            </form>
+        </>
+    );
 }
 
-export default LoginForm
+export default LoginForm;
