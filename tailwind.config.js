@@ -7,6 +7,7 @@ export default {
                 "main": "#A4B1F5",
                 "main-light": "#F5F5FF",
                 "main-dark": "#5B69E4",
+                "dark-night": "#394295",
                 "second": "#FCA920",
                 "second-light": "#FFF4E9",
                 "second-dark": "#FF8A00",
