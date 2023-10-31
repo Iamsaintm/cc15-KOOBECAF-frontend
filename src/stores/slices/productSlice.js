@@ -8,12 +8,8 @@ const productSlice = createSlice({
         error: "",
         success: false,
     },
-    reducers: {
-
-    },
-    extraReducers: (builder) => {
-
-    },
+    reducers: {},
+    extraReducers: (builder) => {},
 });
 
 export const {} = productSlice.actions;

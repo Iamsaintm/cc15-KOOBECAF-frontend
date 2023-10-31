@@ -1,4 +1,4 @@
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RedirectIfAuthenticated from "../features/auth/RedirectIfAuthenticated";
 import LoginPage from "../pages/LoginPage";
 import Authenticated from "../features/auth/Authenticated";
@@ -17,8 +17,11 @@ const router = createBrowserRouter([
             </Authenticated>
         ),
         children: [
-            {path: "", element: <HomePage />},
-            {path: "/create", element: <CreateProductPage />},
+            { path: "", element: <HomePage /> },
+            { path: "/buying", element: <HomePage /> },
+            { path: "/selling", element: <HomePage /> },
+            { path: "/category/:categoryId", element: <HomePage /> },
+            { path: "/create", element: <CreateProductPage /> },
         ],
     },
     {
@@ -28,13 +31,13 @@ const router = createBrowserRouter([
                 <div className="h-screen">
                     <LoginPage />
                 </div>
-            </RedirectIfAuthenticated> 
+            </RedirectIfAuthenticated>
         ),
     },
 ]);
 
 function Route() {
-  return <RouterProvider router={router}/>
+    return <RouterProvider router={router} />;
 }
 
-export default Route
+export default Route;

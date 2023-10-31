@@ -8,9 +8,9 @@ function Search() {
 
     return (
         <>
-            <div className="pt-6 pb-2 px-4">
+            <div className="pt-10 pb-2 px-4">
                 <div className="flex justify-between">
-                    <div className="text-2xl font-bold">Marketplace</div>
+                    <div className="text-2xl font-bold pl-2">Marketplace</div>
                 </div>
                 <SearchInput placeholder={"ค้นหา Marketplace"} />
             </div>

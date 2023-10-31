@@ -6,20 +6,21 @@ function CreateProductPage() {
         {
             id: 1,
             src: "",
-            header: "สินค้าที่จะขาย",
+            header: "Item for Sale",
             content: (
                 <>
-                    สร้างรายการสินค้า <br /> รายการเดียวสำหรับ <br /> สินค้าที่จะขาย 1 <br /> รายการขึ้นไป
+                    create a single listing <br /> for one or more items <br /> to sell.
                 </>
             ),
         },
         {
             id: 2,
             src: "",
-            header: "พาหนะที่จะขาย",
+            header: "Vehicle for Sale",
             content: (
                 <>
-                    ขายรถยนต์ รถบรรทุก <br /> หรือพาหนะประเภทอื่นๆ
+                    Sell a car, truck or
+                    <br />
                 </>
             ),
         },
@@ -41,7 +42,7 @@ function CreateProductPage() {
                 <div className="min-w-[300px]"></div>
                 <div className="flex justify-center items-center w-full">
                     <div className="flex gap-3 flex-col">
-                        <div className="text-xl font-bold">เลือกประเภทรายการสินค้า</div>
+                        <div className="text-xl font-bold">Choose Listing Type</div>
                         <div className="grid grid-cols-3 m-auto gap-3 w-[532px] h-[222px]">
                             {menu.map((x) => (
                                 <CreateProductCard key={x.id} {...x} />
