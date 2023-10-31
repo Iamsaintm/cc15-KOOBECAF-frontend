@@ -1,17 +1,26 @@
+import { useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
+import Loading from "../../components/Loading";
 
 function ProductContainer() {
-    let arr = [];
-
-    for (let i = 1; i <= 60; i++) {
-        arr = [...arr, { id: i, name: i }];
-    }
+    const { productData, loading } = useSelector((state) => state.product);
 
     return (
         <>
-            {arr.map((x) => (
-                <ProductCard key={x.id} />
-            ))}
+            {loading ? (
+                <Loading />
+            ) : (
+                <>
+                    {productData?.map((x) => (
+                        <ProductCard
+                            key={x.id}
+                            src={x.image[0].image}
+                            productPrice={x.productPrice}
+                            productName={x.productName}
+                        />
+                    ))}
+                </>
+            )}
         </>
     );
 }
