@@ -1,15 +1,19 @@
+import ProductCard from "./ProductCard";
+
 function ProductContainer() {
     let arr = [];
 
-    for(let i = 1; i <= 60; i++){
-      arr = [...arr, {id: i, name: i}]
-    };
+    for (let i = 1; i <= 60; i++) {
+        arr = [...arr, { id: i, name: i }];
+    }
 
-  return (
-    <>
-      {arr.map(x => <div key={x.id} className="w-full h-[244px] bg-yellow-700 rounded-md">{x.name}</div>)} 
-    </>
-  )
+    return (
+        <>
+            {arr.map((x) => (
+                <ProductCard key={x.id} />
+            ))}
+        </>
+    );
 }
 
-export default ProductContainer
+export default ProductContainer;

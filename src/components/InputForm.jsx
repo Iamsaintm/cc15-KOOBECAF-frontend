@@ -1,4 +1,4 @@
-export default function InputForm({ type = "text", placeholder, onChange, value, styles, isError, name}) {
+export default function InputForm({ type = "text", placeholder, onChange, value, styles, isError, name }) {
     return (
         <div className="w-full text-lg py-3 font-light ">
             <input
@@ -16,4 +16,3 @@ export default function InputForm({ type = "text", placeholder, onChange, value,
         </div>
     );
 }
-
