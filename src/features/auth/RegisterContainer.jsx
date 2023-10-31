@@ -7,7 +7,7 @@ function RegisterContainer() {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <>
-            <div className="w-48 py-3">
+            <div className="w-48">
                 <Button onClick={() => setIsOpen(true)} text={"Create new account"} />
             </div>
             <Modal title={"Sign up"} open={isOpen} onClose={() => setIsOpen(false)}>

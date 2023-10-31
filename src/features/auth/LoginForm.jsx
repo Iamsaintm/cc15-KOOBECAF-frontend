@@ -36,7 +36,7 @@ function LoginForm() {
                         onChange={onChangeInput}
                     />
                 </div>
-                <div className="flex self-center w-48 py-3">
+                <div className="flex self-center w-48 pt-4">
                     <Button type={"submit"} text={"Log in"} />
                 </div>
             </form>
