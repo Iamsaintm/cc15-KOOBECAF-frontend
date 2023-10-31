@@ -1,17 +1,21 @@
-import InputForm from "../../components/InputForm"
+import { useState } from "react";
+import SearchInput from "./SearchInput";
 
 function Search() {
-  return (
-    <>
-        <div className="pt-6 pb-2 px-4">
-            <div className="flex justify-between">
-                <div>Market Place</div>
-                <div>icon</div>
+    const [input, setInput] = useState("");
+
+    const onChangeInput = (e) => setInput(e.target.value);
+
+    return (
+        <>
+            <div className="pt-6 pb-2 px-4">
+                <div className="flex justify-between">
+                    <div className="text-2xl font-bold">Marketplace</div>
+                </div>
+                <SearchInput placeholder={"ค้นหา Marketplace"} />
             </div>
-            <InputForm /> 
-        </div>
-    </>
-  )
+        </>
+    );
 }
 
-export default Search
+export default Search;

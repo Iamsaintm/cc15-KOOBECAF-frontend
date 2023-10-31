@@ -1,4 +1,4 @@
-export default function InputForm({ type = "text", placeholder, onChange, value, styles, isError, name}) {
+export default function InputForm({ type = "text", placeholder, onChange, value, styles, isError, name }) {
     return (
         <div className="w-full text-lg pt-4 font-light ">
             <input
