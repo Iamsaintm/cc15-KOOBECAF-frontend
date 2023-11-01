@@ -5,6 +5,7 @@ import Authenticated from "../features/auth/Authenticated";
 import Layout from "../layout/Layout";
 import HomePage from "../pages/HomePage";
 import CreateProductPage from "../pages/CreateProductPage";
+import CreateItemProductPage from "../pages/CreateItemProductPage";
 
 const router = createBrowserRouter([
     {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
             { path: "/selling", element: <HomePage /> },
             { path: "/category/:categoryId", element: <HomePage /> },
             { path: "/create", element: <CreateProductPage /> },
-            { path: "/create/item", element: <CreateProductPage /> },
+            { path: "/create/item", element: <CreateItemProductPage /> },
             { path: "/create/vehicle", element: <CreateProductPage /> },
             { path: "/create/rental", element: <CreateProductPage /> },
         ],
