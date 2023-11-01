@@ -6,7 +6,7 @@ import { ImPriceTags } from "react-icons/im";
 import { FaHome } from "react-icons/fa";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { LuToyBrick } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import CategorieItem from "./CategorieItem";
 
 function Categories() {
     const list = [
@@ -33,17 +33,10 @@ function Categories() {
 
     return (
         <>
-            <div className="flex flex-col">
-                <div className="text-lg font-semibold">Categories</div>
+            <div className="flex flex-col pb-60">
+                <div className="text-lg font-semibold pt-2">Categories</div>
                 {list.map((item, id) => (
-                    <Link to={"/"}>
-                        <div className="flex gap-4 hover:bg-second/40 rounded-lg p-2 group">
-                            <div className="flex justify-center items-center text-xl w-10 aspect-square rounded-full group-hover:bg-main bg-[#d9d9d9]">
-                                {item.icons}
-                            </div>
-                            <div className="self-center font-medium">{item.title}</div>
-                        </div>
-                    </Link>
+                    <CategorieItem key={id} {...item} to="/category/1" />
                 ))}
             </div>
         </>

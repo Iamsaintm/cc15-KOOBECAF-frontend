@@ -9,6 +9,7 @@ export const fetchAllProduct = createAsyncThunk("products/featchAllProducts", as
         return thunkAPI.rejectWithValue(error.message);
     }
 });
+
 const productSlice = createSlice({
     name: "product",
     initialState: {
@@ -17,7 +18,11 @@ const productSlice = createSlice({
         error: "",
         success: false,
     },
-    reducers: {},
+    reducers: {
+        logoutProduct: (state, { payload }) => {
+            state.productData = null;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchAllProduct.pending, (state, { payload }) => {
@@ -36,6 +41,6 @@ const productSlice = createSlice({
     },
 });
 
-export const {} = productSlice.actions;
+export const { logoutProduct } = productSlice.actions;
 
 export default productSlice.reducer;

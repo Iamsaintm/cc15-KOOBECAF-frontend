@@ -4,6 +4,7 @@ import { logout } from "../stores/slices/authSlice";
 import Avatar from "../components/Avatar";
 import userImage from "../assets/Images/user.jpg";
 import { Link } from "react-router-dom";
+import { logoutProduct } from "../stores/slices/productSlice";
 
 export default function Navbar() {
     const dispatch = useDispatch();
@@ -13,8 +14,15 @@ export default function Navbar() {
             <Link to="/">
                 <div className="text-4xl font-fontHeader text-white">KOOBECAF</div>
             </Link>
-            <div className="flex gap-4 text-lg">
-                <button onClick={() => dispatch(logout())}>Logout</button>
+            <div className="flex fixed gap-4 text-lg right-6">
+                <button
+                    onClick={() => {
+                        dispatch(logout());
+                        dispatch(logoutProduct());
+                    }}
+                >
+                    Logout
+                </button>
                 <Avatar src={userImage} />
             </div>
         </div>

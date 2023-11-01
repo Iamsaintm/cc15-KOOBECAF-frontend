@@ -6,30 +6,37 @@ function CreateProductPage() {
         {
             id: 1,
             src: "",
-            header: "สินค้าที่จะขาย",
+            header: "Item for Sale",
+            to: "/create/item",
             content: (
                 <>
-                    สร้างรายการสินค้า <br /> รายการเดียวสำหรับ <br /> สินค้าที่จะขาย 1 <br /> รายการขึ้นไป
+                    create a single listing <br /> for one or more items <br /> to sell.
                 </>
             ),
         },
         {
             id: 2,
             src: "",
-            header: "พาหนะที่จะขาย",
+            header: "Vehicle for Sale",
+            to: "/create/vehicle",
             content: (
                 <>
-                    ขายรถยนต์ รถบรรทุก <br /> หรือพาหนะประเภทอื่นๆ
+                    Sell a car, truck or <br /> other type of vehicle.
                 </>
             ),
         },
         {
             id: 3,
             src: "",
-            header: "บ้านสำหรับขายหรือ\nเช่า",
+            header: (
+                <>
+                    Home for Sale or <br /> Rent
+                </>
+            ),
+            to: "/create/rental",
             content: (
                 <>
-                    รายการบ้านหรือ <br /> อพาร์ตเมนต์สำหรับขาย <br /> หรือเช่า
+                    List a house or <br /> apartment for sale or rent. <br /> rent.
                 </>
             ),
         },
@@ -37,12 +44,12 @@ function CreateProductPage() {
 
     return (
         <>
-            <div className="flex h-screen w-full">
+            <div className="flex h-screen w-full bg-main-light">
                 <div className="min-w-[300px]"></div>
                 <div className="flex justify-center items-center w-full">
                     <div className="flex gap-3 flex-col">
-                        <div className="text-xl font-bold">เลือกประเภทรายการสินค้า</div>
-                        <div className="grid grid-cols-3 m-auto gap-3 w-[532px] h-[222px]">
+                        <div className="text-xl font-bold">Choose Listing Type</div>
+                        <div className="grid grid-cols-3 m-auto gap-8 w-[600px] h-[222px]">
                             {menu.map((x) => (
                                 <CreateProductCard key={x.id} {...x} />
                             ))}
