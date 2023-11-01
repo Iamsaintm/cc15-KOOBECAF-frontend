@@ -5,7 +5,7 @@ function ProductCard({ src = defaultProduct, productPrice = "1,050,000", product
         <>
             <div className="w-full h-[320px] bg-main/50 rounded-md shadow-main shadow-md">
                 <div className="w-full aspect-square rounded-md">
-                    <img className="h-full object-cover rounded-md" src={src} alt="" />
+                    <img className="h-full object-cover rounded-t-md" src={src} alt="" />
                 </div>
                 <div className="p-2">
                     <div className="font-semibold">&#3647;{productPrice}</div>

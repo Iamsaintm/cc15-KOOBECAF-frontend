@@ -11,8 +11,8 @@ function App() {
 
     useEffect(() => {
         if (getAccessToken()) {
-            dispatch(fetchDataUser());
             dispatch(fetchAllProduct());
+            dispatch(fetchDataUser());
         }
     }, []);
 
