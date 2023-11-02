@@ -6,6 +6,7 @@ import Layout from "../layout/Layout";
 import HomePage from "../pages/HomePage";
 import CreateProductPage from "../pages/CreateProductPage";
 import CreateItemProductPage from "../pages/CreateItemProductPage";
+import CategoryPage from "../pages/CategoryPage";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
             { path: "", element: <HomePage /> },
             { path: "/buying", element: <HomePage /> },
             { path: "/selling", element: <HomePage /> },
-            { path: "/category/:categoryId", element: <HomePage /> },
+            { path: "/category/:categoryId", element: <CategoryPage /> },
             { path: "/create", element: <CreateProductPage /> },
             { path: "/create/item", element: <CreateItemProductPage /> },
             { path: "/create/vehicle", element: <CreateProductPage /> },

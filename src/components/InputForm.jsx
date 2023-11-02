@@ -1,6 +1,6 @@
-export default function InputForm({ type = "text", placeholder, onChange, value, styles, isError, name }) {
+export default function InputForm({ type = "text", placeholder, onChange, value, styles, isError, name, className }) {
     return (
-        <div className="w-full text-lg pt-4 font-light ">
+        <div className={`w-full text-lg pt-4 font-light ${className} `}>
             <input
                 name={name}
                 type={type}

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { fetchDataUser } from "../stores/slices/authSlice";
 import { fetchAllProduct } from "../stores/slices/productSlice";
 import { getAccessToken } from "../utils/local-storage";
+import { fetchAllCategory } from "../stores/slices/categorySlice";
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -11,6 +12,11 @@ function HomePage() {
     useEffect(() => {
         if (getAccessToken()) {
             dispatch(fetchAllProduct());
+<<<<<<< HEAD
+=======
+            dispatch(fetchDataUser());
+            dispatch(fetchAllCategory());
+>>>>>>> develop
         }
     }, []);
     return (
