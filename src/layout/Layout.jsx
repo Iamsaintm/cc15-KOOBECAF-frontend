@@ -53,8 +53,14 @@ function Layout() {
                     <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
                         <SideNavItemCreate />
                     </div>
-                    <div className="w-full">
-                        <Outlet />
+                    <div className="flex w-full">
+                        <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                            <SideNav />
+                        </div>
+                        <div className="w-full">
+                        
+                            <Outlet />
+                        </div>
                     </div>
                 </div>
             </div>
