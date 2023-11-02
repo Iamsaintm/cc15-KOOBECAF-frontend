@@ -12,8 +12,7 @@ export default function InputForm({ type = "text", placeholder, onChange, value,
                         ? "w-full rounded-full outline-none border-2 px-4 py-2  focus:border-1 border-error-light-soft focus:ring-2 focus:ring-error-light  "
                         : "w-full rounded-full outline-none border-2 px-4 py-2  focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
                 }`}
-            >
-            </input>
+            ></input>
         </div>
     );
 }

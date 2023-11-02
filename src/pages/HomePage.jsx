@@ -11,7 +11,6 @@ function HomePage() {
     useEffect(() => {
         if (getAccessToken()) {
             dispatch(fetchAllProduct());
-            dispatch(fetchDataUser());
         }
     }, []);
     return (
