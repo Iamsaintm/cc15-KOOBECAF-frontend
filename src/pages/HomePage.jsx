@@ -12,8 +12,11 @@ function HomePage() {
     useEffect(() => {
         if (getAccessToken()) {
             dispatch(fetchAllProduct());
+<<<<<<< HEAD
+=======
             dispatch(fetchDataUser());
             dispatch(fetchAllCategory());
+>>>>>>> develop
         }
     }, []);
     return (

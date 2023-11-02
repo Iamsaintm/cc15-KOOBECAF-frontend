@@ -51,7 +51,25 @@ function Layout() {
                 </div>
                 <div className="flex w-full">
                     <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
-                        <SideNavItemCreate />
+                        <SideNavItemCreate header={"Item for sale"} />
+                    </div>
+                    <div className="w-full">
+                        <Outlet />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (pathname === "/create/vehicle") {
+        sideNav = (
+            <div className="flex flex-col h-full w-full">
+                <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
+                    <Header />
+                </div>
+                <div className="flex w-full">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                        <SideNavItemCreate header={"Vehicle for sale"} />
                     </div>
                     <div className="flex w-full">
                         <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">

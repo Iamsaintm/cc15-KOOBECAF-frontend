@@ -12,7 +12,7 @@ function SideNavCreate() {
         <>
             <div className="flex flex-col gap-2 px-4">
                 <div className="sticky h-6"></div>
-                <div className="text-2xl font-semibold pl-2">Create new listing</div>
+                <div className="text-2xl font-bold pl-2">Create new listing</div>
                 <div>
                     <CategorieItem icons={<FaTag />} isActive={pathname === "/create"} title={"Choose listing type"} />
                 </div>
