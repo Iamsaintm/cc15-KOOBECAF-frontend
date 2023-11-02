@@ -31,7 +31,7 @@ function Layout() {
                             <SideNav />
                         </div>
                         <div className="w-full">
-                            <div className="h-16"></div>
+                        
                             <Outlet />
                         </div>
                     </div>
