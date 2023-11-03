@@ -27,7 +27,7 @@ function RequiredContainer() {
 
     const onChangeInputLocation = useCallback(
         async (e) => {
-            if (typeof e.target.value === "undefined") return; //ออกนอก Fn เลย if u use useMemo ต้องส่งค่าสักอย่าง " " , undefined
+            if (typeof e.target.value === "undefined") return; //ออกนอก Fn เลย if you use useMemo ต้องส่งค่าสักอย่าง " " , undefined
             if (e.target.value === "") return; //ออกนอก Fn เลย
             dispatch(fetchGeocoding(e.target.value));
         },

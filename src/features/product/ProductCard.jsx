@@ -10,7 +10,7 @@ function ProductCard({ src = defaultProduct, productPrice = "1,050,000", product
                 <div className="p-2">
                     <div className="font-semibold">&#3647;{productPrice}</div>
                     <div>{productName}</div>
-                    <div className="text-sm">กรุงเทพมหานคร</div>
+                    <p className="text-sm">กรุงเทพมหานคร</p>
                 </div>
             </div>
         </>

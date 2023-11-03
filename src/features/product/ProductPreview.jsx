@@ -2,7 +2,7 @@ import Avatar from "../../components/Avatar";
 import userImage from "../../assets/Images/user.jpg";
 import Button from "../../components/Button";
 import GoogleMapInput from "../../features/product/GoogleMap";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 
 function ProductPreview({ src, productPrice, productDetail }) {
     const settings = {
@@ -62,7 +62,7 @@ function ProductPreview({ src, productPrice, productDetail }) {
                                     สวัสดีวันนี้วันอะไรkjnjknlksnfkfnknfgkenglkermngkjenejrkgbnbfejknfgjerอะไรครับเนี่ย
                                     {productDetail}
                                 </p>
-                                <GoogleMapInput className="py-2"/>
+                                <GoogleMapInput className="py-2" />
                                 <p className="truncate font-thin">
                                     กรุงเทพมหานคร อมรรัฒนโกสินธ์ มหิมนราทิเบท อเนกประสงค์ อนงค์ สวัสดี
                                 </p>

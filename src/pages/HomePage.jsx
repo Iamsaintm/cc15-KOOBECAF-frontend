@@ -12,7 +12,6 @@ function HomePage() {
         if (getAccessToken()) {
             dispatch(fetchAllProduct());
             dispatch(fetchAllCategory());
-           
         }
     }, []);
     return (
