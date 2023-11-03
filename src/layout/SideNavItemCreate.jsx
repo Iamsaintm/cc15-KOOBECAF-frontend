@@ -25,7 +25,7 @@ function SideNavItemCreate({ header }) {
         }
 
         for (let i = 0; i < inputProduct.productImage.length; i++) {
-            formData.append("productImage", inputProduct.productImage[0]);
+            formData.append("productImage", inputProduct.productImage[i]);
         }
 
         formData.append("product", JSON.stringify(newInputProduct));
