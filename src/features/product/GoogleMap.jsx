@@ -1,36 +1,31 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
-import InputForm from "../../components/InputForm";
+import { useMemo } from "react";
+import { GOOGLE_MAPS_API_KEY } from "../../config/env";
 
 const GoogleMapInput = ({ className }) => {
-    const [center, setCenter] = useState({
-        lat: 14.015413,
-        lng: 99.993387,
-    });
+    const { inputProduct, loading } = useSelector((state) => state.product);
+    console.log(inputProduct);
 
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyAD2cnxbl_ndhGSO6emJt0oSrs_Y3aRO3Q",
+        googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     });
+
+    const geometry = useMemo(() => {
+        return {
+            lat: inputProduct.latitude,
+            lng: inputProduct.longitude,
+        };
+    }, [inputProduct.latitude, inputProduct.longitude]);
 
     if (!isLoaded) {
         return <div>Loading</div>;
     }
-
     return (
         <div className={className}>
-            <GoogleMap
-                onClick={(e) => {
-                    console.log(e.latLng.toJSON());
-                    setCenter({
-                        lat: e.latLng.lat(),
-                        lng: e.latLng.lng(),
-                    });
-                }}
-                zoom={12}
-                center={center}
-                mapContainerStyle={{ width: "100%", height: 250 }}
-            >
-                <MarkerF position={center} />
+            <GoogleMap zoom={16} center={geometry} mapContainerStyle={{ width: "100%", height: 250 }}>
+                <MarkerF position={geometry} />
             </GoogleMap>
         </div>
     );
