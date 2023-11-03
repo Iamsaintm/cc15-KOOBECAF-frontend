@@ -1,9 +1,9 @@
 import { ToastContainer } from "react-toastify";
 import Route from "./routes/Route";
 import { useDispatch } from "react-redux";
-import { fetchDataUser } from "./stores/slices/authSlice";
 import { useEffect } from "react";
 import { getAccessToken } from "./utils/local-storage";
+import { fetchDataUser } from "./stores/slices/authSlice";
 
 function App() {
     const dispatch = useDispatch();
@@ -13,6 +13,7 @@ function App() {
             dispatch(fetchDataUser());
         }
     }, []);
+
     return (
         <>
             <Route />
