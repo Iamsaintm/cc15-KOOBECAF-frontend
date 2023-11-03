@@ -76,7 +76,6 @@ function Layout() {
                             <SideNav />
                         </div>
                         <div className="w-full">
-                        
                             <Outlet />
                         </div>
                     </div>
