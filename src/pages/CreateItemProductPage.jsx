@@ -7,7 +7,7 @@ function CreateItemProductPage() {
         <>
             <div className="flex bg-main-light h-screen">
                 <div className="w-[480px]"></div>
-                <ProductPreview src={defaultProduct} />
+                <ProductPreview src={defaultProduct} productDetail="Description" />
             </div>
         </>
     );

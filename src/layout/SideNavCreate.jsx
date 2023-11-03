@@ -17,7 +17,12 @@ function SideNavCreate() {
                     <CategorieItem icons={<FaTag />} isActive={pathname === "/create"} title={"Choose listing type"} />
                 </div>
                 <div className="border-b-2 mb-2 pb-2"></div>
-                <CategorieItem icons={<FaTags />} title={"Your listings"} />
+                <CategorieItem
+                    icons={<FaTags />}
+                    isActive={pathname === "/selling"}
+                    to="/selling"
+                    title={"Your listings"}
+                />
                 <div className="flex flex-col gap-2 overflow-auto h-screen pb-56 px-2"></div>
             </div>
         </>
