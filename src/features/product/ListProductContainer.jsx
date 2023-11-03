@@ -3,7 +3,7 @@ import Loading from "../../components/Loading";
 import ListProductCard from "./ListProductCard";
 
 function ListProductContainer() {
-    const { productData, loading } = useSelector((state) => state.product);
+    const { productByUserId, loading } = useSelector((state) => state.product);
 
     return (
         <>
@@ -11,7 +11,7 @@ function ListProductContainer() {
                 <Loading />
             ) : (
                 <>
-                    {productData?.map((data) => (
+                    {productByUserId?.map((data) => (
                         <ListProductCard
                             key={data.id}
                             src={data.image[0].image}

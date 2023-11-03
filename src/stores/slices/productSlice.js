@@ -10,11 +10,20 @@ export const fetchAllProduct = createAsyncThunk("products/featchAllProducts", as
     }
 });
 
+export const fetchProductByUserId = createAsyncThunk("product/fetchProductByUserId", async (payload, thunkAPI) => {
+    try {
+        const res = await axios.get(`/product/search/${payload}`);
+        return res.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
 
 const productSlice = createSlice({
     name: "product",
     initialState: {
         productData: null,
+        productByUserId: null,
         loading: false,
         error: "",
         success: false,
@@ -36,6 +45,21 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(fetchAllProduct.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(fetchProductByUserId.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(fetchProductByUserId.fulfilled, (state, { payload }) => {
+                state.productByUserId = payload.product;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(fetchProductByUserId.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });
