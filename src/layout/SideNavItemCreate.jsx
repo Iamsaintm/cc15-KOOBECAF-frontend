@@ -1,28 +1,41 @@
-import React, { useState } from "react";
-import CategorieItem from "../features/filter/CategorieItem";
-import { FaTag, FaTags } from "react-icons/fa6";
-import { useLocation } from "react-router-dom";
 import Avatar from "../components/Avatar";
-import userImage from "../assets/Images/user.jpg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PhotoUpload from "../features/product/PhotoUpload";
 import RequiredContainer from "../features/product/RequiredContainer";
 import Button from "../components/Button";
-import Categories from "../features/filter/Categories";
 import DescriptionContainer from "../features/product/DescriptionContainer";
+import { createProduct, resetInputProduct } from "../stores/slices/productSlice";
+import { useNavigate } from "react-router-dom";
 
 function SideNavItemCreate({ header }) {
-    const [input, setInput] = useState({
-        productName: "",
-        productPrice: "",
-    });
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { inputProduct } = useSelector((state) => state.product);
     const { firstName, lastName } = useSelector((state) => state.auth.authUserData);
 
-    const onChangeInput = (e) => setInput({ ...input, [e.target.name]: e.target.value });
+    const onSubmit = (e) => {
+        e.preventDefault();
+        let formData = new FormData();
+        const newInputProduct = {};
+
+        for (let key in inputProduct) {
+            if (inputProduct[key] !== "" && inputProduct[key] !== 0) {
+                newInputProduct[key] = inputProduct[key];
+            }
+        }
+
+        for (let i = 0; i < inputProduct.productImage.length; i++) {
+            formData.append("productImage", inputProduct.productImage[i]);
+        }
+
+        formData.append("product", JSON.stringify(newInputProduct));
+        dispatch(createProduct({ formData }));
+        dispatch(resetInputProduct());
+    };
 
     return (
         <>
-            <div className="flex flex-col gap-2 h-screen">
+            <form onSubmit={onSubmit} className="flex flex-col gap-2 h-screen">
                 <div className="sticky h-6"></div>
                 <div className="flex flex-col gap-2 px-4">
                     <div className="text-2xl font-bold">{header}</div>
@@ -36,13 +49,13 @@ function SideNavItemCreate({ header }) {
                 <div className="border-b-2 mb-2 pb-2"></div>
                 <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
                     <PhotoUpload />
-                    <RequiredContainer input={input} onChange={onChangeInput} />
+                    <RequiredContainer />
                     <div className="flex flex-col gap-4">
                         <DescriptionContainer />
-                        <Button text={"Create"} />
+                        <Button type={"submit"} text={"Create"} />
                     </div>
                 </div>
-            </div>
+            </form>
         </>
     );
 }
