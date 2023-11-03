@@ -4,7 +4,7 @@ import PhotoUpload from "../features/product/PhotoUpload";
 import RequiredContainer from "../features/product/RequiredContainer";
 import Button from "../components/Button";
 import DescriptionContainer from "../features/product/DescriptionContainer";
-import { createProduct } from "../stores/slices/productSlice";
+import { createProduct, resetInputProduct } from "../stores/slices/productSlice";
 import { useNavigate } from "react-router-dom";
 
 function SideNavItemCreate({ header }) {
@@ -17,16 +17,20 @@ function SideNavItemCreate({ header }) {
         e.preventDefault();
         let formData = new FormData();
         const newInputProduct = {};
+
         for (let key in inputProduct) {
             if (inputProduct[key] !== "" && inputProduct[key] !== 0) {
                 newInputProduct[key] = inputProduct[key];
             }
         }
-        formData.append("productImage", inputProduct.productImage[0]);
-        formData.append("productImage", inputProduct.productImage[1]);
-        formData.append("product", JSON.stringify(inputProduct));
+
+        for (let i = 0; i < inputProduct.productImage.length; i++) {
+            formData.append("productImage", inputProduct.productImage[0]);
+        }
+
+        formData.append("product", JSON.stringify(newInputProduct));
         dispatch(createProduct({ formData }));
-        // navigate("/selling");
+        dispatch(resetInputProduct());
     };
 
     return (

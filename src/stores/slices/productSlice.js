@@ -32,28 +32,30 @@ export const fetchProductByCategory = createAsyncThunk(
     },
 );
 
+const inputProduct = {
+    productName: "",
+    productPrice: "",
+    productImage: null,
+    description: "",
+    latitude: 11.11,
+    longitude: 11.11,
+    vehicleType: "",
+    vehicleBrand: "",
+    vehicleModel: "",
+    vehicleYears: 0,
+    homeProperty: "",
+    homeType: "",
+    bedroomQuantity: 0,
+    bathroomQuantity: 0,
+    homeAddress: "",
+    categoryId: 0,
+    typeOfCategory: "default",
+};
+
 const productSlice = createSlice({
     name: "product",
     initialState: {
-        inputProduct: {
-            productName: "",
-            productPrice: "",
-            productImage: null,
-            description: "",
-            latitude: 11.11,
-            longitude: 11.11,
-            vehicleType: "",
-            vehicleBrand: "",
-            vehicleModel: "",
-            vehicleYears: 0,
-            homeProperty: "",
-            homeType: "",
-            bedroomQuantity: 0,
-            bathroomQuantity: 0,
-            homeAddress: "",
-            categoryId: 0,
-            typeOfCategory: "default",
-        },
+        inputProduct,
         productData: null,
         productByCategory: null,
         loading: false,
@@ -73,6 +75,9 @@ const productSlice = createSlice({
         },
         setInputProductImage: (state, { payload }) => {
             state.inputProduct.productImage = payload.fieldValue;
+        },
+        resetInputProduct: (state, { payload }) => {
+            state.inputProduct = inputProduct;
         },
     },
     extraReducers: (builder) => {
@@ -123,6 +128,7 @@ const productSlice = createSlice({
     },
 });
 
-export const { logoutProduct, setInputProduct, setInputProductCategory, setInputProductImage } = productSlice.actions;
+export const { logoutProduct, setInputProduct, setInputProductCategory, setInputProductImage, resetInputProduct } =
+    productSlice.actions;
 
 export default productSlice.reducer;
