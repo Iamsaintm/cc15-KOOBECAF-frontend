@@ -43,7 +43,7 @@ function SellingPage() {
                                             When you start selling, your listings will appear here.
                                         </div>
                                         <div className="flex justify-center w-full py-3 pt-5">
-                                            <Link className="w-full px-20" to={"/create"}>
+                                            <Link className="w-full px-24" to={"/create"}>
                                                 <Button text={"Create new listing"} />
                                             </Link>
                                         </div>
