@@ -22,15 +22,17 @@ function SideNavCategory() {
                 </div>
             </div>
 
-            <div className="p-4">
-                <div className="text-lg font-semibold">Filters Price</div>
-                <div className="flex justify-between items-center  ">
-                    <div className="">
-                        <InputForm styles="w-24" placeholder="Min" className="pt-0" />
+            <div className="flex flex-col p-4">
+                <div className="text-lg font-semibold">Filters</div>
+                <div className="flex justify-between items-center px-4">
+                    <div className="w-32">
+                        <InputForm placeholder="Min" className="pt-0" />
                     </div>
-                    <div className="flex justify-center text-lg">To</div>
-                    <div className="">
-                        <InputForm styles="w-24" placeholder="Max" className="pt-0" />
+                    <div>
+                        <div>To</div>
+                    </div>
+                    <div className="w-32">
+                        <InputForm placeholder="Max" className="pt-0" />
                     </div>
                 </div>
             </div>
