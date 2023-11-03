@@ -28,7 +28,6 @@ const GoogleMapInput = ({ className }) => {
                 }}
                 zoom={12}
                 center={center}
-                // mapContainerClassName={""}
                 mapContainerStyle={{ width: "100%", height: 250 }}
             >
                 <MarkerF position={center} />
