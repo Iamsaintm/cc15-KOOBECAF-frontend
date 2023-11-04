@@ -13,7 +13,7 @@ function SideNavItemCreate({ header }) {
     const { inputProduct } = useSelector((state) => state.product);
     const { firstName, lastName } = useSelector((state) => state.auth.authUserData);
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
         const newInputProduct = {};
@@ -29,8 +29,14 @@ function SideNavItemCreate({ header }) {
         }
 
         formData.append("product", JSON.stringify(newInputProduct));
-        dispatch(createProduct({ formData }));
-        dispatch(resetInputProduct());
+
+        try {
+            await dispatch(createProduct({ formData }));
+            dispatch(resetInputProduct());
+            navigate("/selling");
+        } catch (error) {
+            console.error("Error dispatching createProduct:", error);
+        }
     };
 
     return (
