@@ -14,7 +14,7 @@ function ProductContainer() {
                     {productData?.map((x) => (
                         <ProductCard
                             key={x.id}
-                            src={x.image[0].image}
+                            src={x.image[0]?.image}
                             productPrice={x.productPrice}
                             productName={x.productName}
                         />

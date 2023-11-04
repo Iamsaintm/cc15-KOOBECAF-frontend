@@ -128,7 +128,7 @@ const productSlice = createSlice({
                 state.error = "";
             })
             .addCase(createProduct.fulfilled, (state, { payload }) => {
-                state.productData = { ...state.productData, ...payload };
+                state.productByUserId = payload.product;
                 state.loading = false;
                 state.success = true;
             })
