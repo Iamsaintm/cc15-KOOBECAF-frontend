@@ -1,11 +1,10 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setInputProduct, setInputProductCategory } from "../../stores/slices/productSlice";
 import { fetchGeocoding } from "../../stores/slices/productSlice";
+import { debounce } from "lodash";
 import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
-import { debounce } from "lodash";
-import { useMemo } from "react";
 
 function RequiredContainer() {
     const dispatch = useDispatch();
