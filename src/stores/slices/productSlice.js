@@ -62,10 +62,18 @@ const inputProduct = {
     typeOfCategory: "default",
 };
 
+const searchProduct = "";
+const productPrice = {
+    minPrice: "",
+    maxPrice: "",
+};
+
 const productSlice = createSlice({
     name: "product",
     initialState: {
         inputProduct,
+        searchProduct,
+        productPrice,
         productData: null,
         productByUserId: null,
         productByCategory: null,
@@ -89,6 +97,18 @@ const productSlice = createSlice({
         },
         resetInputProduct: (state, { payload }) => {
             state.inputProduct = inputProduct;
+        },
+        setSearchProduct: (state, { payload }) => {
+            state.searchProduct = payload.fieldValue;
+        },
+        resetSearchProduct: (state, { payload }) => {
+            state.searchProduct = "";
+        },
+        setProductPrice: (state, { payload }) => {
+            state.productPrice[payload.fieldName] = payload.fieldValue;
+        },
+        resetProductPrice: (state, { payload }) => {
+            state.productPrice = productPrice;
         },
     },
     extraReducers: (builder) => {
@@ -154,7 +174,16 @@ const productSlice = createSlice({
     },
 });
 
-export const { logoutProduct, setInputProduct, setInputProductCategory, setInputProductImage, resetInputProduct } =
-    productSlice.actions;
+export const {
+    logoutProduct,
+    setInputProduct,
+    setInputProductCategory,
+    setInputProductImage,
+    resetInputProduct,
+    setSearchProduct,
+    resetSearchProduct,
+    setProductPrice,
+    resetProductPrice,
+} = productSlice.actions;
 
 export default productSlice.reducer;

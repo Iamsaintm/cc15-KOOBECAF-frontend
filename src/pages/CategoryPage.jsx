@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { fetchProductByCategory } from "../stores/slices/productSlice";
+import { fetchProductByCategory, resetProductPrice, resetSearchProduct } from "../stores/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getAccessToken } from "../utils/local-storage";
 import ProductByCategoryContainer from "../features/product/ProductByCategoryContainer";
@@ -18,6 +18,8 @@ function CategoryPage() {
     useEffect(() => {
         if (getAccessToken()) {
             dispatch(fetchProductByCategory(`${categoryId}`));
+            dispatch(resetSearchProduct());
+            dispatch(resetProductPrice());
         }
     }, [categoryId]);
 

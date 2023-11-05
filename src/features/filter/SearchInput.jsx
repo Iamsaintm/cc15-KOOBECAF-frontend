@@ -1,9 +1,18 @@
 import { FaSistrix } from "react-icons/fa6";
-function SearchInput({ type = "text", placeholder, onChange, value, styles, isError, name }) {
+function SearchInput({
+    type = "text",
+    placeholder,
+    onChange,
+    value,
+    styles,
+    isError,
+    name,
+    className = "top-24 left-7",
+}) {
     return (
         <>
             <div className="w-full text-lg py-3 font-light ">
-                <div className="text-2xl text-slate-500 absolute top-24 left-7">
+                <div className={`text-2xl text-slate-500 absolute ${className}`}>
                     <FaSistrix />
                 </div>
                 <input

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { FaSistrix } from "react-icons/fa6";
-import ListingSearch from "../features/filter/ListingSearch";
 import Button from "../components/Button";
 import ListProductContainer from "../features/product/ListProductContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductByUserId } from "../stores/slices/productSlice";
+import { fetchProductByUserId, resetSearchProduct } from "../stores/slices/productSlice";
 import { useEffect } from "react";
 import { getAccessToken } from "../utils/local-storage";
 import Loading from "../components/Loading";
+import Search from "../features/filter/Search";
 
 function SellingPage() {
     const dispatch = useDispatch();
@@ -17,6 +17,7 @@ function SellingPage() {
     useEffect(() => {
         if (getAccessToken()) {
             dispatch(fetchProductByUserId(authUserData.id));
+            dispatch(resetSearchProduct());
         }
     }, []);
     return (
@@ -34,7 +35,7 @@ function SellingPage() {
                                     <div className="flex items-center bg-white justify-between rounded-lg">
                                         <div className="text-xl font-semibold pl-5">Your listings</div>
                                         <div className="pr-5">
-                                            <ListingSearch />
+                                            <Search className="top-[100px] right-60" nameTagSearch="" div="" />
                                         </div>
                                     </div>
 
