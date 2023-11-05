@@ -5,13 +5,25 @@ import RequiredContainer from "../features/product/RequiredContainer";
 import Button from "../components/Button";
 import DescriptionContainer from "../features/product/DescriptionContainer";
 import { createProduct, resetInputProduct } from "../stores/slices/productSlice";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getAccessToken } from "../utils/local-storage";
+import { fetchDataUser } from "../stores/slices/authSlice";
 
-function SideNavItemCreate({ header }) {
+function SideNavItemCreate({ header, type }) {
+    const [test, setTest] = useState("");
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { inputProduct } = useSelector((state) => state.product);
-    const { firstName, lastName } = useSelector((state) => state.auth.authUserData);
+    // const { firstName, lastName } = useSelector((state) => state.auth.authUserData);
+
+    useEffect(() => {
+        if (getAccessToken()) {
+            dispatch(fetchDataUser())
+                .unwrap()
+                .then((res) => {
+                    setTest(res.user);
+                });
+        }
+    }, []);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -42,14 +54,14 @@ function SideNavItemCreate({ header }) {
                     <div className="flex gap-3 items-center">
                         <Avatar />
                         <div>
-                            {firstName} {lastName}
+                            {test.firstName} {test.lastName}
                         </div>
                     </div>
                 </div>
                 <div className="border-b-2 mb-2 pb-2"></div>
                 <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
                     <PhotoUpload />
-                    <RequiredContainer />
+                    <RequiredContainer type={type} />
                     <div className="flex flex-col gap-4">
                         <DescriptionContainer />
                         <Button type={"submit"} text={"Create"} />

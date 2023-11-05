@@ -2,7 +2,6 @@ import React from "react";
 import Avatar from "../../components/Avatar";
 import userImage from "../../assets/Images/user.jpg";
 import Button from "../../components/Button";
-import Map from "../../components/Map";
 
 function ProductPreview({ src, productPrice, productDetail }) {
     return (
@@ -15,7 +14,7 @@ function ProductPreview({ src, productPrice, productDetail }) {
                             <div
                                 className={`relative top-0 bg-[url("https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg?w=1060")] object-contain bg-center w-full blur-sm saturate-50`}
                             ></div>
-                            <img src={src} className="relative h-full object-contain z-50 -top-[510px]" />
+                            {/* <img src={src} className="relative h-full object-contain z-50 -top-[510px]" /> */}
                         </div>
 
                         <div className="flex flex-col bg-white justify-between border w-2/5 rounded-r-lg gap-4 p-3 h-full ">

@@ -20,14 +20,32 @@ const router = createBrowserRouter([
             </Authenticated>
         ),
         children: [
-            { path: "", element: <HomePage /> },
+            {
+                path: "",
+                element: <HomePage />,
+            },
             { path: "/buying", element: <HomePage /> },
-            { path: "/selling", element: <SellingPage /> },
-            { path: "/category/:categoryId", element: <CategoryPage /> },
-            { path: "/create", element: <CreateProductPage /> },
-            { path: "/create/item", element: <CreateItemProductPage /> },
-            { path: "/create/vehicle", element: <CreateProductPage /> },
-            { path: "/create/rental", element: <CreateProductPage /> },
+            {
+                path: "/selling",
+                element: <SellingPage />,
+            },
+            {
+                path: "/category/:categoryId",
+                element: <CategoryPage />,
+            },
+            {
+                path: "/create",
+                element: <CreateProductPage />,
+            },
+            {
+                path: "/create/item",
+                element: <CreateItemProductPage />,
+            },
+            {
+                path: "/create/vehicle",
+                element: <CreateItemProductPage />,
+            },
+            { path: "/create/rental", element: <CreateItemProductPage /> },
         ],
     },
     {

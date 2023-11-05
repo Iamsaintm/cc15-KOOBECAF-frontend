@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 export const fetchAllProduct = createAsyncThunk("products/fetchAllProducts", async (payload, thunkAPI) => {
@@ -26,6 +27,7 @@ export const createProduct = createAsyncThunk("products/createProducts", async (
         });
         return res.data;
     } catch (error) {
+        toast.error("You can add only 5 photos.");
         return thunkAPI.rejectWithValue(error.message);
     }
 });
@@ -45,18 +47,18 @@ export const fetchProductByCategory = createAsyncThunk(
 const inputProduct = {
     productName: "",
     productPrice: "",
-    productImage: null,
+    productImage: [],
     description: "",
     latitude: 11.11,
     longitude: 11.11,
     vehicleType: "",
     vehicleBrand: "",
     vehicleModel: "",
-    vehicleYears: 0,
+    vehicleYears: "",
     homeProperty: "",
     homeType: "",
-    bedroomQuantity: 0,
-    bathroomQuantity: 0,
+    bedroomQuantity: "",
+    bathroomQuantity: "",
     homeAddress: "",
     categoryId: 0,
     typeOfCategory: "default",
@@ -72,6 +74,7 @@ const productSlice = createSlice({
         loading: false,
         error: "",
         success: false,
+        errorMessage: false,
     },
     reducers: {
         logoutProduct: (state, { payload }) => {
@@ -79,16 +82,17 @@ const productSlice = createSlice({
         },
         setInputProduct: (state, { payload }) => {
             state.inputProduct[payload.fieldName] = payload.fieldValue;
+            Array.from(state.inputProduct.productImage).length > 5
+                ? (state.errorMessage = true)
+                : (state.errorMessage = false);
         },
         setInputProductCategory: (state, { payload }) => {
             state.inputProduct.categoryId = payload.id;
             state.inputProduct.typeOfCategory = payload.fieldValue;
         },
-        setInputProductImage: (state, { payload }) => {
-            state.inputProduct.productImage = payload.fieldValue;
-        },
         resetInputProduct: (state, { payload }) => {
             state.inputProduct = inputProduct;
+            state.errorMessage = false;
         },
     },
     extraReducers: (builder) => {
@@ -154,7 +158,6 @@ const productSlice = createSlice({
     },
 });
 
-export const { logoutProduct, setInputProduct, setInputProductCategory, setInputProductImage, resetInputProduct } =
-    productSlice.actions;
+export const { logoutProduct, setInputProduct, setInputProductCategory, resetInputProduct } = productSlice.actions;
 
 export default productSlice.reducer;
