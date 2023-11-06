@@ -4,7 +4,7 @@ import { logout } from "../stores/slices/authSlice";
 import Avatar from "../components/Avatar";
 import userImage from "../assets/Images/user.jpg";
 import { Link } from "react-router-dom";
-import { logoutProduct, resetSearchProduct } from "../stores/slices/productSlice";
+import { logoutProduct, resetInputProduct, resetSearchProduct } from "../stores/slices/productSlice";
 
 export default function Navbar() {
     const dispatch = useDispatch();
@@ -12,7 +12,12 @@ export default function Navbar() {
 
     return (
         <div className="flex justify-between items-center h-full px-6 text-white">
-            <Link to="/">
+            <Link
+                onClick={() => {
+                    dispatch(resetInputProduct());
+                }}
+                to="/"
+            >
                 <div className="text-4xl font-fontHeader text-white">KOOBECAF</div>
             </Link>
             <div className="flex fixed gap-4 text-lg right-6">

@@ -7,7 +7,7 @@ import DescriptionContainer from "../features/product/DescriptionContainer";
 import { createProduct, resetInputProduct } from "../stores/slices/productSlice";
 import { useNavigate } from "react-router-dom";
 
-function SideNavItemCreate({ header }) {
+function SideNavItemCreate({ header, type }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { authUserData } = useSelector((state) => state.auth);
@@ -57,7 +57,7 @@ function SideNavItemCreate({ header }) {
                 <div className="border-b-2 mb-2 pb-2"></div>
                 <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
                     <PhotoUpload />
-                    <RequiredContainer />
+                    <RequiredContainer type={type} />
                     <div className="flex flex-col gap-4">
                         <DescriptionContainer />
                         <Button type={"submit"} text={"Create"} />
