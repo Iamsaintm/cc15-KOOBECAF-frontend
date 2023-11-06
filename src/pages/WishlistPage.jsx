@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getAccessToken } from "../utils/local-storage";
-import { fetchAllProduct, fetchWishlist } from "../stores/slices/productSlice";
+import { fetchWishlist } from "../stores/slices/productSlice";
 import { useEffect } from "react";
 import WishlistContainer from "../features/product/WishlistContainer";
 
