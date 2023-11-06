@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ImBin2 } from "react-icons/im";
+import { FaCog } from "react-icons/fa";
 import Modal from "../../components/Modal";
 import DeleteProductForm from "./DeleteProductForm";
 
@@ -37,11 +39,19 @@ function ListProductCard({ src, productPrice, productName, status, productDetail
                                 )}
                             </div>
 
-                            <div className="flex gap-6 items-center cursor-pointer ">
-                                <div>edit</div>
-                                <div onClick={() => setIsOpen(true)}>delete</div>
+                            <div className="flex gap-6 items-center cursor-pointer">
+                                <div className="text-[1.5rem] text-dark-night">
+                                    <FaCog />
+                                </div>
+                                <div onClick={() => setIsOpen(true)} className="text-[1.5rem] text-dark-night">
+                                    <ImBin2 />
+                                </div>
                                 <Modal title={"Delete listing"} open={isOpen} onClose={() => setIsOpen(false)}>
-                                    <DeleteProductForm productDetail={productDetail} productId={productId} />
+                                    <DeleteProductForm
+                                        productDetail={productDetail}
+                                        productId={productId}
+                                        onClose={() => setIsOpen(false)}
+                                    />
                                 </Modal>
                             </div>
                         </div>
