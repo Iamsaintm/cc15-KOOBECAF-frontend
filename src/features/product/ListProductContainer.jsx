@@ -14,6 +14,8 @@ function ListProductContainer() {
                     {productByUserId?.map((data) => (
                         <ListProductCard
                             key={data.id}
+                            productId={data.id}
+                            productDetail={data}
                             src={data.image[0].image}
                             productPrice={data.productPrice}
                             productName={data.productName}

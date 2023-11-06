@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
 import DeleteProductCard from "./DeleteProductCard";
+import Button from "../../components/Button";
 
-function DeleteContainer() {
-    const { deleteProduct, loading } = useSelector((state) => state.product);
+function DeleteContainer({ productDetail, productId }) {
+    const { loading } = useSelector((state) => state.product);
 
     return (
         <>
@@ -11,14 +13,16 @@ function DeleteContainer() {
                 <Loading />
             ) : (
                 <>
-                    {deleteProduct?.map((data) => (
+                    <DeleteProductCard productDetail={productDetail} productId={productId} />
+                    {/* {productByUserId?.map((data) => (
                         <DeleteProductCard
                             key={data.id}
+                            id={id}
                             src={data.image[0].image}
                             productPrice={data.productPrice}
                             productName={data.productName}
                         />
-                    ))}
+                    ))} */}
                 </>
             )}
         </>

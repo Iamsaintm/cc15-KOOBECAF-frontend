@@ -1,16 +1,20 @@
 import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 
-function DeleteProductCard({ src, productPrice, productName }) {
+function DeleteProductCard({ productDetail, productId }) {
     return (
         <div className="flex flex-col gap-2">
             <div className="flex">
                 <div className="aspect-square rounded-md p-3">
-                    <img className="h-20 w-20 object-cover rounded-md" src={src} alt="productImage" />
+                    <img
+                        className="h-20 w-20 object-cover rounded-md"
+                        src={productDetail.image[0].image}
+                        alt="productImage"
+                    />
                 </div>
                 <div className="flex flex-col justify-center">
-                    <div className="text-md font-semibold">{productName}</div>
-                    <div className="text-sm">&#3647; {productPrice}</div>
+                    <div className="text-md font-semibold">{productDetail.productName}</div>
+                    <div className="text-sm">&#3647; {productDetail.productPrice}</div>
                 </div>
             </div>
             <hr className="border" />

@@ -2,8 +2,9 @@ import { useState } from "react";
 import Modal from "../../components/Modal";
 import DeleteProductForm from "./DeleteProductForm";
 
-function ListProductCard({ src, productPrice, productName, status }) {
+function ListProductCard({ src, productPrice, productName, status, productDetail, productId }) {
     const [isOpen, setIsOpen] = useState(false);
+    // console.log(id);
     return (
         <>
             <div className="w-full h-[180px] bg-white rounded-md my-2 flex px-16">
@@ -40,7 +41,7 @@ function ListProductCard({ src, productPrice, productName, status }) {
                                 <div>edit</div>
                                 <div onClick={() => setIsOpen(true)}>delete</div>
                                 <Modal title={"Delete listing"} open={isOpen} onClose={() => setIsOpen(false)}>
-                                    <DeleteProductForm />
+                                    <DeleteProductForm productDetail={productDetail} productId={productId} />
                                 </Modal>
                             </div>
                         </div>
