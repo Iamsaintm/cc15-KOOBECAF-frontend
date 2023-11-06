@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
-import InputForm from "../../components/InputForm";
+import { useCallback, useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import InputDropdown from "../../components/InputDropdown";
 import { setInputProduct, setInputProductCategory } from "../../stores/slices/productSlice";
+import { fetchGeocoding } from "../../stores/slices/productSlice";
+import { debounce } from "lodash";
 import { DatePicker, ConfigProvider } from "antd";
 import { fetchAllCategory } from "../../stores/slices/categorySlice";
+import InputForm from "../../components/InputForm";
+import InputDropdown from "../../components/InputDropdown";
 
 function RequiredContainer({ type }) {
     const dispatch = useDispatch();
@@ -66,6 +68,20 @@ function RequiredContainer({ type }) {
         dispatch(setInputProductCategory({ id, fieldValue }));
     };
 
+    const onChangeInputLocation = useCallback(
+        async (e) => {
+            if (typeof e.target.value === "undefined") return; //ออกนอก Fn เลย if you use useMemo ต้องส่งค่าสักอย่าง " " , undefined
+            if (e.target.value === "") return; //ออกนอก Fn เลย
+            dispatch(fetchGeocoding(e.target.value));
+        },
+        [dispatch],
+    );
+
+    const handleDebounceInputLocation = useMemo(
+        () => debounce(onChangeInputLocation, 1000, { leading: false }),
+        [onChangeInputLocation],
+    );
+
     let inputForm = (
         <>
             <InputForm
@@ -86,7 +102,7 @@ function RequiredContainer({ type }) {
                 onChange={onChangeInputCategory}
                 type={"category"}
             />
-            <InputForm placeholder={"Location"} />
+            <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
         </>
     );
 
@@ -125,7 +141,7 @@ function RequiredContainer({ type }) {
                     name={"vehicleBrand"}
                     placeholder={"Brand"}
                 />
-                <InputForm placeholder={"Location"} />
+                <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
                 <InputForm
                     value={inputProduct.productPrice}
                     onChange={onChangeInput}
@@ -171,7 +187,8 @@ function RequiredContainer({ type }) {
                     name={"productPrice"}
                     placeholder={"Price"}
                 />
-                <InputForm placeholder={"Location"} />
+                <InputDropdown input={inputProduct} data={newCategoryData} onChange={onChangeInputCategory} />
+                <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
                 <InputForm
                     value={inputProduct.homeAddress}
                     onChange={onChangeInput}

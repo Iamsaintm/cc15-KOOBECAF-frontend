@@ -53,6 +53,19 @@ export const fetchProductByCategory = createAsyncThunk(
     },
 );
 
+export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async (address) => {
+    try {
+        const newAxios = axios.create({});
+        const res = await newAxios.get("/json", {
+            params: { address, key: "AIzaSyAD2cnxbl_ndhGSO6emJt0oSrs_Y3aRO3Q" },
+            baseURL: "https://maps.googleapis.com/maps/api/geocode",
+        });
+        return res.data; //return lat lng
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
 const inputProduct = {
     productName: "",
     productPrice: "",
@@ -197,6 +210,27 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(fetchProductByCategory.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(fetchGeocoding.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(fetchGeocoding.fulfilled, (state, { payload }) => {
+                const payloadData = payload.results;
+                if (payloadData.length != 0) {
+                    const location = payloadData[0].geometry.location;
+                    state.inputProduct.latitude = location.lat;
+                    state.inputProduct.longitude = location.lng;
+                }
+                //save value ที่return มาจาก api ลงredux state
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(fetchGeocoding.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });

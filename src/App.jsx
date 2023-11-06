@@ -1,9 +1,11 @@
 import { ToastContainer } from "react-toastify";
-import Route from "./routes/Route";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAccessToken } from "./utils/local-storage";
 import { fetchDataUser } from "./stores/slices/authSlice";
+import Route from "./routes/Route";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
     const dispatch = useDispatch();
