@@ -8,6 +8,7 @@ import CreateProductPage from "../pages/CreateProductPage";
 import CreateItemProductPage from "../pages/CreateItemProductPage";
 import SellingPage from "../pages/SellingPage";
 import CategoryPage from "../pages/CategoryPage";
+import WishlistPage from "../pages/WishlistPage";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
         ),
         children: [
             { path: "", element: <HomePage /> },
-            { path: "/buying", element: <HomePage /> },
+            { path: "/wishlist", element: <WishlistPage /> },
             { path: "/selling", element: <SellingPage /> },
             { path: "/category/:categoryId", element: <CategoryPage /> },
             { path: "/create", element: <CreateProductPage /> },

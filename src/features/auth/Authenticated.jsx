@@ -1,13 +1,16 @@
-import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom";
+import { getAccessToken } from "../../utils/local-storage";
+import { useSelector } from "react-redux";
 
-function Authenticated({children}) {
-    const authUser = useSelector(state => state.auth.authUserData); 
+function Authenticated({ children }) {
+    const authUser = getAccessToken();
+    const user = useSelector((state) => state.auth.authUserData);
 
-    if(!authUser) {
-        return <Navigate to="/login" />
+    if (!user && !authUser) {
+        return <Navigate to="/login" />;
     }
+
     return children;
 }
 
-export default Authenticated
+export default Authenticated;
