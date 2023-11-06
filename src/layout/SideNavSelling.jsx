@@ -15,8 +15,8 @@ function SideNavSelling() {
                     </Link>
                     <div className="text-2xl font-semibold pl-2">Selling</div>
                 </div>
-                <div className="flex justify-center w-full my-3">
-                    <Link className="w-full px-20" to={"/create"}>
+                <div className="flex px-12 my-3">
+                    <Link className="w-full " to={"/create"}>
                         <Button text={"Create new listing"} />
                     </Link>
                 </div>
