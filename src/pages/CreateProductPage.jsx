@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CreateProductCard from "../features/product/CreateProductCard";
+import { fetchAllCategory } from "../stores/slices/categorySlice";
+import { useDispatch } from "react-redux";
 
 function CreateProductPage() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchAllCategory());
+    }, []);
     const menu = [
         {
             id: 1,

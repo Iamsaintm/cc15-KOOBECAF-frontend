@@ -7,13 +7,15 @@ import DescriptionContainer from "../features/product/DescriptionContainer";
 import { createProduct, resetInputProduct } from "../stores/slices/productSlice";
 import { useNavigate } from "react-router-dom";
 
-function SideNavItemCreate({ header }) {
+function SideNavItemCreate({ header, type }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { authUserData } = useSelector((state) => state.auth);
     const { inputProduct } = useSelector((state) => state.product);
-    const { firstName, lastName } = useSelector((state) => state.auth.authUserData);
+    const firstName = authUserData?.firstName;
+    const lastName = authUserData?.lastName;
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
         const newInputProduct = {};
@@ -29,8 +31,14 @@ function SideNavItemCreate({ header }) {
         }
 
         formData.append("product", JSON.stringify(newInputProduct));
-        dispatch(createProduct({ formData }));
-        dispatch(resetInputProduct());
+
+        try {
+            await dispatch(createProduct({ formData }));
+            dispatch(resetInputProduct());
+            navigate("/selling");
+        } catch (error) {
+            console.error("Error dispatching createProduct:", error);
+        }
     };
 
     return (
@@ -49,7 +57,7 @@ function SideNavItemCreate({ header }) {
                 <div className="border-b-2 mb-2 pb-2"></div>
                 <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
                     <PhotoUpload />
-                    <RequiredContainer />
+                    <RequiredContainer type={type} />
                     <div className="flex flex-col gap-4">
                         <DescriptionContainer />
                         <Button type={"submit"} text={"Create"} />

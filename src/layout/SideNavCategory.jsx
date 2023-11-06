@@ -4,11 +4,20 @@ import Search from "../features/filter/Search";
 import Categories from "../features/filter/Categories";
 import { useLocation } from "react-router-dom";
 import InputForm from "../components/InputForm";
+import { useDispatch, useSelector } from "react-redux";
+import { setProductPrice } from "../stores/slices/productSlice";
 
 function SideNavCategory() {
+    const dispatch = useDispatch();
     const { pathname } = useLocation();
+    const { productPrice } = useSelector((state) => state.product);
     const nameTagSearch = pathname.slice(10).replace(/_/g, " ");
 
+    const onChangeInput = (e) => {
+        const fieldName = e.target.name;
+        const fieldValue = e.target.value;
+        dispatch(setProductPrice({ fieldName, fieldValue }));
+    };
     return (
         <>
             <div className="flex flex-col gap-2 pb-4 border-b-2">
@@ -26,13 +35,25 @@ function SideNavCategory() {
                 <div className="text-lg font-semibold">Filters</div>
                 <div className="flex justify-between items-center px-4">
                     <div className="w-32">
-                        <InputForm placeholder="Min" className="pt-0" />
+                        <InputForm
+                            name="minPrice"
+                            placeholder="Min"
+                            className="pt-0"
+                            onChange={onChangeInput}
+                            value={productPrice.minPrice}
+                        />
                     </div>
                     <div>
                         <div>To</div>
                     </div>
                     <div className="w-32">
-                        <InputForm placeholder="Max" className="pt-0" />
+                        <InputForm
+                            name="maxPrice"
+                            placeholder="Max"
+                            className="pt-0"
+                            onChange={onChangeInput}
+                            value={productPrice.maxPrice}
+                        />
                     </div>
                 </div>
             </div>
