@@ -4,10 +4,11 @@ import { logout } from "../stores/slices/authSlice";
 import Avatar from "../components/Avatar";
 import userImage from "../assets/Images/user.jpg";
 import { Link } from "react-router-dom";
-import { logoutProduct } from "../stores/slices/productSlice";
+import { logoutProduct, resetSearchProduct } from "../stores/slices/productSlice";
 
 export default function Navbar() {
     const dispatch = useDispatch();
+    dispatch(resetSearchProduct());
 
     return (
         <div className="flex justify-between items-center h-full px-6 text-white">
@@ -19,6 +20,7 @@ export default function Navbar() {
                     onClick={() => {
                         dispatch(logout());
                         dispatch(logoutProduct());
+                        dispatch(resetSearchProduct());
                     }}
                 >
                     Logout
