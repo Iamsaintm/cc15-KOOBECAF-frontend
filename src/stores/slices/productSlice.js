@@ -41,6 +41,18 @@ export const createProduct = createAsyncThunk("products/createProducts", async (
     }
 });
 
+export const updateProduct = createAsyncThunk("products/updateProducts", async ({ productId, formData }, thunkAPI) => {
+    try {
+        const res = await axios.patch(`/product/edit/${productId}`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        return res.data;
+    } catch (error) {
+        toast.error("You can add only 5 photos.");
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
 export const deleteProduct = createAsyncThunk("/product/deleteProduct", async (productId, thunkAPI) => {
     try {
         const res = await axios.delete(`/product/${productId}`);
