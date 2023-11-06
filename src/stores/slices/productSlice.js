@@ -30,6 +30,15 @@ export const createProduct = createAsyncThunk("products/createProducts", async (
     }
 });
 
+export const deleteProduct = createAsyncThunk("/product/deleteProduct", async (productId, thunkAPI) => {
+    try {
+        const res = await axios.delete(`/product/${productId}`);
+        return res.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
 export const fetchProductByCategory = createAsyncThunk(
     "products/fetchProductByCategorys",
     async (categoryId, thunkAPI) => {
@@ -69,6 +78,7 @@ const productSlice = createSlice({
         productData: null,
         productByUserId: null,
         productByCategory: null,
+        deleteProduct: null,
         loading: false,
         error: "",
         success: false,
@@ -133,6 +143,21 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(createProduct.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(deleteProduct.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(deleteProduct.fulfilled, (state, { payload }) => {
+                state.deleteProduct = payload.deletedProduct;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(deleteProduct.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });

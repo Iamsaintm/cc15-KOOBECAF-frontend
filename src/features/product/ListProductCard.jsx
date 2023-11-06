@@ -1,4 +1,9 @@
-function ListProductCard({ src = defaultProduct, productPrice, productName, status }) {
+import { useState } from "react";
+import Modal from "../../components/Modal";
+import DeleteProductForm from "./DeleteProductForm";
+
+function ListProductCard({ src, productPrice, productName, status }) {
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <>
             <div className="w-full h-[180px] bg-white rounded-md my-2 flex px-16">
@@ -33,7 +38,10 @@ function ListProductCard({ src = defaultProduct, productPrice, productName, stat
 
                             <div className="flex gap-6 items-center cursor-pointer ">
                                 <div>edit</div>
-                                <div>delete</div>
+                                <div onClick={() => setIsOpen(true)}>delete</div>
+                                <Modal title={"Delete listing"} open={isOpen} onClose={() => setIsOpen(false)}>
+                                    <DeleteProductForm />
+                                </Modal>
                             </div>
                         </div>
                     </div>

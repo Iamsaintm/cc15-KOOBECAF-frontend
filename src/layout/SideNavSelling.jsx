@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FaTags, FaArrowLeft } from "react-icons/fa6";
 import CategorieItem from "../features/filter/CategorieItem";
 import Button from "../components/Button";
+import Avatar from "../components/Avatar";
 
 function SideNavSelling() {
     const { pathname } = useLocation();
@@ -10,9 +11,11 @@ function SideNavSelling() {
             <div className="flex flex-col gap-2 px-4">
                 {/* <div className="sticky h-6"></div> */}
                 <div className="flex items-center pt-10">
-                    <Link to="/">
-                        <FaArrowLeft />
-                    </Link>
+                    <div className=" rounded-full p-2 hover:bg-main">
+                        <Link to="/">
+                            <FaArrowLeft />
+                        </Link>
+                    </div>
                     <div className="text-2xl font-semibold pl-2">Selling</div>
                 </div>
                 <div className="flex px-12 my-3">
@@ -26,6 +29,17 @@ function SideNavSelling() {
                         isActive={pathname === "/selling"}
                         to="/selling"
                         title={"Your listings"}
+                    />
+                </div>
+
+                <hr className="border" />
+
+                <div className="">
+                    <CategorieItem
+                        icons={<Avatar className="w-8 h-8" />}
+                        isActive={pathname === "/"}
+                        to="/"
+                        title={"Marketplace profile"}
                     />
                 </div>
 

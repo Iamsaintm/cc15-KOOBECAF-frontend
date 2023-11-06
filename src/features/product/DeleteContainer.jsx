@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import Loading from "../../components/Loading";
-import ListProductCard from "./ListProductCard";
+import DeleteProductCard from "./DeleteProductCard";
 
-function ListProductContainer() {
-    const { productByUserId, loading } = useSelector((state) => state.product);
+function DeleteContainer() {
+    const { deleteProduct, loading } = useSelector((state) => state.product);
 
     return (
         <>
@@ -11,8 +11,8 @@ function ListProductContainer() {
                 <Loading />
             ) : (
                 <>
-                    {productByUserId?.map((data) => (
-                        <ListProductCard
+                    {deleteProduct?.map((data) => (
+                        <DeleteProductCard
                             key={data.id}
                             src={data.image[0].image}
                             productPrice={data.productPrice}
@@ -25,4 +25,4 @@ function ListProductContainer() {
     );
 }
 
-export default ListProductContainer;
+export default DeleteContainer;
