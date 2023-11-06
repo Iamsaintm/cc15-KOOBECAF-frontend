@@ -5,27 +5,17 @@ import RequiredContainer from "../features/product/RequiredContainer";
 import Button from "../components/Button";
 import DescriptionContainer from "../features/product/DescriptionContainer";
 import { createProduct, resetInputProduct } from "../stores/slices/productSlice";
-import { useEffect, useState } from "react";
-import { getAccessToken } from "../utils/local-storage";
-import { fetchDataUser } from "../stores/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function SideNavItemCreate({ header, type }) {
-    const [test, setTest] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { authUserData } = useSelector((state) => state.auth);
     const { inputProduct } = useSelector((state) => state.product);
-    // const { firstName, lastName } = useSelector((state) => state.auth.authUserData);
+    const firstName = authUserData?.firstName;
+    const lastName = authUserData?.lastName;
 
-    useEffect(() => {
-        if (getAccessToken()) {
-            dispatch(fetchDataUser())
-                .unwrap()
-                .then((res) => {
-                    setTest(res.user);
-                });
-        }
-    }, []);
-
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
         const newInputProduct = {};
@@ -41,8 +31,14 @@ function SideNavItemCreate({ header, type }) {
         }
 
         formData.append("product", JSON.stringify(newInputProduct));
-        dispatch(createProduct({ formData }));
-        dispatch(resetInputProduct());
+
+        try {
+            await dispatch(createProduct({ formData }));
+            dispatch(resetInputProduct());
+            navigate("/selling");
+        } catch (error) {
+            console.error("Error dispatching createProduct:", error);
+        }
     };
 
     return (
@@ -54,7 +50,7 @@ function SideNavItemCreate({ header, type }) {
                     <div className="flex gap-3 items-center">
                         <Avatar />
                         <div>
-                            {test.firstName} {test.lastName}
+                            {firstName} {lastName}
                         </div>
                     </div>
                 </div>

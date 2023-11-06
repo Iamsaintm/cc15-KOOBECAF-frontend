@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import InputForm from "../../components/InputForm";
 import { useDispatch, useSelector } from "react-redux";
 import InputDropdown from "../../components/InputDropdown";
@@ -8,17 +8,14 @@ import { fetchAllCategory } from "../../stores/slices/categorySlice";
 
 function RequiredContainer({ type }) {
     const dispatch = useDispatch();
-    const [categoryData, setCategoryData] = useState([]);
-    // const { categoryData } = useSelector((state) => state.category);
+
+    const { authUserData } = useSelector((state) => state.auth);
+    const { categoryData } = useSelector((state) => state.category);
     const { inputProduct } = useSelector((state) => state.product);
 
     useEffect(() => {
-        dispatch(fetchAllCategory())
-            .unwrap()
-            .then((res) => {
-                setCategoryData(res.allCategory);
-            });
-    }, []);
+        dispatch(fetchAllCategory());
+    }, [authUserData]);
 
     const vehicleTypes = [
         { id: 1, vehicleType: "CAR" },
@@ -44,7 +41,9 @@ function RequiredContainer({ type }) {
         { id: 2, homeProperty: "SALE" },
     ];
 
-    const newCategoryData = [{ id: 0, typeOfCategory: "Category" }, ...categoryData];
+    const newCategoryData = Array.isArray(categoryData)
+        ? [{ id: 0, typeOfCategory: "Category" }, ...categoryData]
+        : [{ id: 0, typeOfCategory: "Category" }];
     const newVehicleTypeData = [{ id: 0, vehicleType: "Vehicle type" }, ...vehicleTypes];
     const newHomeTypeData = [{ id: 0, homeType: "Property type" }, ...homeTypes];
     const newHomePropertyData = [{ id: 0, homeProperty: "Home for Sale or Rent" }, ...homePropertys];

@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { fetchDataUser } from "../../stores/slices/authSlice";
 import { getAccessToken } from "../../utils/local-storage";
+import { useSelector } from "react-redux";
 
 function Authenticated({ children }) {
-    const authUser = useSelector((state) => state.auth.authUserData);
+    const authUser = getAccessToken();
+    const user = useSelector((state) => state.auth.authUserData);
 
-    if (!authUser) {
+    if (!user && !authUser) {
         return <Navigate to="/login" />;
     }
+
     return children;
 }
 
