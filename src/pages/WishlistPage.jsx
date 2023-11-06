@@ -8,7 +8,6 @@ function WishlistPage() {
     const dispatch = useDispatch();
     const { wishlistProduct } = useSelector((state) => state.product);
 
-    console.log(wishlistProduct);
     useEffect(() => {
         if (getAccessToken()) {
             dispatch(fetchWishlist());
