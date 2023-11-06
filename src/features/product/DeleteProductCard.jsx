@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import Button from "../../components/Button";
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../../stores/slices/productSlice";
 
 function DeleteProductCard({ productDetail, productId }) {
+    const dispatch = useDispatch();
+
     return (
         <div className="flex flex-col gap-2">
             <div className="flex">
@@ -27,9 +31,13 @@ function DeleteProductCard({ productDetail, productId }) {
                     </Link>
                 </div>
                 <div className="flex">
-                    <Link className="px-2">
-                        <Button text={"Delete"} type={"submit"} />
-                    </Link>
+                    <Button
+                        text={"Delete"}
+                        type={"submit"}
+                        onClick={() => {
+                            dispatch(deleteProduct(`${productId}`));
+                        }}
+                    />
                 </div>
             </div>
         </div>

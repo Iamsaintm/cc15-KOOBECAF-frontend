@@ -153,7 +153,6 @@ const productSlice = createSlice({
                 state.error = "";
             })
             .addCase(deleteProduct.fulfilled, (state, { payload }) => {
-                state.deleteProduct = payload.deletedProduct;
                 state.loading = false;
                 state.success = true;
             })

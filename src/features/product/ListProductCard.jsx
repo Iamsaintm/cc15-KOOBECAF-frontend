@@ -4,7 +4,7 @@ import DeleteProductForm from "./DeleteProductForm";
 
 function ListProductCard({ src, productPrice, productName, status, productDetail, productId }) {
     const [isOpen, setIsOpen] = useState(false);
-    // console.log(id);
+
     return (
         <>
             <div className="w-full h-[180px] bg-white rounded-md my-2 flex px-16">
