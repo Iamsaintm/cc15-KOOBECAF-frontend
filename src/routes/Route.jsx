@@ -27,8 +27,8 @@ const router = createBrowserRouter([
             { path: "/category/:categoryId", element: <CategoryPage /> },
             { path: "/create", element: <CreateProductPage /> },
             { path: "/create/item", element: <CreateItemProductPage /> },
-            { path: "/create/vehicle", element: <CreateProductPage /> },
-            { path: "/create/rental", element: <CreateProductPage /> },
+            { path: "/create/vehicle", element: <CreateItemProductPage /> },
+            { path: "/create/rental", element: <CreateItemProductPage /> },
         ],
     },
     {

@@ -12,8 +12,6 @@ function SideNavItemCreate({ header, type }) {
     const navigate = useNavigate();
     const { authUserData } = useSelector((state) => state.auth);
     const { inputProduct } = useSelector((state) => state.product);
-    const firstName = authUserData?.firstName;
-    const lastName = authUserData?.lastName;
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -48,9 +46,9 @@ function SideNavItemCreate({ header, type }) {
                 <div className="flex flex-col gap-2 px-4">
                     <div className="text-2xl font-bold">{header}</div>
                     <div className="flex gap-3 items-center">
-                        <Avatar />
+                        <Avatar src={authUserData?.profileImage} />
                         <div>
-                            {firstName} {lastName}
+                            {authUserData?.firstName} {authUserData?.lastName}
                         </div>
                     </div>
                 </div>

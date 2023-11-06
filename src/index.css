@@ -6,6 +6,13 @@
     html {
         background: #fff;
     }
+    .slick-dots.slick-thumb {
+        display: flex !important;
+        width: 100%;
+    }
+    .slick-dots > li {
+        width: 70px;
+    }
 }
 
 @font-face {
