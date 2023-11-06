@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import Button from "../../components/Button";
-import { useDispatch } from "react-redux";
-import { deleteProduct } from "../../stores/slices/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteProduct, fetchProductByUserId } from "../../stores/slices/productSlice";
 
 function DeleteProductCard({ productDetail, productId }) {
     const dispatch = useDispatch();
+    const { authUserData } = useSelector((state) => state.auth);
 
     return (
         <div className="flex flex-col gap-2">
@@ -35,7 +36,9 @@ function DeleteProductCard({ productDetail, productId }) {
                         text={"Delete"}
                         type={"submit"}
                         onClick={() => {
-                            dispatch(deleteProduct(`${productId}`));
+                            dispatch(deleteProduct(`${productId}`)).then((res) =>
+                                dispatch(fetchProductByUserId(authUserData?.id)),
+                            );
                         }}
                     />
                 </div>

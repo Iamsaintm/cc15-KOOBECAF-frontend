@@ -24,6 +24,8 @@ function ListProductContainer() {
                                 key={data.id}
                                 src={data.image[0].image}
                                 productPrice={data.productPrice}
+                                productId={data.id}
+                                productDetail={data}
                                 productName={data.productName}
                                 status={data.status}
                             />
