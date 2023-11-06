@@ -102,7 +102,7 @@ function RequiredContainer({ type }) {
                 onChange={onChangeInputCategory}
                 type={"category"}
             />
-            <InputForm placeholder={"Location"} />
+            <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
         </>
     );
 
@@ -141,7 +141,7 @@ function RequiredContainer({ type }) {
                     name={"vehicleBrand"}
                     placeholder={"Brand"}
                 />
-                <InputForm placeholder={"Location"} />
+                <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
                 <InputForm
                     value={inputProduct.productPrice}
                     onChange={onChangeInput}
@@ -198,7 +198,6 @@ function RequiredContainer({ type }) {
             </>
         );
     }
-    
 
     return (
         <>
