@@ -10,8 +10,10 @@ import { useNavigate } from "react-router-dom";
 function SideNavItemCreate({ header }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { authUserData } = useSelector((state) => state.auth);
     const { inputProduct } = useSelector((state) => state.product);
-    const { firstName, lastName } = useSelector((state) => state.auth.authUserData);
+    const firstName = authUserData?.firstName;
+    const lastName = authUserData?.lastName;
 
     const onSubmit = async (e) => {
         e.preventDefault();

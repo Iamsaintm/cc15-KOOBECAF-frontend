@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import InputForm from "../../components/InputForm";
 import { useDispatch, useSelector } from "react-redux";
 import InputDropdown from "../../components/InputDropdown";
 import { setInputProduct, setInputProductCategory } from "../../stores/slices/productSlice";
+import { fetchAllCategory } from "../../stores/slices/categorySlice";
 
 function RequiredContainer() {
     const dispatch = useDispatch();
+    const { authUserData } = useSelector((state) => state.auth);
     const { categoryData } = useSelector((state) => state.category);
     const { inputProduct } = useSelector((state) => state.product);
-    const newCategoryData = [{ id: 0, typeOfCategory: "Category" }, ...categoryData];
+    const newCategoryData = Array.isArray(categoryData)
+        ? [{ id: 0, typeOfCategory: "Category" }, ...categoryData]
+        : [{ id: 0, typeOfCategory: "Category" }];
+
+    useEffect(() => {
+        dispatch(fetchAllCategory());
+    }, [authUserData]);
 
     const onChangeInput = (e) => {
         const fieldName = e.target.name;
