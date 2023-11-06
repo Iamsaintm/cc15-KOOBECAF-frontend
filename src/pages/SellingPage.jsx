@@ -32,7 +32,7 @@ function SellingPage() {
                                         <div className="text-xl font-semibold pl-5">Your listings</div>
                                         <div className="pr-5">
                                             <Search
-                                                className="top-[100px] right-60"
+                                                className="top-[100px] right-[231px]"
                                                 nameTagSearch=""
                                                 div=""
                                                 placeholder="Search"
