@@ -19,6 +19,15 @@ export const fetchProductByUserId = createAsyncThunk("product/fetchProductByUser
     }
 });
 
+export const fetchWishlist = createAsyncThunk("product/fetchWishlist", async (payload, thunkAPI) => {
+    try {
+        const res = await axios.get("/product/wishlist");
+        return res.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
 export const createProduct = createAsyncThunk("products/createProducts", async ({ formData }, thunkAPI) => {
     try {
         const res = await axios.post("/product/create", formData, {
@@ -69,6 +78,7 @@ const productSlice = createSlice({
         productData: null,
         productByUserId: null,
         productByCategory: null,
+        wishlistProduct: null,
         loading: false,
         error: "",
         success: false,
@@ -118,6 +128,21 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(fetchProductByUserId.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(fetchWishlist.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(fetchWishlist.fulfilled, (state, { payload }) => {
+                state.wishlistProduct = payload.wishlistProduct;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(fetchWishlist.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });
