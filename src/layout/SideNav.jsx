@@ -15,7 +15,7 @@ function SideNav() {
                 <div className="sticky">
                     <Search />
                     <div className="px-4">
-                        <CategorieItem icons={<FaStore />} title={"Browse All"} isActive={pathname === "/"} />
+                        <CategorieItem icons={<FaStore />} title={"Browse All"} isActive={pathname === "/"} to={true} />
                     </div>
                     <div className="px-4">
                         <CategorieItem

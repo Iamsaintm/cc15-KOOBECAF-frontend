@@ -5,6 +5,7 @@ import Avatar from "../components/Avatar";
 import userImage from "../assets/Images/user.jpg";
 import { Link } from "react-router-dom";
 import { logoutProduct } from "../stores/slices/productSlice";
+import Dropdown from "../components/Dropdown";
 
 export default function Navbar() {
     const dispatch = useDispatch();
@@ -23,7 +24,8 @@ export default function Navbar() {
                 >
                     Logout
                 </button>
-                <Avatar src={userImage} />
+                <Dropdown />
+                {/* <Avatar src={userImage} /> */}
             </div>
         </div>
     );
