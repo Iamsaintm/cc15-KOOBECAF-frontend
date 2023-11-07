@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import { logout } from "../stores/slices/authSlice";
 import { Link } from "react-router-dom";
+// import { BiLogOut } from "react-icons/fa";
 import { logoutProduct, resetInputProduct, resetSearchProduct } from "../stores/slices/productSlice";
 import Avatar from "../components/Avatar";
 import userImage from "../assets/Images/user.jpg";
-import Dropdown from "../components/Dropdown";
+import Dropdown from "../components/DropdownUser";
 
 export default function Navbar() {
     const dispatch = useDispatch();

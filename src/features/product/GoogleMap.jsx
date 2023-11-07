@@ -10,12 +10,13 @@ const GoogleMapInput = ({ className }) => {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     });
-
+    
     const geometry = useMemo(() => {
         return {
             lat: inputProduct.latitude,
             lng: inputProduct.longitude,
         };
+
     }, [inputProduct.latitude, inputProduct.longitude]);
 
     if (!isLoaded) {
@@ -23,7 +24,7 @@ const GoogleMapInput = ({ className }) => {
     }
     return (
         <div className={className}>
-            <GoogleMap zoom={16} center={geometry} mapContainerStyle={{ width: "100%", height: 250 }}>
+            <GoogleMap zoom={16} center={geometry} mapContainerStyle={{ width: "100%", height: 200 }}>
                 <MarkerF position={geometry} />
             </GoogleMap>
         </div>

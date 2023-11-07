@@ -4,9 +4,11 @@ import { useState } from "react";
 import CategorieItem from "../features/filter/CategorieItem";
 import ProfileModal from "../components/ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
+import EditUser from "../features/profile/EditUser";
 
 function SideNavCreate() {
     const [isOpen, setIsOpen] = useState(false);
+    const [editUser, setEditUser] = useState(false);
     const { pathname } = useLocation();
 
     return (
@@ -35,13 +37,22 @@ function SideNavCreate() {
                     }}
                     title={"Marketplace profile"}
                 />
-                <ProfileModal
-                    open={isOpen}
-                    onClose={() => {
-                        setIsOpen(false);
-                    }}
-                >
-                    <ProfileUser />
+                <ProfileModal open={isOpen} >
+                    <ProfileUser 
+                        setEditUser={setEditUser}
+                        onClose={() => {
+                            setIsOpen(false);
+                        }} 
+                    />
+                </ProfileModal>
+
+                <ProfileModal open={editUser} >
+                    <EditUser 
+                        setIsOpen={setIsOpen}
+                        onClose={() => {
+                            setEditUser(false);
+                        }}
+                    />
                 </ProfileModal>
                 <div className="flex flex-col gap-2 overflow-auto h-screen pb-56 px-2"></div>
             </div>

@@ -97,6 +97,7 @@ function RequiredContainer({ type }) {
                 placeholder={"Price"}
             />
             <InputDropdown
+            className={"mt-4"}
                 value={inputProduct.typeOfCategory}
                 data={newCategoryData}
                 onChange={onChangeInputCategory}

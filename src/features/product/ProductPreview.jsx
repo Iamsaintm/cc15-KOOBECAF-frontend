@@ -20,6 +20,7 @@ function ProductPreview({ src, productPrice, productDetail }) {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        
     };
 
     return (
@@ -39,7 +40,9 @@ function ProductPreview({ src, productPrice, productDetail }) {
                         >
                             <div className="w-[400px]">
                                 <Slider {...settings} className="text-2xl text-main-dark">
-                                    <img src="https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg"></img>
+                                    <img
+                                        src="https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg"
+                                    ></img>
                                     <img src="https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg"></img>
                                     <img src="https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg"></img>
                                     <img src="https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg"></img>

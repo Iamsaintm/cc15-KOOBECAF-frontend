@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { BiLogOut } from "react-icons/bi";
 import { logout } from "../stores/slices/authSlice";
 import { logoutProduct } from "../stores/slices/productSlice";
 import userImage from "../assets/Images/user.jpg";
-import Avatar from "../components/Avatar";
+import Avatar from "./Avatar";
 
 export default function Dropdown() {
     const [isOpen, setIsOpen] = useState(false);
+    const { authUserData, loading } = useSelector((state) => state.auth);
+
     const dropDownEl = useRef(null); // {curent: null}
     const dispatch = useDispatch();
 
@@ -31,12 +34,13 @@ export default function Dropdown() {
             </div>
             {isOpen && (
                 <div className=" w-96 absolute bg-white right-0 translate-y-1 border rounded-xl shadow-xl p-2">
-                    {/* <Link to={`/profile/${authUser.id}`} onClick={() => setIsOpen(false)}> */}
                     <Link onClick={() => setIsOpen(false)}>
                         <div className="flex gap-4 p-2 item-center hover:bg-gray-100 rounded-xl">
                             <Avatar className="h-14" src={userImage} />
                             <div>
-                                <div className="font-semibold text-black">beeee boy</div>
+                                <div className="font-semibold text-black">
+                                    {authUserData?.firstName} {authUserData?.lastName}
+                                </div>
                                 <div className="text-sm text-gray-500">See Your Profile</div>
                             </div>
                         </div>
@@ -46,13 +50,14 @@ export default function Dropdown() {
                         className="flex gap-4 p-2 items-center cursor-pointer hover:bg-gray-100 rounded-xl"
                         onClick={() => {
                             dispatch(logout());
-                            dispatch(logoutProduct());
                         }}
                     >
-                        <div className="bg-gray-300 h-9 aspect-square rounded-full flex justify-center items-center">
-                            {/* <RightFromBracketIcon /> */}
+                        <div className="flex flex-1 justify-end items-center gap-4 ">
+                            <div className="font-semibold text-sm text-black ">Log Out</div>
+                            <div className="bg-gray-300 h-9 aspect-square rounded-full flex justify-center items-center">
+                                <BiLogOut />
+                            </div>
                         </div>
-                        <div className="font-semibold text-sm text-black ">Log Out</div>
                     </div>
                 </div>
             )}
