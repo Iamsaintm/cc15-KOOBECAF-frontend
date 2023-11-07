@@ -1,7 +1,6 @@
 import wishList from "../assets/Images/wishlist.svg";
 import chatIcon from "../assets/Images/chat.svg";
 import Avatar from "../components/Avatar";
-import userImage from "../assets/Images/user.jpg";
 import SliderForProduct from "../components/SliderForProduct";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,14 +9,13 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import formatTimeAgo from "../utils/time-ago";
 import { fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
-import axios from "../config/axios";
 
 function ProductItemPage({}) {
     const dispatch = useDispatch();
     const { isWishList } = useSelector((state) => state.product);
     const { state } = useLocation();
 
-    const [isActive, setIsActive] = useState(isWishList);
+    // const [isActive, setIsActive] = useState(isWishList);
     const category = state.productDetail.categoryId;
 
     useEffect(() => {
@@ -34,7 +32,8 @@ function ProductItemPage({}) {
 
     const handleClick = () => {
         dispatch(wishListProduct(state.productDetail.id));
-        setIsActive(!isActive);
+        // setIsActive(!isActive);
+        window.location.reload();
     };
     return (
         <>
@@ -72,7 +71,7 @@ function ProductItemPage({}) {
                         </button>
                         <button
                             className={`text-lg rounded-xl border-2 py-2 px-3 ${
-                                isActive ? "bg-sky-400 hover:bg-sky-700" : "bg-white"
+                                isWishList ? "bg-sky-400 hover:bg-sky-700" : "bg-white"
                             } `}
                             onClick={handleClick}
                         >
@@ -101,7 +100,7 @@ function ProductItemPage({}) {
                     <div className="py-2">
                         <div className="font-semibold text-lg">Seller information</div>
                         <div className="flex flex-row justify-start items-center ">
-                            <Avatar src={userImage || state.productDetail.usersId.profileImage} />
+                            <Avatar src={state.productDetail.usersId.profileImage} />
                             <div className="px-2">{state.productDetail.usersId.firstName}</div>
                             <div className="">{state.productDetail.usersId.lastName}</div>
                         </div>

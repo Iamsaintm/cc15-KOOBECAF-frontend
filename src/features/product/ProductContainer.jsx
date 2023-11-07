@@ -20,12 +20,14 @@ function ProductContainer() {
                 <>
                     {product && product.length > 0 ? (
                         product.map((data) => (
-                            <ProductCard
-                                key={data.id}
-                                src={data.image[0]?.image}
-                                productPrice={data.productPrice}
-                                productName={data.productName}
-                            />
+                            <Link key={data.id} to={`/product/${data.id}`} state={{ productDetail: data }}>
+                                <ProductCard
+                                    src={data.image[0]?.image}
+                                    productPrice={data.productPrice}
+                                    productName={data.productName}
+                                    productDetail={data}
+                                />
+                            </Link>
                         ))
                     ) : (
                         <div>Product not Found</div>
