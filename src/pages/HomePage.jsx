@@ -17,7 +17,7 @@ function HomePage() {
 
     return (
         <>
-            <div className="flex w-full bg-second-light">
+            <div className="flex w-full bg-second-light h-screen">
                 <div className="min-w-[360px]"></div>
                 <div className="flex flex-col w-full bg-main-light">
                     <div className="flex justify-start py-6 px-12">

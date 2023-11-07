@@ -8,7 +8,6 @@ import Dropdown from "../components/DropdownUser";
 
 export default function Navbar() {
     const dispatch = useDispatch();
-    dispatch(resetSearchProduct());
 
     return (
         <div className="flex justify-between items-center h-full px-6 text-white">

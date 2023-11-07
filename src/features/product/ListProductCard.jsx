@@ -1,4 +1,12 @@
-function ListProductCard({ src = defaultProduct, productPrice, productName, status }) {
+import { useState } from "react";
+import { ImBin2 } from "react-icons/im";
+import { FaCog } from "react-icons/fa";
+import Modal from "../../components/Modal";
+import DeleteProductForm from "./DeleteProductForm";
+
+function ListProductCard({ src, productPrice, productName, status, productDetail, productId }) {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <>
             <div className="w-full h-[180px] bg-white rounded-md my-2 flex px-16">
@@ -31,9 +39,20 @@ function ListProductCard({ src = defaultProduct, productPrice, productName, stat
                                 )}
                             </div>
 
-                            <div className="flex gap-6 items-center cursor-pointer ">
-                                <div>edit</div>
-                                <div>delete</div>
+                            <div className="flex gap-6 items-center cursor-pointer">
+                                <div className="text-[1.5rem] text-dark-night">
+                                    <FaCog />
+                                </div>
+                                <div onClick={() => setIsOpen(true)} className="text-[1.5rem] text-dark-night">
+                                    <ImBin2 />
+                                </div>
+                                <Modal title={"Delete listing"} open={isOpen} onClose={() => setIsOpen(false)}>
+                                    <DeleteProductForm
+                                        productDetail={productDetail}
+                                        productId={productId}
+                                        onClose={() => setIsOpen(false)}
+                                    />
+                                </Modal>
                             </div>
                         </div>
                     </div>
