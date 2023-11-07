@@ -1,14 +1,13 @@
-import wishList from "../assets/Images/wishlist.svg";
-import chatIcon from "../assets/Images/chat.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { BsFillChatDotsFill, BsFillBookmarkFill } from "react-icons/bs";
+import { fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
 import Avatar from "../components/Avatar";
 import SliderForProduct from "../components/SliderForProduct";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import formatTimeAgo from "../utils/time-ago";
-import { fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
 
 function ProductItemPage({}) {
     const dispatch = useDispatch();
@@ -64,7 +63,7 @@ function ProductItemPage({}) {
                         <button className="text-lg rounded-2xl border-2 py-2 px-8 bg-second hover:bg-second-dark">
                             <div className=" flex flex-row justify-center items-center">
                                 <div>
-                                    <img src={chatIcon} alt="" className="w-4 h-4 " />
+                                    <BsFillChatDotsFill />
                                 </div>
                                 <div className="px-1">Message</div>
                             </div>
@@ -76,7 +75,7 @@ function ProductItemPage({}) {
                             onClick={handleClick}
                         >
                             <div className="flex justify-center">
-                                <img src={wishList} alt="" className="w-4 h-4" />
+                                <BsFillBookmarkFill />
                             </div>
                         </button>
                     </div>
