@@ -5,7 +5,6 @@ import { GOOGLE_MAPS_API_KEY } from "../../config/env";
 
 const GoogleMapInput = ({ className }) => {
     const { inputProduct, loading } = useSelector((state) => state.product);
-    console.log(inputProduct);
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY,

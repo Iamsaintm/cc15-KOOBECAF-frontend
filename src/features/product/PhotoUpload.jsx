@@ -25,6 +25,10 @@ function PhotoUpload() {
         newFile = Array.from(inputProduct.productImage);
     }
 
+    // if (inputProduct.image) {
+    //     newFile = Array.from(inputProduct.image);
+    // }
+
     const deleteImage = (index) => {
         const fieldName = "productImage";
         const fieldValue = Array.from(inputProduct.productImage).filter((x, idx) => idx !== index);

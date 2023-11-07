@@ -70,8 +70,8 @@ function RequiredContainer({ type }) {
 
     const onChangeInputLocation = useCallback(
         async (e) => {
-            if (typeof e.target.value === "undefined") return; //ออกนอก Fn เลย if you use useMemo ต้องส่งค่าสักอย่าง " " , undefined
-            if (e.target.value === "") return; //ออกนอก Fn เลย
+            if (typeof e.target.value === "undefined") return;
+            if (e.target.value === "") return;
             dispatch(fetchGeocoding(e.target.value));
         },
         [dispatch],
@@ -106,7 +106,7 @@ function RequiredContainer({ type }) {
         </>
     );
 
-    if (type === "/create/vehicle") {
+    if (type === "/create/vehicle" || type === "/update/vehicle") {
         inputForm = (
             <>
                 <InputDropdown
@@ -152,7 +152,7 @@ function RequiredContainer({ type }) {
         );
     }
 
-    if (type === "/create/rental") {
+    if (type === "/create/rental" || type === "/update/rental") {
         inputForm = (
             <>
                 <InputDropdown
@@ -187,7 +187,6 @@ function RequiredContainer({ type }) {
                     name={"productPrice"}
                     placeholder={"Price"}
                 />
-                <InputDropdown input={inputProduct} data={newCategoryData} onChange={onChangeInputCategory} />
                 <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
                 <InputForm
                     value={inputProduct.homeAddress}

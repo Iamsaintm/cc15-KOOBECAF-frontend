@@ -4,7 +4,7 @@ import PhotoUpload from "../features/product/PhotoUpload";
 import RequiredContainer from "../features/product/RequiredContainer";
 import Button from "../components/Button";
 import DescriptionContainer from "../features/product/DescriptionContainer";
-import { createProduct, resetInputProduct } from "../stores/slices/productSlice";
+import { createProduct, resetInputProduct, updateInputProduct } from "../stores/slices/productSlice";
 import { useNavigate } from "react-router-dom";
 
 function SideNavItemCreate({ header, type }) {
@@ -33,7 +33,13 @@ function SideNavItemCreate({ header, type }) {
         formData.append("product", JSON.stringify(newInputProduct));
 
         try {
-            await dispatch(createProduct({ formData }));
+            if (inputProduct.id) {
+                formData.append("id", inputProduct.id);
+                await dispatch(updateInputProduct({ formData }));
+            } else {
+                await dispatch(createProduct({ formData }));
+            }
+
             dispatch(resetInputProduct());
             navigate("/selling");
         } catch (error) {
@@ -60,7 +66,11 @@ function SideNavItemCreate({ header, type }) {
                     <RequiredContainer type={type} />
                     <div className="flex flex-col gap-4">
                         <DescriptionContainer />
-                        <Button type={"submit"} text={"Create"} />
+                        {inputProduct.id ? (
+                            <Button type={"submit"} text={"Update"} />
+                        ) : (
+                            <Button type={"submit"} text={"Create"} />
+                        )}
                     </div>
                 </div>
             </form>

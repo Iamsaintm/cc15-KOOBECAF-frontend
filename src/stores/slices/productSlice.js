@@ -41,9 +41,9 @@ export const createProduct = createAsyncThunk("products/createProducts", async (
     }
 });
 
-export const updateProduct = createAsyncThunk("products/updateProducts", async ({ productId, formData }, thunkAPI) => {
+export const updateProduct = createAsyncThunk("products/updateProducts", async ({ formData }, thunkAPI) => {
     try {
-        const res = await axios.patch(`/product/edit/${productId}`, formData, {
+        const res = await axios.patch(`/product/edit/${formData.id}`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
         });
         return res.data;
@@ -139,6 +139,12 @@ const productSlice = createSlice({
                 ? (state.errorMessage = true)
                 : (state.errorMessage = false);
         },
+        updateInputProduct: (state, { payload }) => {
+            state.inputProduct = { ...state.inputProduct, ...payload };
+            Array.from(state.inputProduct.productImage).length > 5
+                ? (state.errorMessage = true)
+                : (state.errorMessage = false);
+        },
         setInputProductCategory: (state, { payload }) => {
             state.inputProduct.categoryId = payload.id;
             state.inputProduct.typeOfCategory = payload.fieldValue;
@@ -222,6 +228,22 @@ const productSlice = createSlice({
             });
 
         builder
+            .addCase(updateProduct.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(updateProduct.fulfilled, (state, { payload }) => {
+                console.log(payload);
+                state.productByUserId = payload.product;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(updateProduct.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
             .addCase(deleteProduct.pending, (state, { payload }) => {
                 state.loading = true;
                 state.error = "";
@@ -282,6 +304,7 @@ export const {
     resetSearchProduct,
     setProductPrice,
     resetProductPrice,
+    updateInputProduct,
 } = productSlice.actions;
 
 export default productSlice.reducer;
