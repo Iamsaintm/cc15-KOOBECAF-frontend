@@ -1,4 +1,4 @@
-function Button({ type, text, onClick, className }) {
+function Button({ type, text, onClick, className = "bg-second hover:bg-second-dark " }) {
     return (
         <button
             type={type}
