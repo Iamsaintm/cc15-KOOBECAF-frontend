@@ -5,6 +5,6 @@ TimeAgo.addDefaultLocale(en);
 
 const timeAgo = new TimeAgo("en-us");
 
-const formatTimeAgo = (date) => timeAgo.format(new Date(date), "mini-now");
+const formatTimeAgo = (date) => timeAgo.format(new Date(date));
 
 export default formatTimeAgo;

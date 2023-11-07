@@ -62,6 +62,27 @@ export const fetchProductByCategory = createAsyncThunk(
     },
 );
 
+export const fetchProductByProductId = createAsyncThunk(
+    "products/fetchProductByProductId",
+    async (productId, thunkAPI) => {
+        try {
+            const res = await axios.get(`/product/${productId}`);
+            console.log(res.data);
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    },
+);
+
+export const wishListProduct = createAsyncThunk("products/wishListProduct", async (productId, thunkAPI) => {
+    try {
+        const res = await axios.post(`/product/wishList/${productId}`);
+        return res.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
 export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async (address) => {
     try {
         const newAxios = axios.create({});
@@ -110,6 +131,9 @@ const productSlice = createSlice({
         productData: null,
         productByUserId: null,
         productByCategory: null,
+        productByProductId: null,
+        isWishList: false,
+        myWishListProduct: null,
         deleteProduct: null,
         wishlistProduct: null,
         loading: false,
@@ -239,6 +263,35 @@ const productSlice = createSlice({
             });
 
         builder
+            .addCase(fetchProductByProductId.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(fetchProductByProductId.fulfilled, (state, { payload }) => {
+                console.log(payload, "payload");
+                state.productByProductId = payload.product;
+                state.isWishList = payload.isWishList;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(fetchProductByProductId.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+        builder
+            .addCase(wishListProduct.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(wishListProduct.fulfilled, (state, { payload }) => {
+                state.myWishListProduct = payload.product;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(wishListProduct.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            })
             .addCase(fetchGeocoding.pending, (state, { payload }) => {
                 state.loading = true;
                 state.error = "";
