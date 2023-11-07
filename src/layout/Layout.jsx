@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import Header from "./Header";
 import SideNav from "./SideNav";
 import SideNavCreate from "./SideNavCreate";
@@ -8,6 +8,7 @@ import SideNavCategory from "./SideNavCategory";
 
 function Layout() {
     const { pathname } = useLocation();
+    const params = useParams();
 
     let sideNav = (
         <div className="flex flex-col h-full w-full">
@@ -113,6 +114,21 @@ function Layout() {
                     <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
                         <SideNavSelling />
                     </div>
+                    <div className="w-full">
+                        <Outlet />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (pathname === `/product/${params.productId}`) {
+        sideNav = (
+            <div className="flex flex-col h-full w-full">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                    <Header />
+                </div>
+                <div className="flex w-full">
                     <div className="w-full">
                         <Outlet />
                     </div>

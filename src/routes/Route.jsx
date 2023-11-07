@@ -8,6 +8,7 @@ import CreateProductPage from "../pages/CreateProductPage";
 import CreateItemProductPage from "../pages/CreateItemProductPage";
 import SellingPage from "../pages/SellingPage";
 import CategoryPage from "../pages/CategoryPage";
+import ProductItemPage from "../pages/productItemPage";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
             { path: "/create/item", element: <CreateItemProductPage /> },
             { path: "/create/vehicle", element: <CreateProductPage /> },
             { path: "/create/rental", element: <CreateProductPage /> },
+            { path: "/product/:productId", element: <ProductItemPage /> },
         ],
     },
     {
