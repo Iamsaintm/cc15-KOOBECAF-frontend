@@ -11,6 +11,10 @@ export default function Dropdown() {
     const [isOpen, setIsOpen] = useState(false);
     const { authUserData, loading } = useSelector((state) => state.auth);
 
+    const handleOnclick = () => {
+        setIsOpen();
+    };
+
     const dropDownEl = useRef(null); // {curent: null}
     const dispatch = useDispatch();
 
@@ -41,7 +45,9 @@ export default function Dropdown() {
                                 <div className="font-semibold text-black">
                                     {authUserData?.firstName} {authUserData?.lastName}
                                 </div>
-                                <div className="text-sm text-gray-500">See Your Profile</div>
+                                <div className="text-sm text-gray-500">
+                                    See Your Profile
+                                </div>
                             </div>
                         </div>
                     </Link>

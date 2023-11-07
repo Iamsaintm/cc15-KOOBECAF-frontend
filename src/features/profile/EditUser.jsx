@@ -5,12 +5,12 @@ import Avatar from "../../components/Avatar";
 import InputDropdown from "../../components/InputDropdown";
 import SearchInput from "../../features/filter/SearchInput";
 import ProductCard from "../../features/product/ProductCard";
+import { useState } from "react";
 
 export default function EditUser({ onClose }) {
     const { authUserData, loading } = useSelector((state) => state.auth);
-    const firstName = authUserData?.firstName;
-    const lastName = authUserData?.lastName;
-
+    const [isOpen, setIsOpen] = useState(false);
+    
     const handleOnClose = () => {
         onClose();
         setIsOpen(true);
@@ -35,7 +35,7 @@ export default function EditUser({ onClose }) {
                 <div className="flex gap-4 py-4">
                     <p className="text-lg font-semibold">Edit Name: </p>
                     <div className="text-lg">
-                        {firstName} {lastName}
+                        {authUserData?.firstNamm} {authUserData?.lastName}
                     </div>
                 </div>
                 <div className="flex justify-between">
@@ -43,48 +43,16 @@ export default function EditUser({ onClose }) {
                     <FaEdit className="w-6 h-6 cursor-pointer" />
                 </div>
                 <div className="flex justify-center ">
-                    <Avatar src={userImage} className="w-[200px]" />
+                    <div className="w-[200px]">{authUserData?.profileImage}</div>
+                    {/* <Avatar src={userImage} className="w-[200px]" /> */}
                 </div>
                 <div className="flex justify-between">
                     <p className="text-lg font-semibold">Cover Image</p>
                     <FaEdit className="w-6 h-6 cursor-pointer" />
                 </div>
-                <div className="rounded-lg bg-cover w-full h-[250px] bg-[url('https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg')]" />
+                <div className="rounded-lg bg-cover w-full h-[250px]">{authUserData?.coverImage}</div>
+                {/* <div className="rounded-lg bg-cover w-full h-[250px] bg-[url('https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg')]" /> */}
             </div>
-            {/* <div className="bg-white rounded-lg">
-                <div className="flex flex-col items-center bg-white p-4">
-                    <div className="relative">
-                        <div className="text-xl font-bold ">Edit Profile</div>
-                        <div
-                            className="absolute bottom-1 left-[340px] text-2xl hover:text-[#959595] cursor-pointer"
-                            onClick={handleOnClose}
-                        >
-                            X
-                        </div>
-                        <div className="absolute top-[300px] left-[108px] z-10">
-                            <FaCamera className="w-10 h-6 cursor-pointer flex justify-center items-center text-xl aspect-square rounded-full" />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-cover w-full h-[250px] bg-[url('https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg')]" />
-
-                <div className="flex flex-col bg-white rounded-lg px-4 ">
-                    <div className="flex justify-end">
-                        <div className="">
-                            <FaCamera className="w-6 h-6 cursor-pointer" />
-                        </div>
-                    </div>
-                    <div className="flex justify-center text-xl font-bold pt-16 pb-3">
-                        <FaEdit className="w-6 h-6 cursor-pointer" />
-                        <div>BUBEEEBUUU JANJKNKJNJK</div>
-                    </div>
-
-                    <div className="absolute top-[45%] left-[43%]">
-                        <Avatar src={userImage} className="w-48" />
-                    </div>
-                </div>
-            </div> */}
         </>
     );
 }
