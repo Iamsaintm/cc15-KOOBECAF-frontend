@@ -1,6 +1,6 @@
 import React from "react";
 
-function InputDropdown({ name, value, data, onChange, type }) {
+function InputDropdown({ name, value, data, onChange }) {
     let context = null;
 
     const dataMap = (type) => {
@@ -11,10 +11,7 @@ function InputDropdown({ name, value, data, onChange, type }) {
         ));
     };
 
-    if (type === "category") dataMap("typeOfCategory");
-    if (type === "vehicle") dataMap("vehicleType");
-    if (type === "rental") dataMap("homeProperty");
-    if (type === "rental2") dataMap("homeType");
+    dataMap(name);
 
     return (
         <>
