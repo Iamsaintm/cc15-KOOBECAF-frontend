@@ -36,6 +36,7 @@ function ProductItemPage({}) {
     };
     return (
         <>
+        
             <div className="flex flex-row h-full justify-between mt-16">
                 <div className="w-2/3 flex justify-between">
                     <SliderForProduct images={images} />
@@ -101,7 +102,7 @@ function ProductItemPage({}) {
                         <div className="flex flex-row justify-start items-center ">
                             <Avatar src={state.productDetail.usersId.profileImage} />
                             <div className="px-2">{state.productDetail.usersId.firstName}</div>
-                            <div className="">{state.productDetail.usersId.lastName}</div>
+                            <div>{state.productDetail.usersId.lastName}</div>
                         </div>
                     </div>
                 </div>
