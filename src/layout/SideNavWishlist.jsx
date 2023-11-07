@@ -1,34 +1,29 @@
+import { FaArrowLeft } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
-import { FaTags, FaArrowLeft } from "react-icons/fa6";
+import { BsFillBookmarkFill } from "react-icons/bs";
 import CategorieItem from "../features/filter/CategorieItem";
-import Button from "../components/Button";
 import Avatar from "../components/Avatar";
 
-function SideNavSelling() {
+function SideNavWishlist() {
     const { pathname } = useLocation();
     return (
         <>
             <div className="flex flex-col gap-2 px-4">
-                {/* <div className="sticky h-6"></div> */}
-                <div className="flex items-center pt-10">
+                <div className="flex pt-10 items-center">
                     <div className=" rounded-full p-2 hover:bg-main">
                         <Link to="/">
                             <FaArrowLeft />
                         </Link>
                     </div>
-                    <div className="text-2xl font-semibold pl-2">Selling</div>
+                    <div className="text-2xl font-semibold pl-2">Wishlist</div>
                 </div>
-                <div className="flex px-12 my-3">
-                    <Link className="w-full " to={"/create"}>
-                        <Button text={"Create new listing"} />
-                    </Link>
-                </div>
-                <div>
+
+                <div className="pt-3">
                     <CategorieItem
-                        icons={<FaTags />}
-                        isActive={pathname === "/selling"}
-                        to="/selling"
-                        title={"Your listings"}
+                        icons={<BsFillBookmarkFill />}
+                        isActive={pathname === "/wishlist"}
+                        to="/wishlist"
+                        title={"Your wishlist"}
                     />
                 </div>
 
@@ -48,4 +43,5 @@ function SideNavSelling() {
         </>
     );
 }
-export default SideNavSelling;
+
+export default SideNavWishlist;

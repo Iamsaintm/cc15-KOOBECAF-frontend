@@ -4,27 +4,32 @@ import ProductCard from "./ProductCard";
 import Loading from "../../components/Loading";
 
 function ProductContainer() {
-    const { productData, loading } = useSelector((state) => state.product);
-    const { pathname } = useLocation();
+    const { productData, loading, searchProduct } = useSelector((state) => state.product);
 
+    let product = productData;
+    if (searchProduct.length !== 0) {
+        product = productData?.filter((el) =>
+            el.productName.toLowerCase().includes(searchProduct.toLowerCase().trim()) ? el : null,
+        );
+    }
     return (
         <>
             {loading ? (
                 <Loading />
             ) : (
                 <>
-                    {productData?.map((x) => (
-                        <Link key={x.id} to={`/product/${x.id}`} state={{ productDetail: x }}>
+                    {product && product.length > 0 ? (
+                        product.map((data) => (
                             <ProductCard
-                                src={x.image[0]?.image}
-                                productPrice={x.productPrice}
-                                productName={x.productName}
-                                productId={x.id}
-                                productDetail={x}
-                                isActive={pathname === `/product/${x.id}`}
+                                key={data.id}
+                                src={data.image[0]?.image}
+                                productPrice={data.productPrice}
+                                productName={data.productName}
                             />
-                        </Link>
-                    ))}
+                        ))
+                    ) : (
+                        <div>Product not Found</div>
+                    )}
                 </>
             )}
         </>

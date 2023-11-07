@@ -3,8 +3,10 @@ import Button from "../components/Button";
 import Search from "../features/filter/Search";
 import Categories from "../features/filter/Categories";
 import CategorieItem from "../features/filter/CategorieItem";
-import { FaBasketShopping, FaStore, FaTags } from "react-icons/fa6";
+import { BsFillBookmarkFill } from "react-icons/bs";
+import { FaStore, FaTags } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
+import InputDropdown from "../components/InputDropdown";
 
 function SideNav() {
     const { pathname } = useLocation();
@@ -19,10 +21,10 @@ function SideNav() {
                     </div>
                     <div className="px-4">
                         <CategorieItem
-                            icons={<FaBasketShopping />}
-                            title={"Buying"}
-                            isActive={pathname === "/buying"}
-                            to="/buying"
+                            icons={<BsFillBookmarkFill />}
+                            title={"Wishlist"}
+                            isActive={pathname === "/wishlist"}
+                            to="/wishlist"
                         />
                     </div>
                     <div className="px-4">

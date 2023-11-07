@@ -9,6 +9,7 @@ import CreateItemProductPage from "../pages/CreateItemProductPage";
 import SellingPage from "../pages/SellingPage";
 import CategoryPage from "../pages/CategoryPage";
 import ProductItemPage from "../pages/productItemPage";
+import WishlistPage from "../pages/WishlistPage";
 
 const router = createBrowserRouter([
     {
@@ -22,13 +23,13 @@ const router = createBrowserRouter([
         ),
         children: [
             { path: "", element: <HomePage /> },
-            { path: "/buying", element: <HomePage /> },
+            { path: "/wishlist", element: <WishlistPage /> },
             { path: "/selling", element: <SellingPage /> },
             { path: "/category/:categoryId", element: <CategoryPage /> },
             { path: "/create", element: <CreateProductPage /> },
             { path: "/create/item", element: <CreateItemProductPage /> },
-            { path: "/create/vehicle", element: <CreateProductPage /> },
-            { path: "/create/rental", element: <CreateProductPage /> },
+            { path: "/create/vehicle", element: <CreateItemProductPage /> },
+            { path: "/create/rental", element: <CreateItemProductPage /> },
             { path: "/product/:productId", element: <ProductItemPage /> },
         ],
     },

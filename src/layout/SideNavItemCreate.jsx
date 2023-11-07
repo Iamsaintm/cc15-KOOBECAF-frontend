@@ -7,11 +7,11 @@ import DescriptionContainer from "../features/product/DescriptionContainer";
 import { createProduct, resetInputProduct } from "../stores/slices/productSlice";
 import { useNavigate } from "react-router-dom";
 
-function SideNavItemCreate({ header }) {
+function SideNavItemCreate({ header, type }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { authUserData } = useSelector((state) => state.auth);
     const { inputProduct } = useSelector((state) => state.product);
-    const { firstName, lastName } = useSelector((state) => state.auth.authUserData);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -46,16 +46,16 @@ function SideNavItemCreate({ header }) {
                 <div className="flex flex-col gap-2 px-4">
                     <div className="text-2xl font-bold">{header}</div>
                     <div className="flex gap-3 items-center">
-                        <Avatar />
+                        <Avatar src={authUserData?.profileImage} />
                         <div>
-                            {firstName} {lastName}
+                            {authUserData?.firstName} {authUserData?.lastName}
                         </div>
                     </div>
                 </div>
                 <div className="border-b-2 mb-2 pb-2"></div>
                 <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
                     <PhotoUpload />
-                    <RequiredContainer />
+                    <RequiredContainer type={type} />
                     <div className="flex flex-col gap-4">
                         <DescriptionContainer />
                         <Button type={"submit"} text={"Create"} />
