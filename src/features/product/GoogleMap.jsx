@@ -23,7 +23,7 @@ const GoogleMapInput = ({ className }) => {
     }
     return (
         <div className={className}>
-            <GoogleMap zoom={16} center={geometry} mapContainerStyle={{ width: "100%", height: 150 }}>
+            <GoogleMap zoom={16} center={geometry} mapContainerStyle={{ width: "100%", height: 230 }}>
                 <MarkerF position={geometry} />
             </GoogleMap>
         </div>

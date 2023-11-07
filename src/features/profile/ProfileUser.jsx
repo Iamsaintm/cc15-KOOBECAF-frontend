@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDataUser } from "../../stores/slices/authSlice";
 
-import EditUser from "./EditUser";
 import Avatar from "../../components/Avatar";
-import userImage from "../../assets/Images/user.jpg";
 import InputDropdown from "../../components/InputDropdown";
 import SearchInput from "../../features/filter/SearchInput";
-import ProductCard from "../../features/product/ProductCard";
+import CoverImage from "../../components/CoverImage";
+import ProductCardUser from "../../features/profile/ProductCardUser";
 
 export default function ProfileUser({ onClose, setEditUser }) {
     const { authUserData, loading } = useSelector((state) => state.auth);
 
     const [isOpen, setIsOpen] = useState(false);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchDataUser());
+    }, []);
 
     const handleOnClick = () => {
         onClose();
@@ -33,26 +39,29 @@ export default function ProfileUser({ onClose, setEditUser }) {
 
     return (
         <>
-            <div className="bg-white">
-                <div className="relative rounded-lg">
-                    <div className="rounded-t-lg bg-cover w-full h-[250px] bg-[url('https://img.freepik.com/premium-photo/cute-pastel-pupy-dog-pastl-room_902994-1158.jpg')]" />
+            <div className="bg-white rounded-lg ">
+                <div className="relative">
+                    <CoverImage className="rounded-t-lg bg-cover w-full h-[250px]">
+                        {authUserData?.coverImage}
+                    </CoverImage>
+
                     <div
-                        className="absolute text-3xl top-[3px] left-[95%] hover:text-[#959595] cursor-pointer text-white"
+                        className="absolute text-3xl top-[3px] left-[95%] hover:text-[#959595] cursor-pointer"
                         onClick={onClose}
                     >
                         X
                     </div>
                     <div className="flex flex-col p-4">
                         <div className="flex justify-end">
-                            <FaEdit className="w-6 h-6 cursor-pointer" onClick={handleOnClick} />
+                            <FaEdit className="w-6 h-6 cursor-pointer hover:text-[#959595]" onClick={handleOnClick} />
                         </div>
-                        <div className="flex justify-center text-xl font-bold pt-16 border-b pb-3">
+                        <div className="flex justify-center text-xl font-bold pt-5 border-b pb-3">
                             {authUserData?.firstName} {authUserData?.lastName}
                         </div>
                     </div>
 
-                    <div className="absolute top-[50%] left-[39%]">
-                        <Avatar src={userImage} className="w-36" />
+                    <div className="absolute top-[35%] left-[39%]">
+                        <Avatar className="w-36">{authUserData?.profileImage}</Avatar>
                     </div>
                 </div>
 
@@ -72,10 +81,13 @@ export default function ProfileUser({ onClose, setEditUser }) {
                             }
                         />
                     </div>
-                    <div className="flex justify-between px-4 pb-4 gap-2">
-                        <div className="bg-red-300 w-full h-[150px]">7</div>
-                        <div className="bg-blue-300 w-full">8</div>
-                        <div className="bg-green-300 w-full">9</div>
+                    <div className="grid grid-cols-3 justify-between px-4 pb-4 gap-2 overflow-y-auto h-[268px]">
+                        <ProductCardUser>7</ProductCardUser>
+                        <ProductCardUser>8</ProductCardUser>
+                        <ProductCardUser>9</ProductCardUser>
+                        <ProductCardUser>9</ProductCardUser>
+                        <ProductCardUser>9</ProductCardUser>
+                        <ProductCardUser>9</ProductCardUser>
                     </div>
                 </div>
             </div>

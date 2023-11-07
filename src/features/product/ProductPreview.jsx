@@ -53,7 +53,6 @@ function ProductPreview() {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        
     };
 
     return (
@@ -64,7 +63,7 @@ function ProductPreview() {
                         <div className="flex pb-3 text-xl font-bold">Preview</div>
                     </div>
                     <div className="flex flex-1 border rounded-lg ">
-                        <div className="relative flex flex-1 items-center justify-center w-[50%]  drop-shadow-md bg-cover rounded-l">
+                        <div className="relative flex flex-1 items-center justify-center w-[50%] drop-shadow-md bg-cover rounded-l">
                             {inputProduct.productImage.length !== 0 ? (
                                 <>
                                     <div className="w-[480px] -z-20">
@@ -128,7 +127,7 @@ function ProductPreview() {
                             <div>
                                 <p className="text-lg mb-2">Seller Information</p>
                                 <div className="flex gap-x-2 items-center">
-                                    <Avatar src={authUserData?.profileImage} />
+                                    <Avatar src={authUserData?.profileImage} className={"h-10"} />
                                     <p>
                                         {authUserData?.firstName} {authUserData?.lastName}
                                     </p>

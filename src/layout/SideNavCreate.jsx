@@ -1,12 +1,15 @@
 import { FaTag, FaTags } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import CategorieItem from "../features/filter/CategorieItem";
 import ProfileModal from "../components/ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
 import EditUser from "../features/profile/EditUser";
+import Avatar from "../components/Avatar";
 
 function SideNavCreate() {
+    const { authUserData, loading } = useSelector((state) => state.auth);
     const [isOpen, setIsOpen] = useState(false);
     const [editUser, setEditUser] = useState(false);
     const { pathname } = useLocation();
@@ -32,22 +35,23 @@ function SideNavCreate() {
                     title={"Your listings"}
                 />
                 <CategorieItem
+                    icons={<Avatar>{authUserData?.profileImage}</Avatar>}
                     onClick={() => {
                         setIsOpen(true);
                     }}
                     title={"Marketplace profile"}
                 />
-                <ProfileModal open={isOpen} >
-                    <ProfileUser 
+                <ProfileModal open={isOpen}>
+                    <ProfileUser
                         setEditUser={setEditUser}
                         onClose={() => {
                             setIsOpen(false);
-                        }} 
+                        }}
                     />
                 </ProfileModal>
 
-                <ProfileModal open={editUser} >
-                    <EditUser 
+                <ProfileModal open={editUser}>
+                    <EditUser
                         setIsOpen={setIsOpen}
                         onClose={() => {
                             setEditUser(false);

@@ -14,7 +14,7 @@ function ProductItemPage({}) {
     const { isWishList } = useSelector((state) => state.product);
     const { state } = useLocation();
 
-    // const [isActive, setIsActive] = useState(isWishList);
+    // const [isActive, setIsActive] = useState(isWishList);inputElement
     const category = state.productDetail.categoryId;
 
     useEffect(() => {
