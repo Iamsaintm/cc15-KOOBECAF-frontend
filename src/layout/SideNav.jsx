@@ -6,6 +6,7 @@ import CategorieItem from "../features/filter/CategorieItem";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { FaStore, FaTags } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
+import InputDropdown from "../components/InputDropdown";
 
 function SideNav() {
     const { pathname } = useLocation();

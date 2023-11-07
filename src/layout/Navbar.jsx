@@ -8,7 +8,6 @@ import { logoutProduct, resetInputProduct, resetSearchProduct } from "../stores/
 
 export default function Navbar() {
     const dispatch = useDispatch();
-    dispatch(resetSearchProduct());
 
     return (
         <div className="flex justify-between items-center h-full px-6 text-white">

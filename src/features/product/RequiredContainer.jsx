@@ -7,8 +7,10 @@ import { DatePicker, ConfigProvider } from "antd";
 import { fetchAllCategory } from "../../stores/slices/categorySlice";
 import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
+import { useNavigate } from "react-router-dom";
 
 function RequiredContainer({ type }) {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const { authUserData } = useSelector((state) => state.auth);
@@ -66,6 +68,14 @@ function RequiredContainer({ type }) {
         const { id } = newCategoryData.find((x) => x.typeOfCategory === e.target.value);
         const fieldValue = e.target.value;
         dispatch(setInputProductCategory({ id, fieldValue }));
+        if (id === 1) {
+            navigate("/create/vehicle");
+            window.location.reload();
+        }
+        if (id === 2) {
+            navigate("/create/rental");
+            window.location.reload();
+        }
     };
 
     const onChangeInputLocation = useCallback(
@@ -100,7 +110,7 @@ function RequiredContainer({ type }) {
                 value={inputProduct.typeOfCategory}
                 data={newCategoryData}
                 onChange={onChangeInputCategory}
-                type={"category"}
+                name={"typeOfCategory"}
             />
             <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
         </>
@@ -113,7 +123,6 @@ function RequiredContainer({ type }) {
                     value={inputProduct.vehicleType}
                     data={newVehicleTypeData}
                     onChange={onChangeInput}
-                    type={"vehicle"}
                     name={"vehicleType"}
                 />
                 <ConfigProvider
@@ -159,14 +168,12 @@ function RequiredContainer({ type }) {
                     value={inputProduct.homeProperty}
                     data={newHomePropertyData}
                     onChange={onChangeInput}
-                    type={"rental"}
                     name={"homeProperty"}
                 />
                 <InputDropdown
                     value={inputProduct.homeType}
                     data={newHomeTypeData}
                     onChange={onChangeInput}
-                    type={"rental2"}
                     name={"homeType"}
                 />
                 <InputForm
