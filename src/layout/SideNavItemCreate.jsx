@@ -30,6 +30,7 @@ function SideNavItemCreate({ header, type }) {
                 newInputProduct[key] = inputProduct[key];
             }
         }
+        console.log(newInputProduct);
 
         let result = {};
         if (pathname === "/create/item") {
@@ -61,8 +62,8 @@ function SideNavItemCreate({ header, type }) {
 
         try {
             await dispatch(createProduct({ formData }));
-            dispatch(resetInputProduct());
-            navigate("/selling");
+            // dispatch(resetInputProduct());
+            // navigate("/selling");
         } catch (error) {
             console.error("Error dispatching createProduct:", error);
         }

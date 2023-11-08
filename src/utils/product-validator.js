@@ -1,6 +1,7 @@
 import Joi from "joi";
 
 const itemSchema = Joi.object({
+    productImage: Joi.required(),
     productName: Joi.string()
         .pattern(/^[a-zA-Z0-9]/)
         .trim()
@@ -15,6 +16,7 @@ const itemSchema = Joi.object({
 });
 
 const vehicleSchema = Joi.object({
+    productImage: Joi.required(),
     productName: Joi.string()
         .pattern(/^[a-zA-Z0-9]/)
         .trim()
@@ -38,6 +40,7 @@ const vehicleSchema = Joi.object({
 });
 
 const homeSchema = Joi.object({
+    productImage: Joi.required(),
     productName: Joi.string()
         .pattern(/^[a-zA-Z0-9]/)
         .trim()
@@ -62,4 +65,15 @@ const filterPriceSchema = Joi.object({
     maxPrice: Joi.number().min(0).integer(),
 });
 
-export { itemSchema, vehicleSchema, homeSchema, filterPriceSchema };
+const userSchema = Joi.object({
+    firstName: Joi.string()
+        .pattern(/^(?=.*[a-z])(?=.*[A-Z])/)
+        .trim()
+        .required(),
+    lastName: Joi.string()
+        .pattern(/^(?=.*[a-z])(?=.*[A-Z])/)
+        .trim()
+        .required(),
+});
+
+export { itemSchema, vehicleSchema, homeSchema, filterPriceSchema, userSchema };
