@@ -16,8 +16,6 @@ function SideNavItemCreate({ header, type }) {
     const navigate = useNavigate();
     const { authUserData } = useSelector((state) => state.auth);
     const { inputProduct } = useSelector((state) => state.product);
-    const firstName = authUserData?.firstName;
-    const lastName = authUserData?.lastName;
     const [error, setError] = useState({});
 
     const onSubmit = async (e) => {
@@ -30,7 +28,6 @@ function SideNavItemCreate({ header, type }) {
                 newInputProduct[key] = inputProduct[key];
             }
         }
-        console.log(newInputProduct);
 
         let result = {};
         if (pathname === "/create/item") {
@@ -62,8 +59,8 @@ function SideNavItemCreate({ header, type }) {
 
         try {
             await dispatch(createProduct({ formData }));
-            // dispatch(resetInputProduct());
-            // navigate("/selling");
+            dispatch(resetInputProduct());
+            navigate("/selling");
         } catch (error) {
             console.error("Error dispatching createProduct:", error);
         }
@@ -76,9 +73,9 @@ function SideNavItemCreate({ header, type }) {
                 <div className="flex flex-col gap-2 px-4">
                     <div className="text-2xl font-bold">{header}</div>
                     <div className="flex gap-3 items-center">
-                        <Avatar />
+                        <Avatar src={authUserData?.profileImage} />
                         <div>
-                            {firstName} {lastName}
+                            {authUserData?.firstName} {authUserData?.lastName}
                         </div>
                     </div>
                 </div>

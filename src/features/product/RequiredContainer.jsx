@@ -9,7 +9,9 @@ import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
 import InputErrorMessage from "../auth/InputErrorMessage";
 
+import { useNavigate } from "react-router-dom";
 function RequiredContainer({ type, error }) {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const { authUserData } = useSelector((state) => state.auth);
@@ -67,6 +69,14 @@ function RequiredContainer({ type, error }) {
         const { id } = newCategoryData.find((x) => x.typeOfCategory === e.target.value);
         const fieldValue = e.target.value;
         dispatch(setInputProductCategory({ id, fieldValue }));
+        if (id === 1) {
+            navigate("/create/vehicle");
+            window.location.reload();
+        }
+        if (id === 2) {
+            navigate("/create/rental");
+            window.location.reload();
+        }
     };
 
     const onChangeInputLocation = useCallback(
@@ -105,7 +115,7 @@ function RequiredContainer({ type, error }) {
                 value={inputProduct.typeOfCategory}
                 data={newCategoryData}
                 onChange={onChangeInputCategory}
-                type={"category"}
+                name={"typeOfCategory"}
             />
             {error.typeOfCategory && <InputErrorMessage message={"Type of category is required"} />}
             <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
@@ -120,7 +130,6 @@ function RequiredContainer({ type, error }) {
                     value={inputProduct.vehicleType}
                     data={newVehicleTypeData}
                     onChange={onChangeInput}
-                    type={"vehicle"}
                     name={"vehicleType"}
                 />
                 {error.vehicleType && <InputErrorMessage message={"Vehicle type is required"} />}
@@ -172,7 +181,6 @@ function RequiredContainer({ type, error }) {
                     value={inputProduct.homeProperty}
                     data={newHomePropertyData}
                     onChange={onChangeInput}
-                    type={"rental"}
                     name={"homeProperty"}
                 />
                 {error.homeProperty && <InputErrorMessage message={"Home type is required"} />}
@@ -180,7 +188,6 @@ function RequiredContainer({ type, error }) {
                     value={inputProduct.homeType}
                     data={newHomeTypeData}
                     onChange={onChangeInput}
-                    type={"rental2"}
                     name={"homeType"}
                 />
                 {error.homeType && <InputErrorMessage message={"Property type is required"} />}
