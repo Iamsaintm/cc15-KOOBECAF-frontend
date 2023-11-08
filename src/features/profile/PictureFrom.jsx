@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import FormButton from "../../components/FormButton";
 
-export default function PictureForm({ title, children, initialSrc, onSave }) {
+export default function PictureForm({ title, children, initialSrc }) {
     const [file, setFile] = useState(null);
     const inputEl = useRef(null);
 

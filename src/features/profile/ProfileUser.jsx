@@ -46,7 +46,7 @@ export default function ProfileUser({ onClose, setEditUser }) {
                     </CoverImage>
 
                     <div
-                        className="absolute text-3xl top-[3px] left-[95%] hover:text-[#959595] cursor-pointer"
+                        className="absolute text-2xl top-[3px] left-[95%] hover:text-[#959595] cursor-pointer"
                         onClick={onClose}
                     >
                         X
@@ -55,12 +55,12 @@ export default function ProfileUser({ onClose, setEditUser }) {
                         <div className="flex justify-end">
                             <FaEdit className="w-6 h-6 cursor-pointer hover:text-[#959595]" onClick={handleOnClick} />
                         </div>
-                        <div className="flex justify-center text-xl font-bold pt-5 border-b pb-3">
+                        <div className="flex justify-center text-xl font-bold pt-8 border-b pb-3">
                             {authUserData?.firstName} {authUserData?.lastName}
                         </div>
                     </div>
 
-                    <div className="absolute top-[35%] left-[39%]">
+                    <div className="absolute top-[45%] left-[39%]">
                         <Avatar className="w-36">{authUserData?.profileImage}</Avatar>
                     </div>
                 </div>
