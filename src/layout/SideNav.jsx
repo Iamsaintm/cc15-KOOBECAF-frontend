@@ -1,11 +1,12 @@
+import Joi from "joi";
 import { Link } from "react-router-dom";
+import { BsFillBookmarkFill } from "react-icons/bs";
+import { FaStore, FaTags } from "react-icons/fa6";
+import { useLocation } from "react-router-dom";
 import Button from "../components/Button";
 import Search from "../features/filter/Search";
 import Categories from "../features/filter/Categories";
 import CategorieItem from "../features/filter/CategorieItem";
-import { BsFillBookmarkFill } from "react-icons/bs";
-import { FaStore, FaTags } from "react-icons/fa6";
-import { useLocation } from "react-router-dom";
 
 function SideNav() {
     const { pathname } = useLocation();

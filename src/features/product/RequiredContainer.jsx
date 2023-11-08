@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useEffect } from "react";
+import { useCallback, useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setInputProduct, setInputProductCategory } from "../../stores/slices/productSlice";
 import { fetchGeocoding } from "../../stores/slices/productSlice";
@@ -7,8 +7,9 @@ import { DatePicker, ConfigProvider } from "antd";
 import { fetchAllCategory } from "../../stores/slices/categorySlice";
 import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
+import InputErrorMessage from "../auth/InputErrorMessage";
 
-function RequiredContainer({ type }) {
+function RequiredContainer({ type, error }) {
     const dispatch = useDispatch();
 
     const { authUserData } = useSelector((state) => state.auth);
@@ -70,8 +71,8 @@ function RequiredContainer({ type }) {
 
     const onChangeInputLocation = useCallback(
         async (e) => {
-            if (typeof e.target.value === "undefined") return; //ออกนอก Fn เลย if you use useMemo ต้องส่งค่าสักอย่าง " " , undefined
-            if (e.target.value === "") return; //ออกนอก Fn เลย
+            if (typeof e.target.value === "undefined") return;
+            if (e.target.value === "") return;
             dispatch(fetchGeocoding(e.target.value));
         },
         [dispatch],
@@ -90,19 +91,25 @@ function RequiredContainer({ type }) {
                 name={"productName"}
                 placeholder={"Title"}
             />
+            {error.productName && <InputErrorMessage message={"Title is required"} />}
+
             <InputForm
                 value={inputProduct.productPrice}
                 onChange={onChangeInput}
                 name={"productPrice"}
                 placeholder={"Price"}
             />
+            {error.productPrice && <InputErrorMessage message={"Price is required"} />}
+
             <InputDropdown
                 value={inputProduct.typeOfCategory}
                 data={newCategoryData}
                 onChange={onChangeInputCategory}
                 type={"category"}
             />
+            {error.typeOfCategory && <InputErrorMessage message={"Type of category is required"} />}
             <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+            {error.latitude && <InputErrorMessage message={"Location is required"} />}
         </>
     );
 
@@ -116,6 +123,7 @@ function RequiredContainer({ type }) {
                     type={"vehicle"}
                     name={"vehicleType"}
                 />
+                {error.vehicleType && <InputErrorMessage message={"Vehicle type is required"} />}
                 <ConfigProvider
                     theme={{
                         token: {
@@ -129,25 +137,30 @@ function RequiredContainer({ type }) {
                         picker="year"
                     />
                 </ConfigProvider>
+                {error.vehicleYears && <InputErrorMessage message={"Year is required"} />}
                 <InputForm
                     value={inputProduct.vehicleModel}
                     onChange={onChangeInput}
                     name={"vehicleModel"}
                     placeholder={"Model"}
                 />
+                {error.vehicleModel && <InputErrorMessage message={"Model is required"} />}
                 <InputForm
                     value={inputProduct.vehicleBrand}
                     onChange={onChangeInput}
                     name={"vehicleBrand"}
                     placeholder={"Brand"}
                 />
+                {error.vehicleBrand && <InputErrorMessage message={"Brand is required"} />}
                 <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+                {error.latitude && <InputErrorMessage message={"Location is required"} />}
                 <InputForm
                     value={inputProduct.productPrice}
                     onChange={onChangeInput}
                     name={"productPrice"}
                     placeholder={"Price"}
                 />
+                {error.productPrice && <InputErrorMessage message={"Price is required"} />}
             </>
         );
     }
@@ -162,6 +175,7 @@ function RequiredContainer({ type }) {
                     type={"rental"}
                     name={"homeProperty"}
                 />
+                {error.homeProperty && <InputErrorMessage message={"Home type is required"} />}
                 <InputDropdown
                     value={inputProduct.homeType}
                     data={newHomeTypeData}
@@ -169,32 +183,38 @@ function RequiredContainer({ type }) {
                     type={"rental2"}
                     name={"homeType"}
                 />
+                {error.homeType && <InputErrorMessage message={"Property type is required"} />}
                 <InputForm
                     value={inputProduct.bedroomQuantity}
                     onChange={onChangeInput}
                     name={"bedroomQuantity"}
                     placeholder={"Number of bedrooms"}
                 />
+                {error.bedroomQuantity && <InputErrorMessage message={"Number of bedrooms are required"} />}
                 <InputForm
                     value={inputProduct.bathroomQuantity}
                     onChange={onChangeInput}
                     name={"bathroomQuantity"}
                     placeholder={"Number of bathrooms"}
                 />
+                {error.bathroomQuantity && <InputErrorMessage message={"Number of bathrooms are required"} />}
                 <InputForm
                     value={inputProduct.productPrice}
                     onChange={onChangeInput}
                     name={"productPrice"}
                     placeholder={"Price"}
                 />
-                <InputDropdown input={inputProduct} data={newCategoryData} onChange={onChangeInputCategory} />
+                {error.productPrice && <InputErrorMessage message={"Price is required"} />}
+
                 <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+                {error.latitude && <InputErrorMessage message={"Location is required"} />}
                 <InputForm
                     value={inputProduct.homeAddress}
                     onChange={onChangeInput}
                     name={"homeAddress"}
                     placeholder={"Property address"}
                 />
+                {error.homeAddress && <InputErrorMessage message={"Address is required"} />}
             </>
         );
     }

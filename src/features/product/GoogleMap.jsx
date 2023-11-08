@@ -5,7 +5,6 @@ import { GOOGLE_MAPS_API_KEY } from "../../config/env";
 
 const GoogleMapInput = ({ className }) => {
     const { inputProduct, loading } = useSelector((state) => state.product);
-    console.log(inputProduct);
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -23,7 +22,7 @@ const GoogleMapInput = ({ className }) => {
     }
     return (
         <div className={className}>
-            <GoogleMap zoom={16} center={geometry} mapContainerStyle={{ width: "100%", height: 250 }}>
+            <GoogleMap zoom={16} center={geometry} mapContainerStyle={{ width: "100%", height: 150 }}>
                 <MarkerF position={geometry} />
             </GoogleMap>
         </div>

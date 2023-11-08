@@ -1,6 +1,7 @@
 import { FaCarRear, FaBuilding, FaMusic, FaPaw } from "react-icons/fa6";
 import { GiPriceTag, GiClothes, GiSmartphone, GiGardeningShears } from "react-icons/gi";
 import { MdOutlineFamilyRestroom, MdOutlineSmartToy, MdSportsMartialArts } from "react-icons/md";
+import { PiShirtFoldedFill } from "react-icons/pi";
 import { BiCameraMovie } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
@@ -19,7 +20,7 @@ function Categories() {
         { icons: <FaBuilding />, title: "Property for rent" },
         { icons: <GiClothes />, title: "Apparel" },
         { icons: <GiPriceTag />, title: "Classified" },
-        { icons: <GiClothes />, title: "Clothing" },
+        { icons: <PiShirtFoldedFill />, title: "Clothing" },
         { icons: <GiSmartphone />, title: "Electronics" },
         { icons: <BiCameraMovie />, title: "Entertainment" },
         { icons: <MdOutlineFamilyRestroom />, title: "Family" },
