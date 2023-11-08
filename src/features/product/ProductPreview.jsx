@@ -7,11 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { setInputProductCategory } from "../../stores/slices/productSlice";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 function ProductPreview() {
     const dispatch = useDispatch();
     const { authUserData } = useSelector((state) => state.auth);
-    const [index, setIndex] = useState(0);
+    const [currentSlide, setCurrentSlide] = useState(0);
     const { inputProduct } = useSelector((state) => state.product);
     const { pathname } = useLocation();
 
@@ -34,18 +35,48 @@ function ProductPreview() {
         newFile = Array.from(inputProduct.productImage);
     }
 
+    function NextArrow(props) {
+        const { onClick } = props;
+        return (
+            <>
+                <div
+                    onClick={onClick}
+                    className="hover:bg-white/20 transition duration-150 text-white absolute flex p-4 h-full items-center top-1/2 transform -translate-y-1/2 right-0 text-3xl"
+                >
+                    <FaArrowRight />
+                </div>
+            </>
+        );
+    }
+
+    function PrevArrow(props) {
+        const { onClick } = props;
+        return (
+            <div
+                onClick={onClick}
+                className="hover:bg-white/20 transition duration-150  text-white absolute flex p-4 h-full items-center top-1/2 transform -translate-y-1/2 left-0 text-3xl z-10"
+            >
+                <FaArrowLeft />
+            </div>
+        );
+    }
+
     const settings = {
         customPaging: function (i) {
             let binaryData = [];
             binaryData.push(inputProduct.productImage[i]);
             return (
                 <div>
-                    <img id={i} src={URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }))} />
+                    <img
+                        className={`rounded-md ${i === currentSlide ? "border border-gray-100" : "opacity-50"}`}
+                        id={i}
+                        src={URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }))}
+                    />
                 </div>
             );
         },
-        beforeChange: function (c, n) {
-            setIndex(n);
+        beforeChange: function (current, next) {
+            setCurrentSlide(next);
         },
         dots: true,
         dotsClass: "slick-dots slick-thumb",
@@ -53,6 +84,8 @@ function ProductPreview() {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        prevArrow: <PrevArrow />,
+        nextArrow: <NextArrow />,
     };
 
     return (
@@ -62,27 +95,27 @@ function ProductPreview() {
                     <div className="flex-1 ">
                         <div className="flex pb-3 text-xl font-bold">Preview</div>
                     </div>
-                    <div className="flex flex-1 border rounded-lg ">
-                        <div className="relative flex flex-1 items-center justify-center w-[50%]  drop-shadow-md bg-cover rounded-l">
+                    <div className="grid grid-cols-2 border rounded-lg ">
+                        <div className="flex items-center justify-center w-full overflow-clip drop-shadow-md bg-cover rounded-lg">
                             {inputProduct.productImage.length !== 0 ? (
                                 <>
-                                    <div className="w-[480px] -z-20">
+                                    <div className="relative w-full -z-20">
                                         <Slider {...settings}>
                                             {newFile.map((x, idx) => (
-                                                <div className="pl-[68px] mb-4 bg-black/75" key={idx}>
+                                                <div key={idx} className="!flex justify-center bg-black/80">
                                                     <img
-                                                        className="w-10/12 aspect-square rounded-md"
+                                                        className="w-[400px] aspect-square object-contain rounded-md"
                                                         src={URL.createObjectURL(inputProduct.productImage[idx])}
                                                     />
                                                 </div>
                                             ))}
                                         </Slider>
-                                        <div className="absolute top-3 left-12 blur-md -z-10 w-10/12 aspect-square">
+                                        <div className="absolute -top-1/2 -left-1/4 blur-md -z-10 w-[150%] aspect-square">
                                             <img
-                                                className="w-full h-full"
-                                                id={index}
+                                                className="w-full aspect-square object-cover"
+                                                id={currentSlide}
                                                 src={URL.createObjectURL(
-                                                    new Blob([inputProduct.productImage[index]], {
+                                                    new Blob([inputProduct.productImage[currentSlide]], {
                                                         type: "application/zip",
                                                     }),
                                                 )}
@@ -101,7 +134,7 @@ function ProductPreview() {
                             )}
                         </div>
 
-                        <div className="flex flex-1 flex-col gap-y-2 w-[50%] p-3 ">
+                        <div className="flex flex-1 flex-col gap-y-2 w-full p-3 ">
                             <div>
                                 <p className="truncate text-lg mb-2">
                                     {inputProduct.productName ? inputProduct.productName : "Title"}
