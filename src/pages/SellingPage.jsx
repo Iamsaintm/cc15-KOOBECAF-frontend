@@ -13,7 +13,9 @@ function SellingPage() {
     const { authUserData } = useSelector((state) => state.auth);
     const { productByUserId, loading } = useSelector((state) => state.product);
     useEffect(() => {
-        dispatch(fetchProductByUserId(authUserData?.id));
+        if (authUserData?.id) {
+            dispatch(fetchProductByUserId(authUserData?.id));
+        }
         dispatch(resetSearchProduct());
     }, [authUserData]);
     return (

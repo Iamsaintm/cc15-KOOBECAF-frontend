@@ -113,7 +113,7 @@ const inputProduct = {
     bathroomQuantity: "",
     homeAddress: "",
     categoryId: 0,
-    typeOfCategory: "default",
+    typeOfCategory: "",
 };
 
 const searchProduct = "";

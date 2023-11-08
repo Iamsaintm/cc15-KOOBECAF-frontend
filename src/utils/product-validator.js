@@ -2,34 +2,22 @@ import Joi from "joi";
 
 const itemSchema = Joi.object({
     productImage: Joi.required(),
-    productName: Joi.string()
-        .pattern(/^[a-zA-Z0-9]/)
-        .trim()
-        .required(),
+    productName: Joi.string().trim().required(),
     productPrice: Joi.string()
         .trim()
         .pattern(/^[0-9]/)
         .required(),
-    categoryId: Joi.required(),
+    typeOfCategory: Joi.required(),
     latitude: Joi.required(),
     longitude: Joi.required(),
 });
 
 const vehicleSchema = Joi.object({
     productImage: Joi.required(),
-    productName: Joi.string()
-        .pattern(/^[a-zA-Z0-9]/)
-        .trim()
-        .required(),
+    productName: Joi.string().trim().required(),
     vehicleType: Joi.required(),
-    vehicleModel: Joi.string()
-        .pattern(/^[a-zA-Z0-9]/)
-        .trim()
-        .required(),
-    vehicleBrand: Joi.string()
-        .pattern(/^(?=.*[a-z])(?=.*[A-Z])/)
-        .trim()
-        .required(),
+    vehicleModel: Joi.string().trim().required(),
+    vehicleBrand: Joi.string().trim().required(),
     vehicleYears: Joi.required(),
     latitude: Joi.required(),
     longitude: Joi.required(),
@@ -41,10 +29,7 @@ const vehicleSchema = Joi.object({
 
 const homeSchema = Joi.object({
     productImage: Joi.required(),
-    productName: Joi.string()
-        .pattern(/^[a-zA-Z0-9]/)
-        .trim()
-        .required(),
+    productName: Joi.string().trim().required(),
     homeProperty: Joi.required(),
     homeType: Joi.required(),
     bedroomQuantity: Joi.number().integer().positive().required(),
@@ -53,10 +38,7 @@ const homeSchema = Joi.object({
         .pattern(/^[0-9]/)
         .trim()
         .required(),
-    homeAddress: Joi.string()
-        .pattern(/^[a-zA-Z0-9]/)
-        .trim()
-        .required(),
+    homeAddress: Joi.string().required(),
     latitude: Joi.required(),
     longitude: Joi.required(),
 });
@@ -66,14 +48,8 @@ const filterPriceSchema = Joi.object({
 });
 
 const userSchema = Joi.object({
-    firstName: Joi.string()
-        .pattern(/^(?=.*[a-z])(?=.*[A-Z])/)
-        .trim()
-        .required(),
-    lastName: Joi.string()
-        .pattern(/^(?=.*[a-z])(?=.*[A-Z])/)
-        .trim()
-        .required(),
+    firstName: Joi.string().trim().required(),
+    lastName: Joi.string().trim().required(),
 });
 
 export { itemSchema, vehicleSchema, homeSchema, filterPriceSchema, userSchema };
