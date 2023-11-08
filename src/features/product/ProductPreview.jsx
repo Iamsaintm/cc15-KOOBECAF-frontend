@@ -16,22 +16,25 @@ function ProductPreview() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        if (pathname === "/create/rental") {
+        if (pathname === "/create/rental" || pathname.includes("/update/rental")) {
             const id = 2;
             const fieldValue = "PROPERTY_FOR_RENT";
             dispatch(setInputProductCategory({ id, fieldValue }));
         }
-        if (pathname === "/create/vehicle") {
+        if (pathname === "/create/vehicle" || pathname.includes("/update/vehicle")) {
             const id = 1;
             const fieldValue = "VEHICLES";
             dispatch(setInputProductCategory({ id, fieldValue }));
         }
-    }, []);
+    }, [authUserData]);
 
-    let newFile = null;
+    let newFile = [];
 
     if (inputProduct.productImage) {
-        newFile = Array.from(inputProduct.productImage);
+        newFile = [...newFile, ...Array.from(inputProduct.productImage)];
+    }
+    if (inputProduct.image) {
+        newFile = [...newFile, ...inputProduct.image];
     }
 
     const settings = {
@@ -40,7 +43,12 @@ function ProductPreview() {
             binaryData.push(inputProduct.productImage[i]);
             return (
                 <div>
-                    <img id={i} src={URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }))} />
+                    <img
+                        id={i}
+                        src={
+                            newFile[i]?.image || URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }))
+                        }
+                    />
                 </div>
             );
         },
@@ -64,15 +72,15 @@ function ProductPreview() {
                     </div>
                     <div className="flex flex-1 border rounded-lg ">
                         <div className="relative flex flex-1 items-center justify-center w-[50%]  drop-shadow-md bg-cover rounded-l">
-                            {inputProduct.productImage.length !== 0 ? (
+                            {newFile.length !== 0 ? (
                                 <>
                                     <div className="w-[480px] -z-20">
                                         <Slider {...settings}>
-                                            {newFile.map((x, idx) => (
+                                            {newFile.map((file, idx) => (
                                                 <div className="pl-[68px] mb-4 bg-black/75" key={idx}>
                                                     <img
                                                         className="w-10/12 aspect-square rounded-md"
-                                                        src={URL.createObjectURL(inputProduct.productImage[idx])}
+                                                        src={file?.image || URL.createObjectURL(file)}
                                                     />
                                                 </div>
                                             ))}
@@ -81,11 +89,14 @@ function ProductPreview() {
                                             <img
                                                 className="w-full h-full"
                                                 id={index}
-                                                src={URL.createObjectURL(
-                                                    new Blob([inputProduct.productImage[index]], {
-                                                        type: "application/zip",
-                                                    }),
-                                                )}
+                                                src={
+                                                    newFile[index]?.image ||
+                                                    URL.createObjectURL(
+                                                        new Blob([inputProduct.productImage[index]], {
+                                                            type: "application/zip",
+                                                        }),
+                                                    )
+                                                }
                                             />
                                         </div>
                                     </div>

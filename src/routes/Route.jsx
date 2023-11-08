@@ -29,9 +29,9 @@ const router = createBrowserRouter([
             { path: "/create/item", element: <CreateItemProductPage /> },
             { path: "/create/vehicle", element: <CreateItemProductPage /> },
             { path: "/create/rental", element: <CreateItemProductPage /> },
-            { path: "/update/item", element: <CreateItemProductPage /> },
-            { path: "/update/vehicle", element: <CreateItemProductPage /> },
-            { path: "/update/rental", element: <CreateItemProductPage /> },
+            { path: "/update/item/:productId", element: <CreateItemProductPage /> },
+            { path: "/update/vehicle/:productId", element: <CreateItemProductPage /> },
+            { path: "/update/rental/:productId", element: <CreateItemProductPage /> },
         ],
     },
     {

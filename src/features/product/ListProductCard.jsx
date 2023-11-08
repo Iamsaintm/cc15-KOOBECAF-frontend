@@ -16,18 +16,18 @@ function ListProductCard({ src, productPrice, productName, status, productDetail
     const handleUpdateClick = async () => {
         const fieldName = "typeOfCategory";
         let fieldValue = typeOfCategory;
-        if (productDetail.id === 1) {
+        if (productDetail.categoryId === 1) {
             dispatch(updateInputProduct(productDetail));
             dispatch(setInputProduct({ fieldName, fieldValue }));
-            navigate("/update/vehicle");
-        } else if (productDetail.id === 2) {
+            navigate(`/update/vehicle/${productDetail.id}`);
+        } else if (productDetail.categoryId === 2) {
             dispatch(updateInputProduct(productDetail));
             dispatch(setInputProduct({ fieldName, fieldValue }));
-            navigate("/update/rental");
+            navigate(`/update/rental/${productDetail.id}`);
         } else {
             dispatch(updateInputProduct(productDetail));
             dispatch(setInputProduct({ fieldName, fieldValue }));
-            navigate("/update/item");
+            navigate(`/update/item/${productDetail.id}`);
         }
     };
 

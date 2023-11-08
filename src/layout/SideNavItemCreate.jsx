@@ -4,7 +4,7 @@ import PhotoUpload from "../features/product/PhotoUpload";
 import RequiredContainer from "../features/product/RequiredContainer";
 import Button from "../components/Button";
 import DescriptionContainer from "../features/product/DescriptionContainer";
-import { createProduct, resetInputProduct, updateInputProduct } from "../stores/slices/productSlice";
+import { createProduct, resetInputProduct, updateProduct } from "../stores/slices/productSlice";
 import { useNavigate } from "react-router-dom";
 
 function SideNavItemCreate({ header, type }) {
@@ -12,14 +12,13 @@ function SideNavItemCreate({ header, type }) {
     const navigate = useNavigate();
     const { authUserData } = useSelector((state) => state.auth);
     const { inputProduct } = useSelector((state) => state.product);
-
     const onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
         const newInputProduct = {};
 
         for (let key in inputProduct) {
-            if (inputProduct[key] !== "" && inputProduct[key] !== 0) {
+            if (inputProduct[key] !== "" && inputProduct[key] !== 0 && inputProduct[key]) {
                 newInputProduct[key] = inputProduct[key];
             }
         }
@@ -29,15 +28,13 @@ function SideNavItemCreate({ header, type }) {
         }
 
         formData.append("product", JSON.stringify(newInputProduct));
-
         try {
             if (inputProduct.id) {
-                formData.append("id", inputProduct.id);
-                await dispatch(updateInputProduct({ formData }));
+                const productId = inputProduct.id;
+                await dispatch(updateProduct({ productId, formData }));
             } else {
                 await dispatch(createProduct({ formData }));
             }
-
             dispatch(resetInputProduct());
             navigate("/selling");
         } catch (error) {

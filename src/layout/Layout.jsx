@@ -6,6 +6,7 @@ import SideNavItemCreate from "./SideNavItemCreate";
 import SideNavSelling from "./SideNavSelling";
 import SideNavCategory from "./SideNavCategory";
 import SideNavWishlist from "./SideNavWishlist";
+import { includes } from "lodash";
 
 function Layout() {
     const { pathname } = useLocation();
@@ -63,7 +64,7 @@ function Layout() {
         );
     }
 
-    if (pathname === "/update/item") {
+    if (pathname.includes("/update/item")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
                 <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
@@ -99,7 +100,7 @@ function Layout() {
         );
     }
 
-    if (pathname === "/update/vehicle") {
+    if (pathname.includes("/update/vehicle")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
                 <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
@@ -135,7 +136,7 @@ function Layout() {
         );
     }
 
-    if (pathname === "/update/rental") {
+    if (pathname.includes("/update/rental")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
                 <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
