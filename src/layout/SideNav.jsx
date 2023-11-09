@@ -36,7 +36,7 @@ function SideNav() {
                     </div>
                 </div>
                 <div className="flex justify-center w-full">
-                    <Link className="w-full px-20" to={"/create"}>
+                    <Link to={"/create"}>
                         <Button text={"Create new listing"} />
                     </Link>
                 </div>

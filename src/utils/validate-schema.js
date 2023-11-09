@@ -8,7 +8,5 @@ export default function validateSchema(schema, input) {
         }, {});
 
         return result;
-    } else {
-        return validated;
     }
 }

@@ -3,13 +3,11 @@ import Joi from "joi";
 const itemSchema = Joi.object({
     productImage: Joi.required(),
     productName: Joi.string().trim().required(),
-    productPrice: Joi.string()
-        .trim()
-        .pattern(/^[0-9]/)
-        .required(),
+    productPrice: Joi.number().min(0).integer().required(),
     typeOfCategory: Joi.required(),
     latitude: Joi.required(),
     longitude: Joi.required(),
+    categoryId: Joi.required(),
 });
 
 const vehicleSchema = Joi.object({
@@ -21,10 +19,7 @@ const vehicleSchema = Joi.object({
     vehicleYears: Joi.required(),
     latitude: Joi.required(),
     longitude: Joi.required(),
-    productPrice: Joi.string()
-        .pattern(/^[0-9]/)
-        .trim()
-        .required(),
+    productPrice: Joi.number().min(0).integer().required(),
 });
 
 const homeSchema = Joi.object({
@@ -34,10 +29,7 @@ const homeSchema = Joi.object({
     homeType: Joi.required(),
     bedroomQuantity: Joi.number().integer().positive().required(),
     bathroomQuantity: Joi.number().integer().positive().required(),
-    productPrice: Joi.string()
-        .pattern(/^[0-9]/)
-        .trim()
-        .required(),
+    productPrice: Joi.number().min(0).integer().required(),
     homeAddress: Joi.string().required(),
     latitude: Joi.required(),
     longitude: Joi.required(),

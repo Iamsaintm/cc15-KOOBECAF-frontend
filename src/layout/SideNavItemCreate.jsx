@@ -36,14 +36,13 @@ function SideNavItemCreate({ header, type }) {
                 setError(result);
             }
         }
-        console.log(result);
+
         if (pathname === "/create/vehicle") {
             result = validateSchema(vehicleSchema, newInputProduct);
             if (result) {
                 setError(result);
             }
         }
-        console.log(result);
 
         if (pathname === "/create/rental") {
             result = validateSchema(homeSchema, newInputProduct);
@@ -51,7 +50,6 @@ function SideNavItemCreate({ header, type }) {
                 setError(result);
             }
         }
-        console.log(result);
 
         for (let i = 0; i < inputProduct.productImage.length; i++) {
             formData.append("productImage", inputProduct.productImage[i]);
@@ -60,9 +58,13 @@ function SideNavItemCreate({ header, type }) {
         formData.append("product", JSON.stringify(newInputProduct));
 
         try {
-            // await dispatch(createProduct({ formData }));
-            // dispatch(resetInputProduct());
-            // navigate("/selling");
+            if (result) {
+                setError(result);
+            } else {
+                await dispatch(createProduct({ formData }));
+                dispatch(resetInputProduct());
+                navigate("/selling");
+            }
         } catch (error) {
             console.error("Error dispatching createProduct:", error);
         }
