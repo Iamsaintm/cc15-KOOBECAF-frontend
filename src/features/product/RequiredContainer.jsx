@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useEffect, useState } from "react";
+import { useCallback, useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setInputProduct, setInputProductCategory } from "../../stores/slices/productSlice";
 import { fetchGeocoding } from "../../stores/slices/productSlice";
@@ -123,7 +123,7 @@ function RequiredContainer({ type, error }) {
         </>
     );
 
-    if (type === "/create/vehicle") {
+    if (type === "/create/vehicle" || type.includes("/update/vehicle")) {
         inputForm = (
             <>
                 <InputForm
@@ -143,13 +143,14 @@ function RequiredContainer({ type, error }) {
                 <ConfigProvider
                     theme={{
                         token: {
-                            colorTextPlaceholder: "#6b7280",
+                            colorTextPlaceholder: "#000000",
                         },
                     }}
                 >
                     <DatePicker
-                        className="mt-4 rounded-full outline-none border-2 px-4 py-[9px]  focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
+                        className="mt-4 rounded-full outline-none border-2 px-4 py-[9px] focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
                         onChange={onChangeInputYear}
+                        placeholder={inputProduct.vehicleYears || "Select year"}
                         picker="year"
                     />
                 </ConfigProvider>
@@ -181,7 +182,7 @@ function RequiredContainer({ type, error }) {
         );
     }
 
-    if (type === "/create/rental") {
+    if (type === "/create/rental" || type.includes("/update/rental")) {
         inputForm = (
             <>
                 <InputForm

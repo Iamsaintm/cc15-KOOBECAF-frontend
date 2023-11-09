@@ -22,7 +22,7 @@ function ListProductContainer() {
                         product?.map((data) => (
                             <ListProductCard
                                 key={data.id}
-                                src={data.image[0].image}
+                                src={data?.image[0]?.image}
                                 productPrice={data.productPrice}
                                 productId={data.id}
                                 productDetail={data}

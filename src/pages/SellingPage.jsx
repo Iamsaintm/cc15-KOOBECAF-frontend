@@ -7,15 +7,15 @@ import { fetchProductByUserId, resetSearchProduct } from "../stores/slices/produ
 import { useEffect } from "react";
 import Loading from "../components/Loading";
 import Search from "../features/filter/Search";
+import { fetchAllCategory } from "../stores/slices/categorySlice";
 
 function SellingPage() {
     const dispatch = useDispatch();
     const { authUserData } = useSelector((state) => state.auth);
     const { productByUserId, loading } = useSelector((state) => state.product);
     useEffect(() => {
-        if (authUserData?.id) {
-            dispatch(fetchProductByUserId(authUserData?.id));
-        }
+        dispatch(fetchProductByUserId(authUserData?.id));
+        dispatch(fetchAllCategory());
         dispatch(resetSearchProduct());
     }, [authUserData]);
     return (
