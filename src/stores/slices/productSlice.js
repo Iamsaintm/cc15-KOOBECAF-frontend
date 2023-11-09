@@ -103,6 +103,7 @@ export const wishListProduct = createAsyncThunk("products/wishListProduct", asyn
         return thunkAPI.rejectWithValue(error.message);
     }
 });
+
 export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async (address) => {
     try {
         const newAxios = axios.create({});
@@ -110,7 +111,7 @@ export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async
             params: { address, key: "AIzaSyAD2cnxbl_ndhGSO6emJt0oSrs_Y3aRO3Q" },
             baseURL: "https://maps.googleapis.com/maps/api/geocode",
         });
-        return res.data; //return lat lng
+        return res.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
     }
@@ -333,6 +334,7 @@ const productSlice = createSlice({
                 state.loading = false;
                 state.error = payload;
             });
+
         builder
             .addCase(wishListProduct.pending, (state, { payload }) => {
                 state.loading = true;
@@ -347,6 +349,7 @@ const productSlice = createSlice({
                 state.loading = false;
                 state.error = payload;
             });
+
         builder
             .addCase(fetchGeocoding.pending, (state, { payload }) => {
                 state.loading = true;
