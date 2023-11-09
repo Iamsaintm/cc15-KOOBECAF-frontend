@@ -33,8 +33,9 @@ function PhotoUpload() {
     const amountPhoto = newFile?.length;
     const deleteImage = (index) => {
         let fieldName = "productImage";
-        let fieldValue = Array.from(inputProduct.productImage).filter((x, idx) => idx !== index);
-        if (fieldValue.length === 0) {
+        const productImageAmount = Array.from(inputProduct.productImage);
+        let fieldValue = productImageAmount.filter((x, idx) => idx !== index);
+        if (fieldValue.length === productImageAmount.length) {
             fieldName = "image";
             fieldValue = inputProduct.image.filter((x, idx) => idx !== index);
         }

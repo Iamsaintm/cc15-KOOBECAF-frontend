@@ -168,8 +168,8 @@ const productSlice = createSlice({
         setInputProduct: (state, { payload }) => {
             state.inputProduct[payload.fieldName] = payload.fieldValue;
 
-            (Array.from(state.inputProduct?.productImage).length || 0) +
-                (Array.from(state.inputProduct?.image).length || 0) >
+            Array.from(state.inputProduct?.productImage || 0).length +
+                Array.from(state.inputProduct?.image || 0).length >
             5
                 ? (state.errorMessage = true)
                 : (state.errorMessage = false);
@@ -346,7 +346,8 @@ const productSlice = createSlice({
             .addCase(wishListProduct.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
-            })
+            });
+        builder
             .addCase(fetchGeocoding.pending, (state, { payload }) => {
                 state.loading = true;
                 state.error = "";

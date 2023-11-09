@@ -120,7 +120,7 @@ function ProductPreview() {
                                                 className="w-full aspect-square object-cover"
                                                 id={currentSlide}
                                                 src={
-                                                    newFile[index]?.image ||
+                                                    newFile[currentSlide]?.image ||
                                                     URL.createObjectURL(
                                                         new Blob([inputProduct.productImage[currentSlide]], {
                                                             type: "application/zip",
