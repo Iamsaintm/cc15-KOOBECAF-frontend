@@ -1,6 +1,6 @@
 import defaultProduct from "../../assets/Images/hero-img_copy.jpg";
 
-function ProductCard({ src = defaultProduct, productPrice = "1,050,000", productName = "2007 Ferrari f430", address }) {
+function ProductCard({ src = defaultProduct, productPrice, productName, address }) {
     return (
         <>
             <div className="w-full h-[320px] bg-white rounded-md shadow-main shadow-md">

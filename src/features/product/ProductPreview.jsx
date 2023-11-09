@@ -119,9 +119,6 @@ function ProductPreview() {
                                         : "Description will appear here."}
                                 </p>
                                 <GoogleMapInput className="py-2" />
-                                {/* <p className="truncate font-thin">
-                                    กรุงเทพมหานคร อมรรัฒนโกสินธ์ มหิมนราทิเบท อเนกประสงค์ อนงค์ สวัสดี
-                                </p> */}
                             </div>
 
                             <div>

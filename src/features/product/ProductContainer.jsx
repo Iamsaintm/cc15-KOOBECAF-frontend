@@ -25,7 +25,6 @@ function ProductContainer() {
                                     src={data.image[0]?.image}
                                     productPrice={data.productPrice}
                                     productName={data.productName}
-                                    productDetail={data}
                                 />
                             </Link>
                         ))

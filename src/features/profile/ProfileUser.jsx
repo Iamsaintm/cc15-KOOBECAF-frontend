@@ -1,29 +1,35 @@
 import { useState, useEffect } from "react";
-import { FaEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { FaEdit } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
 import { fetchDataUser } from "../../stores/slices/authSlice";
 
 import Avatar from "../../components/Avatar";
 import InputDropdown from "../../components/InputDropdown";
-import SearchInput from "../../features/filter/SearchInput";
+import Search from "../../features/filter/Search";
 import CoverImage from "../../components/CoverImage";
 import ProductCardUser from "../../features/profile/ProductCardUser";
+import Loading from "../../components/Loading";
 
 export default function ProfileUser({ onClose, setEditUser }) {
-    const { authUserData, loading } = useSelector((state) => state.auth);
-
+    const { authUserData } = useSelector((state) => state.auth);
     const [isOpen, setIsOpen] = useState(false);
+    const { productData, loading, searchProduct, productByUserId } = useSelector((state) => state.product);
+
+    const { state } = useLocation();
 
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchDataUser());
-    }, []);
 
     const handleOnClick = () => {
         onClose();
         setEditUser(true);
     };
+
+    // if (searchProduct.length !== 0) {
+    //     product = productData?.filter((el) =>
+    //         el.productName.toLowerCase().includes(searchProduct.toLowerCase().trim()) ? el : null,
+    //     );
+    // }
 
     const productStatus = [
         { id: 1, status: "AVAILABLE" },
@@ -64,8 +70,8 @@ export default function ProfileUser({ onClose, setEditUser }) {
                 </div>
 
                 <div>
-                    <div className="flex items-center px-4 gap-4">
-                        <SearchInput placeholder="Search" />
+                    <div className="flex items-center px-4 pb-4 gap-4">
+                        {/* <Search className="" nameTagSearch="" div="" placeholder="Search" /> */}
                         <InputDropdown
                             name={"status"}
                             data={productStatus}
@@ -80,18 +86,22 @@ export default function ProfileUser({ onClose, setEditUser }) {
                         />
                     </div>
                     <div className="grid grid-cols-3 justify-between px-4 pb-4 gap-2 overflow-y-auto h-[268px]">
-                        <ProductCardUser>7</ProductCardUser>
-                        <ProductCardUser>8</ProductCardUser>
-                        <ProductCardUser>9</ProductCardUser>
-                        <ProductCardUser>9</ProductCardUser>
-                        <ProductCardUser>9</ProductCardUser>
-                        <ProductCardUser>9</ProductCardUser>
+                        {productByUserId && productByUserId.length > 0 ? (
+                            productByUserId?.map((data) => (
+                                <Link key={data.id} to={`/product/${data.id}`} state={{ productDetail: data }}>
+                                    <ProductCardUser
+                                        src={data.image[0]?.image}
+                                        productPrice={data.productPrice}
+                                        productName={data.productName}
+                                    />
+                                </Link>
+                            ))
+                        ) : (
+                            <div>Product not Found</div>
+                        )}
                     </div>
                 </div>
             </div>
         </>
     );
 }
-
-// profileImage: true,
-// coverImage: true,

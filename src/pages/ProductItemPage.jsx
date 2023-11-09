@@ -95,9 +95,9 @@ function ProductItemPage({}) {
                     <div className="py-2">
                         <div className="font-semibold text-lg">Seller information</div>
                         <div className="flex flex-row justify-start items-center ">
-                            <Avatar className={"h-10"} src={state.productDetail.usersId.profileImage} />
-                            <div className="px-2">{state.productDetail.usersId.firstName}</div>
-                            <div className="">{state.productDetail.usersId.lastName}</div>
+                            <Avatar className={"h-10"} src={state.productDetail?.usersId?.profileImage} />
+                            <div className="px-2">{state.productDetail?.usersId?.firstName}</div>
+                            <div >{state.productDetail?.usersId?.lastName}</div>
                         </div>
                     </div>
                 </div>

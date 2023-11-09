@@ -3,13 +3,17 @@ import { fetchAllCategory } from "../stores/slices/categorySlice";
 import { useDispatch } from "react-redux";
 import { fetchDataUser } from "../stores/slices/authSlice";
 import CreateProductCard from "../features/product/CreateProductCard";
+import { fetchAllProduct, fetchProductByUserId } from "../stores/slices/productSlice";
 
 function CreateProductPage() {
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchAllCategory());
-        dispatch(fetchDataUser());
+        dispatch(fetchAllProduct());
+        dispatch(fetchDataUser()).unwrap().then((res) => {
+            dispatch(fetchProductByUserId(res.user.id));
+        });
     }, []);
 
     const menu = [

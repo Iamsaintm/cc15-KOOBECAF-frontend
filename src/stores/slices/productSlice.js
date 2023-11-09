@@ -268,7 +268,6 @@ const productSlice = createSlice({
                 state.error = "";
             })
             .addCase(fetchProductByProductId.fulfilled, (state, { payload }) => {
-                console.log(payload, "payload");
                 state.productByProductId = payload.product;
                 state.isWishList = payload.isWishList;
                 state.loading = false;
