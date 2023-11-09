@@ -80,8 +80,8 @@ function RequiredContainer({ type }) {
 
     const onChangeInputLocation = useCallback(
         async (e) => {
-            if (typeof e.target.value === "undefined") return; //ออกนอก Fn เลย if you use useMemo ต้องส่งค่าสักอย่าง " " , undefined
-            if (e.target.value === "") return; //ออกนอก Fn เลย
+            if (typeof e.target.value === "undefined") return;
+            if (e.target.value === "") return;
             dispatch(fetchGeocoding(e.target.value));
         },
         [dispatch],
@@ -116,9 +116,15 @@ function RequiredContainer({ type }) {
         </>
     );
 
-    if (type === "/create/vehicle") {
+    if (type === "/create/vehicle" || type.includes("/update/vehicle")) {
         inputForm = (
             <>
+                <InputForm
+                    value={inputProduct.productName}
+                    onChange={onChangeInput}
+                    name={"productName"}
+                    placeholder={"Title"}
+                />
                 <InputDropdown
                     value={inputProduct.vehicleType}
                     data={newVehicleTypeData}
@@ -128,13 +134,14 @@ function RequiredContainer({ type }) {
                 <ConfigProvider
                     theme={{
                         token: {
-                            colorTextPlaceholder: "#6b7280",
+                            colorTextPlaceholder: "#000000",
                         },
                     }}
                 >
                     <DatePicker
-                        className="mt-4 rounded-full outline-none border-2 px-4 py-[9px]  focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
+                        className="mt-4 rounded-full outline-none border-2 px-4 py-[9px] focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
                         onChange={onChangeInputYear}
+                        placeholder={inputProduct.vehicleYears || "Select year"}
                         picker="year"
                     />
                 </ConfigProvider>
@@ -161,9 +168,15 @@ function RequiredContainer({ type }) {
         );
     }
 
-    if (type === "/create/rental") {
+    if (type === "/create/rental" || type.includes("/update/rental")) {
         inputForm = (
             <>
+                <InputForm
+                    value={inputProduct.productName}
+                    onChange={onChangeInput}
+                    name={"productName"}
+                    placeholder={"Title"}
+                />
                 <InputDropdown
                     value={inputProduct.homeProperty}
                     data={newHomePropertyData}

@@ -14,6 +14,7 @@ export default function Navbar() {
             <Link
                 onClick={() => {
                     dispatch(resetInputProduct());
+                    dispatch(resetSearchProduct());
                 }}
                 to="/"
             >
