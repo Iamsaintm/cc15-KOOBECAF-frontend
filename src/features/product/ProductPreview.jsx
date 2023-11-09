@@ -160,7 +160,7 @@ function ProductPreview() {
                             <div>
                                 <p className="text-lg mb-2">Seller Information</p>
                                 <div className="flex gap-x-2 items-center">
-                                    <Avatar src={authUserData?.profileImage} />
+                                    <Avatar  src={authUserData?.profileImage} />
                                     <p>
                                         {authUserData?.firstName} {authUserData?.lastName}
                                     </p>
