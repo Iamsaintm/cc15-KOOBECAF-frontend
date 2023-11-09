@@ -5,17 +5,23 @@ import "slick-carousel/slick/slick-theme.css";
 
 function SliderForProduct({ images }) {
     const [currentSlide, setCurrentSlide] = useState(0);
+
     const settings = {
         customPaging: function (i) {
+            let binaryData = [];
+            binaryData.push(inputProduct.productImage[i]);
             return (
-                <a className="absolute w-10 ">
+                <div>
                     <img
-                        src={images[i]}
-                        alt={`Image ${i}`}
-                        className={`rounded-md ${i === currentSlide ? "border border-gray-100" : "opacity-50"}`}
+                        className={`rounded-md ${i === index ? "border border-gray-100" : "opacity-50"}`}
+                        id={i}
+                        src={URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }))}
                     />
-                </a>
+                </div>
             );
+        },
+        beforeChange: function (c, n) {
+            setIndex(n);
         },
         dots: true,
         dotsClass: "slick-dots slick-thumb",
@@ -23,18 +29,31 @@ function SliderForProduct({ images }) {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        beforeChange: (current, next) => setCurrentSlide(next),
     };
 
     return (
-        <div className="relative w-full">
+        <div className="relative w-[400px] -z-20">
             <Slider {...settings}>
-                {images.map((image, index) => (
-                    <div key={index} className="">
-                        <img src={image} alt={`Image ${index}`} className="w-full" />
+                {images.map((x, idx) => (
+                    <div className="!flex justify-center bg-black/70" key={idx}>
+                        <img
+                            className="w-full aspect-square object-contain rounded-md"
+                            src={URL.createObjectURL(images.productImage[idx])}
+                        />
                     </div>
                 ))}
             </Slider>
+            <div className="absolute -top-1/4 -left-1/4 blur-md -z-10 w-[150%] aspect-square">
+                <img
+                    className="w-full aspect-square object-cover"
+                    id={index}
+                    src={URL.createObjectURL(
+                        new Blob([images.productImage[index]], {
+                            type: "application/zip",
+                        }),
+                    )}
+                />
+            </div>
         </div>
     );
 }

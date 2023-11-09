@@ -143,6 +143,7 @@ function Layout() {
                     <Header />
                 </div>
                 <div className="flex w-full">
+                    <div className="h-16"></div>
                     <div className="w-full">
                         <Outlet />
                     </div>

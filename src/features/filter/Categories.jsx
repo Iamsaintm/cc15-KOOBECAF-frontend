@@ -58,7 +58,7 @@ function Categories() {
                             key={`${item.category?.id}-${item.title}`}
                             {...item}
                             to={`/category/${item.category?.typeOfCategory}`}
-                            isactive={pathname === `/category/${item.category?.typeOfCategory}`}
+                            isActive={pathname === `/category/${item.category?.typeOfCategory}`}
                         />
                     ))}
                 </div>
