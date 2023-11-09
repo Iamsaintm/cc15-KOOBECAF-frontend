@@ -21,7 +21,7 @@ function CategorieItem({ icons, title, to, isActive, onClick }) {
             ) : (
                 <button
                     onClick={onClick}
-                    className={`flex w-full gap-4 hover:bg-second/40 rounded-lg p-2 group ${
+                    className={`w-full flex gap-4 hover:bg-second/40 rounded-lg p-2 group ${
                         isActive && "bg-second/40"
                     }`}
                 >
