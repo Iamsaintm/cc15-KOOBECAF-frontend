@@ -145,19 +145,14 @@ const productSlice = createSlice({
         setInputProduct: (state, { payload }) => {
             state.inputProduct[payload.fieldName] = payload.fieldValue;
 
-            // Array.from((state.inputProduct?.productImage).length) ||
-            // 0 + Array.from(state.inputProduct?.image).length ||
-            // 0 > 5
-            //     ? (state.errorMessage = true)
-            //     : (state.errorMessage = false);
+            (Array.from(state.inputProduct?.productImage).length || 0) +
+                (Array.from(state.inputProduct?.image).length || 0) >
+            5
+                ? (state.errorMessage = true)
+                : (state.errorMessage = false);
         },
         updateInputProduct: (state, { payload }) => {
             state.inputProduct = { ...state.inputProduct, ...payload };
-            // Array.from((state.inputProduct?.productImage).length) ||
-            // 0 + Array.from(state.inputProduct?.image).length ||
-            // 0 > 5
-            //     ? (state.errorMessage = true)
-            //     : (state.errorMessage = false);
         },
         setInputProductCategory: (state, { payload }) => {
             state.inputProduct.categoryId = payload.id;

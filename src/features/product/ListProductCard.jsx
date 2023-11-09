@@ -4,31 +4,19 @@ import { FaEdit } from "react-icons/fa";
 import Modal from "../../components/Modal";
 import DeleteProductForm from "./DeleteProductForm";
 import { useNavigate } from "react-router-dom";
-import { setInputProduct, updateInputProduct } from "../../stores/slices/productSlice";
-import { useDispatch, useSelector } from "react-redux";
 
 function ListProductCard({ src, productPrice, productName, status, productDetail, productId }) {
     const [isOpenDelete, setIsOpenDelete] = useState(false);
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { categoryData } = useSelector((state) => state.category);
-    const typeOfCategory = categoryData?.find((category) => category.id === productDetail.categoryId)?.typeOfCategory;
     const handleUpdateClick = async () => {
-        const fieldName = "typeOfCategory";
-        let fieldValue = typeOfCategory;
         if (productDetail.categoryId === 1) {
-            dispatch(updateInputProduct(productDetail));
-            dispatch(setInputProduct({ fieldName, fieldValue }));
             navigate(`/update/vehicle/${productDetail.id}`);
         } else if (productDetail.categoryId === 2) {
-            dispatch(updateInputProduct(productDetail));
-            dispatch(setInputProduct({ fieldName, fieldValue }));
             navigate(`/update/rental/${productDetail.id}`);
         } else {
-            dispatch(updateInputProduct(productDetail));
-            dispatch(setInputProduct({ fieldName, fieldValue }));
             navigate(`/update/item/${productDetail.id}`);
         }
+        window.location.reload();
     };
 
     return (

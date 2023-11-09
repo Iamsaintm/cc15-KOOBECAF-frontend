@@ -4,14 +4,35 @@ import PhotoUpload from "../features/product/PhotoUpload";
 import RequiredContainer from "../features/product/RequiredContainer";
 import Button from "../components/Button";
 import DescriptionContainer from "../features/product/DescriptionContainer";
-import { createProduct, resetInputProduct, updateProduct } from "../stores/slices/productSlice";
-import { useNavigate } from "react-router-dom";
+import {
+    createProduct,
+    fetchProductById,
+    resetInputProduct,
+    updateInputProduct,
+    updateProduct,
+} from "../stores/slices/productSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 function SideNavItemCreate({ header, type }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { productId } = useParams();
     const { authUserData } = useSelector((state) => state.auth);
-    const { inputProduct } = useSelector((state) => state.product);
+    const { inputProduct, productData } = useSelector((state) => state.product);
+
+    useEffect(() => {
+        if (productId) {
+            dispatch(fetchProductById(productId));
+        }
+    }, [productId]);
+
+    useEffect(() => {
+        if (productData) {
+            dispatch(updateInputProduct(productData));
+        }
+    }, [productData]);
+
     const onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
@@ -41,7 +62,6 @@ function SideNavItemCreate({ header, type }) {
             console.error("Error dispatching createProduct:", error);
         }
     };
-
     return (
         <>
             <form onSubmit={onSubmit} className="flex flex-col gap-2 h-screen">
