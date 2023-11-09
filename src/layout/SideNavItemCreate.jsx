@@ -4,34 +4,14 @@ import PhotoUpload from "../features/product/PhotoUpload";
 import RequiredContainer from "../features/product/RequiredContainer";
 import Button from "../components/Button";
 import DescriptionContainer from "../features/product/DescriptionContainer";
-import {
-    createProduct,
-    fetchProductById,
-    resetInputProduct,
-    updateInputProduct,
-    updateProduct,
-} from "../stores/slices/productSlice";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { createProduct, resetInputProduct } from "../stores/slices/productSlice";
+import { useNavigate } from "react-router-dom";
 
 function SideNavItemCreate({ header, type }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { productId } = useParams();
     const { authUserData } = useSelector((state) => state.auth);
-    const { inputProduct, productData } = useSelector((state) => state.product);
-
-    useEffect(() => {
-        if (productId) {
-            dispatch(fetchProductById(productId));
-        }
-    }, [productId]);
-
-    useEffect(() => {
-        if (productData) {
-            dispatch(updateInputProduct(productData));
-        }
-    }, [productData]);
+    const { inputProduct } = useSelector((state) => state.product);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +19,7 @@ function SideNavItemCreate({ header, type }) {
         const newInputProduct = {};
 
         for (let key in inputProduct) {
-            if (inputProduct[key] !== "" && inputProduct[key] !== 0 && inputProduct[key]) {
+            if (inputProduct[key] !== "" && inputProduct[key] !== 0) {
                 newInputProduct[key] = inputProduct[key];
             }
         }
@@ -49,19 +29,16 @@ function SideNavItemCreate({ header, type }) {
         }
 
         formData.append("product", JSON.stringify(newInputProduct));
+
         try {
-            if (inputProduct.id) {
-                const productId = inputProduct.id;
-                await dispatch(updateProduct({ productId, formData }));
-            } else {
-                await dispatch(createProduct({ formData }));
-            }
+            await dispatch(createProduct({ formData }));
             dispatch(resetInputProduct());
             navigate("/selling");
         } catch (error) {
             console.error("Error dispatching createProduct:", error);
         }
     };
+
     return (
         <>
             <form onSubmit={onSubmit} className="flex flex-col gap-2 h-screen">
@@ -81,11 +58,7 @@ function SideNavItemCreate({ header, type }) {
                     <RequiredContainer type={type} />
                     <div className="flex flex-col gap-4">
                         <DescriptionContainer />
-                        {inputProduct.id ? (
-                            <Button type={"submit"} text={"Update"} />
-                        ) : (
-                            <Button type={"submit"} text={"Create"} />
-                        )}
+                        <Button type={"submit"} text={"Create"} />
                     </div>
                 </div>
             </form>
