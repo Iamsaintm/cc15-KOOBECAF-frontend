@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import Header from "./Header";
 import SideNav from "./SideNav";
 import SideNavCreate from "./SideNavCreate";
@@ -10,6 +10,7 @@ import { includes } from "lodash";
 
 function Layout() {
     const { pathname } = useLocation();
+    const params = useParams();
 
     let sideNav = (
         <div className="flex flex-col h-full w-full">
@@ -190,6 +191,21 @@ function Layout() {
         );
     }
 
+    if (pathname === `/product/${params.productId}`) {
+        sideNav = (
+            <div className="flex flex-col h-full w-full">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                    <Header />
+                </div>
+                <div className="flex w-full">
+                    <div className="h-16"></div>
+                    <div className="w-full">
+                        <Outlet />
+                    </div>
+                </div>
+            </div>
+        );
+    }
     if (pathname === "/wishlist") {
         sideNav = (
             <div className="flex flex-col h-full w-full">
