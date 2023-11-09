@@ -17,25 +17,22 @@ function ProductPreview() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        if (pathname === "/create/rental" || pathname.includes("/update/rental")) {
+        if (pathname === "/create/rental") {
             const id = 2;
             const fieldValue = "PROPERTY_FOR_RENT";
             dispatch(setInputProductCategory({ id, fieldValue }));
         }
-        if (pathname === "/create/vehicle" || pathname.includes("/update/vehicle")) {
+        if (pathname === "/create/vehicle") {
             const id = 1;
             const fieldValue = "VEHICLES";
             dispatch(setInputProductCategory({ id, fieldValue }));
         }
-    }, [authUserData]);
+    }, []);
 
-    let newFile = [];
+    let newFile = null;
 
     if (inputProduct.productImage) {
-        newFile = [...newFile, ...Array.from(inputProduct.productImage)];
-    }
-    if (inputProduct.image) {
-        newFile = [...newFile, ...inputProduct.image];
+        newFile = Array.from(inputProduct.productImage);
     }
 
     function NextArrow(props) {
@@ -73,9 +70,7 @@ function ProductPreview() {
                     <img
                         className={`rounded-md ${i === currentSlide ? "border border-gray-100" : "opacity-50"}`}
                         id={i}
-                        src={
-                            newFile[i]?.image || URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }))
-                        }
+                        src={URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }))}
                     />
                 </div>
             );
@@ -102,15 +97,15 @@ function ProductPreview() {
                     </div>
                     <div className="grid grid-cols-2 border rounded-lg ">
                         <div className="flex items-center justify-center w-full overflow-clip drop-shadow-md bg-cover rounded-lg">
-                            {newFile.length !== 0 ? (
+                            {inputProduct.productImage.length !== 0 ? (
                                 <>
                                     <div className="relative w-full -z-20">
                                         <Slider {...settings}>
-                                            {newFile.map((file, idx) => (
+                                            {newFile.map((x, idx) => (
                                                 <div key={idx} className="!flex justify-center bg-black/80">
                                                     <img
                                                         className="w-[400px] aspect-square object-contain rounded-md"
-                                                        src={file?.image || URL.createObjectURL(file)}
+                                                        src={URL.createObjectURL(inputProduct.productImage[idx])}
                                                     />
                                                 </div>
                                             ))}
@@ -119,14 +114,11 @@ function ProductPreview() {
                                             <img
                                                 className="w-full aspect-square object-cover"
                                                 id={currentSlide}
-                                                src={
-                                                    newFile[currentSlide]?.image ||
-                                                    URL.createObjectURL(
-                                                        new Blob([inputProduct.productImage[currentSlide]], {
-                                                            type: "application/zip",
-                                                        }),
-                                                    )
-                                                }
+                                                src={URL.createObjectURL(
+                                                    new Blob([inputProduct.productImage[currentSlide]], {
+                                                        type: "application/zip",
+                                                    }),
+                                                )}
                                             />
                                         </div>
                                     </div>
