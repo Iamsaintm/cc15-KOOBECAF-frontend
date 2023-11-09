@@ -67,7 +67,6 @@ export const fetchProductByProductId = createAsyncThunk(
     async (productId, thunkAPI) => {
         try {
             const res = await axios.get(`/product/${productId}`);
-            console.log(res.data);
             return res.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
@@ -268,7 +267,6 @@ const productSlice = createSlice({
                 state.error = "";
             })
             .addCase(fetchProductByProductId.fulfilled, (state, { payload }) => {
-                console.log(payload, "payload");
                 state.productByProductId = payload.product;
                 state.isWishList = payload.isWishList;
                 state.loading = false;

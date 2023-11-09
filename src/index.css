@@ -8,6 +8,7 @@
     }
     .slick-dots.slick-thumb {
         display: flex !important;
+        justify-content: center;
         width: 100%;
     }
     .slick-dots > li {
