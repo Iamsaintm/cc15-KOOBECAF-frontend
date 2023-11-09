@@ -30,13 +30,8 @@ function SellingPage() {
                                 <div className="py-3 px-6 w-full mt-16">
                                     <div className="flex items-center bg-white justify-between rounded-lg">
                                         <div className="text-xl font-semibold pl-5">Your listings</div>
-                                        <div className="pr-5">
-                                            <Search
-                                                className="top-[100px] right-[231px]"
-                                                nameTagSearch=""
-                                                div=""
-                                                placeholder="Search"
-                                            />
+                                        <div className="pr-5 z-10">
+                                            <Search className="" nameTagSearch="" div="" placeholder="Search" />
                                         </div>
                                     </div>
 

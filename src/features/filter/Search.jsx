@@ -1,6 +1,6 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchProduct } from "../../stores/slices/productSlice";
+import React from "react";
 import SearchInput from "./SearchInput";
 
 function Search({ nameTagSearch = "Marketplace", className, div = "pt-10", placeholder = "ค้นหา Marketplace" }) {

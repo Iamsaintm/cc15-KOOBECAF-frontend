@@ -1,7 +1,7 @@
 import { FaTag, FaTags } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CategorieItem from "../features/filter/CategorieItem";
 import ProfileModal from "../components/ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
@@ -13,7 +13,7 @@ function SideNavCreate() {
     const [isOpen, setIsOpen] = useState(false);
     const [editUser, setEditUser] = useState(false);
     const { pathname } = useLocation();
-
+    
     return (
         <>
             <div className="flex flex-col gap-2 px-4">
@@ -35,7 +35,7 @@ function SideNavCreate() {
                     title={"Your listings"}
                 />
                 <CategorieItem
-                    icons={<Avatar>{authUserData?.profileImage}</Avatar>}
+                    icons={<Avatar src={authUserData?.profileImage}></Avatar>}
                     onClick={() => {
                         setIsOpen(true);
                     }}

@@ -46,7 +46,7 @@ function SideNavItemCreate({ header, type }) {
                 <div className="flex flex-col gap-2 px-4">
                     <div className="text-2xl font-bold">{header}</div>
                     <div className="flex gap-3 items-center">
-                        <Avatar src={authUserData?.profileImage} />
+                        <Avatar className={"h-10"} src={authUserData?.profileImage} />
                         <div>
                             {authUserData?.firstName} {authUserData?.lastName}
                         </div>

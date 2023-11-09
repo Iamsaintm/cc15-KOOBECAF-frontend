@@ -39,14 +39,12 @@ export default function ProfileUser({ onClose, setEditUser }) {
 
     return (
         <>
-            <div className="bg-white rounded-lg ">
+            <div className="bg-white rounded-lg">
                 <div className="relative">
-                    <CoverImage className="rounded-t-lg bg-cover w-full h-[250px]">
-                        {authUserData?.coverImage}
-                    </CoverImage>
+                    <CoverImage className="rounded-t-lg bg-cover w-full h-[200px] " src={authUserData?.coverImage} />
 
                     <div
-                        className="absolute text-2xl top-[3px] left-[95%] hover:text-[#959595] cursor-pointer"
+                        className="absolute text-2xl top-[3px] left-[95%] hover:text-[#959595] text-white cursor-pointer"
                         onClick={onClose}
                     >
                         X
@@ -55,19 +53,19 @@ export default function ProfileUser({ onClose, setEditUser }) {
                         <div className="flex justify-end">
                             <FaEdit className="w-6 h-6 cursor-pointer hover:text-[#959595]" onClick={handleOnClick} />
                         </div>
-                        <div className="flex justify-center text-xl font-bold pt-8 border-b pb-3">
+                        <div className="flex justify-center text-xl font-bold pt-10 border-b pb-3">
                             {authUserData?.firstName} {authUserData?.lastName}
                         </div>
                     </div>
 
-                    <div className="absolute top-[45%] left-[39%]">
-                        <Avatar className="w-36">{authUserData?.profileImage}</Avatar>
+                    <div className="absolute top-[37%] left-[39%]">
+                        <Avatar className="w-36" src={authUserData?.profileImage} />
                     </div>
                 </div>
 
                 <div>
                     <div className="flex items-center px-4 gap-4">
-                        <SearchInput className="p-2" placeholder="Search" />
+                        <SearchInput placeholder="Search" />
                         <InputDropdown
                             name={"status"}
                             data={productStatus}

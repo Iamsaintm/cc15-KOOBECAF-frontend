@@ -14,7 +14,6 @@ function ProductItemPage({}) {
     const { isWishList } = useSelector((state) => state.product);
     const { state } = useLocation();
 
-    // const [isActive, setIsActive] = useState(isWishList);inputElement
     const category = state.productDetail.categoryId;
 
     useEffect(() => {
@@ -27,11 +26,8 @@ function ProductItemPage({}) {
         setImages(imgs);
     }, [state.productDetail]);
 
-    console.log(state.productDetail);
-
     const handleClick = () => {
         dispatch(wishListProduct(state.productDetail.id));
-        // setIsActive(!isActive);
         window.location.reload();
     };
     return (
@@ -99,7 +95,7 @@ function ProductItemPage({}) {
                     <div className="py-2">
                         <div className="font-semibold text-lg">Seller information</div>
                         <div className="flex flex-row justify-start items-center ">
-                            <Avatar src={state.productDetail.usersId.profileImage} />
+                            <Avatar className={"h-10"} src={state.productDetail.usersId.profileImage} />
                             <div className="px-2">{state.productDetail.usersId.firstName}</div>
                             <div className="">{state.productDetail.usersId.lastName}</div>
                         </div>

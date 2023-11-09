@@ -16,6 +16,7 @@ function RequiredContainer({ type }) {
     const { authUserData } = useSelector((state) => state.auth);
     const { categoryData } = useSelector((state) => state.category);
     const { inputProduct } = useSelector((state) => state.product);
+    
 
     useEffect(() => {
         dispatch(fetchAllCategory());

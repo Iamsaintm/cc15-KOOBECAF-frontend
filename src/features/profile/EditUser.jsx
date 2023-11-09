@@ -1,31 +1,48 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfileUser, updateProfileName } from "../../stores/slices/authSlice";
+import { FaEdit } from "react-icons/fa";
+
 import Avatar from "../../components/Avatar";
-import PictureForm from "../../features/profile/PictureFrom";
+import PictureForm from "./PictureForm";
 import CoverImage from "../../components/CoverImage";
 import Button from "../../components/Button";
 
 export default function EditUser({ onClose, setIsOpen }) {
-    const { authUserData } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
+    const { authUserData } = useSelector((state) => state.auth);
+    // edit profilename
+    const [open, setOpen] = useState(false);
+    const [inputProfileName, setInputProfileName] = useState({
+        firstName: authUserData?.firstName,
+        lastName: authUserData?.lastName,
+    });
 
-    const handleOnsave = () => {
-        uploadProfileImage();
-        uploadCoverImage();
+    const [input, setInput] = useState(null);
+    const [inputCoverImage, setInputCoverImage] = useState(null);
+
+    const dispatch = useDispatch();
+
+    const handleOnsave = async (input, inputCoverImage, inputProfileName) => {
+        await uploadProfileImage(input);
+        await uploadCoverImage(inputCoverImage);
+        await uploadProfileName(inputProfileName);
+        window.location.reload();
     };
-
     const handleOnClose = () => {
         onClose();
         setIsOpen(true);
     };
 
-    const uploadProfileImage = async (input) => {
+    const uploadProfileName = async (inputProfileName) => {
         try {
-            // Mapping API upload profile
             const formData = new FormData();
-            formData.append("profileImage", input);
-            setLoading(true);
-            // await updateProfile(formData);
+
+            formData.append("firstName", inputProfileName.firstName);
+
+            formData.append("lastName", inputProfileName.lastName);
+
+            await dispatch(updateProfileName(formData));
             onClose();
         } catch (err) {
             console.log(err);
@@ -34,12 +51,26 @@ export default function EditUser({ onClose, setIsOpen }) {
         }
     };
 
-    const uploadCoverImage = async (input) => {
+    const uploadProfileImage = async (input) => {
         try {
             const formData = new FormData();
-            formData.append("coverImage", input);
+            formData.append("profileImage", input);
             setLoading(true);
-            // await updateProfile(formData);
+            await dispatch(updateProfileUser(formData));
+            onClose();
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const uploadCoverImage = async (inputCoverImage) => {
+        try {
+            const formData = new FormData();
+            formData.append("coverImage", inputCoverImage);
+            setLoading(true);
+            await dispatch(updateProfileUser(formData));
             onClose();
         } catch (err) {
             console.log(err);
@@ -65,18 +96,52 @@ export default function EditUser({ onClose, setIsOpen }) {
 
                 <div className="border border-empty w-full" />
                 <div className="p-4">
-                    <div className="flex gap-4 pb-2">
-                        <p className="text-xl font-bold">Edit Name: </p>
-                        <div className="text-lg">
-                            {authUserData?.firstName} {authUserData?.lastName}
+                    <div className="flex justify-between pr-3 ">
+                        <div className="flex gap-4 pb-2">
+                            <p className="text-xl font-bold">Edit Name:</p>
+                            {open ? (
+                                <div className="text-lg">
+                                    <input
+                                        type="text"
+                                        value={inputProfileName.firstName}
+                                        name="firstName"
+                                        className="rounded-lg mx-3"
+                                        onChange={(e) =>
+                                            setInputProfileName((prevProfile) => ({
+                                                ...prevProfile,
+                                                firstName: e.target.value,
+                                            }))
+                                        }
+                                    />
+                                    <input
+                                        type="text"
+                                        value={inputProfileName.lastName}
+                                        name="lastName"
+                                        className="rounded-lg"
+                                        onChange={(e) =>
+                                            setInputProfileName((prevProfile) => ({
+                                                ...prevProfile,
+                                                lastName: e.target.value,
+                                            }))
+                                        }
+                                    />
+                                </div>
+                            ) : (
+                                <div className="text-lg">
+                                    {authUserData?.firstName} {authUserData?.lastName}
+                                </div>
+                            )}
                         </div>
+                        <FaEdit className="w-6 h-6 cursor-pointer hover:text-[#959595]" onClick={() => setOpen(true)} />
                     </div>
 
                     {loading && <div>Loading</div>}
 
                     <PictureForm
                         title="Profile Image"
-                        initialSrc={authUserData?.profileImage} // bug image profile not show ka!!!
+                        initialSrc={authUserData?.profileImage}
+                        input={input}
+                        setInput={setInput}
                     >
                         {(src, onClick) => (
                             <div onClick={onClick} className="flex justify-center">
@@ -86,7 +151,12 @@ export default function EditUser({ onClose, setIsOpen }) {
                     </PictureForm>
 
                     <div className="pb-4">
-                        <PictureForm title="Cover Image" initialSrc={authUserData?.CoverImage}>
+                        <PictureForm
+                            title="Cover Image"
+                            initialSrc={authUserData?.coverImage}
+                            input={inputCoverImage}
+                            setInput={setInputCoverImage}
+                        >
                             {(src, onClick) => (
                                 <div onClick={onClick}>
                                     <CoverImage src={src} />
@@ -95,7 +165,7 @@ export default function EditUser({ onClose, setIsOpen }) {
                         </PictureForm>
                     </div>
                     <div className="flex justify-end">
-                        <Button text={"Save"} onClick={handleOnsave} />
+                        <Button text={"Save"} onClick={() => handleOnsave(input, inputCoverImage, inputProfileName)} />
                     </div>
                 </div>
             </div>

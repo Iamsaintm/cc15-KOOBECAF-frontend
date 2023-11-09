@@ -11,8 +11,8 @@ function SearchInput({
 }) {
     return (
         <>
-            <div className="w-full text-lg py-3 font-light ">
-                <div className={`text-2xl text-slate-500 absolute ${className}`}>
+            <div className="relative w-full text-lg py-3 font-light z-0 ">
+                <div className={`text-2xl text-slate-500 absolute bottom-6 left-3`}>
                     <FaSistrix />
                 </div>
                 <input

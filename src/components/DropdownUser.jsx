@@ -3,19 +3,19 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BiLogOut } from "react-icons/bi";
 import { logout } from "../stores/slices/authSlice";
-import { logoutProduct } from "../stores/slices/productSlice";
-import userImage from "../assets/Images/user.jpg";
+
 import Avatar from "./Avatar";
+import ProfileModal from "./ProfileModal";
+import ProfileUser from "../features/profile/ProfileUser";
+import EditUser from "../features/profile/EditUser";
 
 export default function Dropdown() {
-    const [isOpen, setIsOpen] = useState(false);
     const { authUserData, loading } = useSelector((state) => state.auth);
+    const [editUser, setEditUser] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
-    const handleOnclick = () => {
-        setIsOpen();
-    };
-
-    const dropDownEl = useRef(null); // {curent: null}
+    const dropDownEl = useRef(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -32,23 +32,42 @@ export default function Dropdown() {
     }, []);
 
     return (
-        <div className="relative" ref={dropDownEl}>
+        <div className="relative text-black" ref={dropDownEl}>
+            <ProfileModal open={isOpenModal}>
+                <ProfileUser
+                    setEditUser={setEditUser}
+                    onClose={() => {
+                        setIsOpenModal(false);
+                    }}
+                />
+            </ProfileModal>
+
+            <ProfileModal open={editUser}>
+                <EditUser
+                    setIsOpen={setIsOpenModal}
+                    onClose={() => {
+                        setEditUser(false);
+                    }}
+                />
+            </ProfileModal>
             <div className="cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
-                <Avatar className={"h-10"}>{authUserData?.profileImage}</Avatar>
+                <Avatar className={"h-10"} src={authUserData?.profileImage} />
             </div>
             {isOpen && (
                 <div className=" w-96 absolute bg-white right-0 translate-y-1 border rounded-xl shadow-xl p-2">
-                    <Link onClick={() => setIsOpen(false)}>
-                        <div className="flex gap-4 p-2 item-center hover:bg-gray-100 rounded-xl">
-                            <Avatar className={"h-10"}>{authUserData?.profileImage}</Avatar>
-                            <div>
-                                <div className="font-semibold text-black">
-                                    {authUserData?.firstName} {authUserData?.lastName}
-                                </div>
-                                <div className="text-sm text-gray-500">See Your Profile</div>
+                    <div
+                        className="flex gap-4 p-2 item-center hover:bg-gray-100 rounded-xl"
+                        onClick={() => setIsOpenModal(true)}
+                    >
+                        <Avatar className={"h-10"} src={authUserData?.profileImage} />
+                        <div>
+                            <div className="font-semibold text-black">
+                                {authUserData?.firstName} {authUserData?.lastName}
                             </div>
+                            <div className="text-sm text-gray-500">See Your Profile</div>
                         </div>
-                    </Link>
+                    </div>
+
                     <hr className="m-2 border" />
                     <div
                         className="flex gap-4 p-2 items-center cursor-pointer hover:bg-gray-100 rounded-xl"
