@@ -9,13 +9,12 @@ const GoogleMapInput = ({ className }) => {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     });
-    
+
     const geometry = useMemo(() => {
         return {
             lat: inputProduct.latitude,
             lng: inputProduct.longitude,
         };
-
     }, [inputProduct.latitude, inputProduct.longitude]);
 
     if (!isLoaded) {
