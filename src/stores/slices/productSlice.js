@@ -11,6 +11,15 @@ export const fetchAllProduct = createAsyncThunk("products/fetchAllProducts", asy
     }
 });
 
+export const fetchProductById = createAsyncThunk("products/fetchProductById", async (productId, thunkAPI) => {
+    try {
+        const res = await axios.get(`/product/${productId}`);
+        return res.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
 export const fetchProductByUserId = createAsyncThunk("product/fetchProductByUserId", async (userId, thunkAPI) => {
     try {
         const res = await axios.get(`/product/search/${userId}`);
@@ -49,6 +58,18 @@ export const updateProductStatus = createAsyncThunk("products/updateProductStatu
         const res = await axios.put(`/product/${payload.productId}`, body);
         return res.data;
     } catch (error) {
+        toast.error("You can add only 5 photos.");
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+export const updateProduct = createAsyncThunk("products/updateProducts", async ({ productId, formData }, thunkAPI) => {
+    try {
+        const res = await axios.patch(`/product/edit/${productId}`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        return res.data;
+    } catch (error) {
+        toast.error("You can add only 5 photos.");
         return thunkAPI.rejectWithValue(error.message);
     }
 });
@@ -102,7 +123,7 @@ export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async
             params: { address, key: "AIzaSyAD2cnxbl_ndhGSO6emJt0oSrs_Y3aRO3Q" },
             baseURL: "https://maps.googleapis.com/maps/api/geocode",
         });
-        return res.data; //return lat lng
+        return res.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
     }
@@ -124,10 +145,10 @@ const inputProduct = {
     bedroomQuantity: "",
     bathroomQuantity: "",
     homeAddress: "",
+    idsToDelete: [],
     categoryId: 0,
     typeOfCategory: "default",
 };
-
 const searchProduct = "";
 const productPrice = {
     minPrice: "",
@@ -159,9 +180,15 @@ const productSlice = createSlice({
         },
         setInputProduct: (state, { payload }) => {
             state.inputProduct[payload.fieldName] = payload.fieldValue;
-            Array.from(state.inputProduct.productImage).length > 5
+
+            Array.from(state.inputProduct?.productImage || 0).length +
+                Array.from(state.inputProduct?.image || 0).length >
+            5
                 ? (state.errorMessage = true)
                 : (state.errorMessage = false);
+        },
+        updateInputProduct: (state, { payload }) => {
+            state.inputProduct = { ...state.inputProduct, ...payload };
         },
         setInputProductCategory: (state, { payload }) => {
             state.inputProduct.categoryId = payload.id;
@@ -196,6 +223,21 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(fetchAllProduct.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(fetchProductById.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(fetchProductById.fulfilled, (state, { payload }) => {
+                state.productData = payload.product;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(fetchProductById.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });
@@ -241,6 +283,21 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(createProduct.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(updateProduct.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(updateProduct.fulfilled, (state, { payload }) => {
+                state.productByUserId = payload.product;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(updateProduct.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });
@@ -351,6 +408,7 @@ export const {
     resetSearchProduct,
     setProductPrice,
     resetProductPrice,
+    updateInputProduct,
 } = productSlice.actions;
 
 export default productSlice.reducer;
