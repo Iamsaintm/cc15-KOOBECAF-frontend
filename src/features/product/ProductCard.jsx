@@ -8,7 +8,7 @@ function ProductCard({ src = defaultProduct, productPrice = "1,050,000", product
                     <img className="h-full w-full object-cover object-center lg:h-full lg:w-full" src={src} alt="" />
                 </div>
                 <div className="p-2">
-                    <div className="text-sm text-gray-700">&#3647;{productPrice}</div>
+                    <div className="text-sm text-gray-700">&#3647; {productPrice}</div>
                     <div>{productName}</div>
                     <div className="mt-1 text-sm text-gray-500">กรุงเทพมหานคร</div>
                 </div>
