@@ -66,7 +66,7 @@ function InputAvailable({ name, data, productId, status }) {
                 <div className="flex mt-8">
                     <Button
                         onClick={updateStatus}
-                        className="bg-error-light text-white hover:bg-error-light/80"
+                        className="!bg-error-light text-white !hover:bg-error-light/80"
                         text="SOLD"
                     />
                     <Button onClick={() => setIsOpen(false)} className="!bg-empty hover:!bg-main" text="NO" />
