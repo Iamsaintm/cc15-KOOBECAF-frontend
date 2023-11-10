@@ -34,7 +34,7 @@ const router = createBrowserRouter([
             { path: "/create/rental", element: <CreateItemProductPage /> },
             { path: "/product/:productId", element: <ProductItemPage /> },
         ],
-        errorElement: <ErrorPage />,
+        // errorElement: <ErrorPage />,
     },
     {
         path: "/login",
