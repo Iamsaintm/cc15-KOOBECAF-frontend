@@ -15,6 +15,7 @@ import {
     updateInputProduct,
     updateProduct,
 } from "../stores/slices/productSlice";
+import { _ } from "lodash";
 
 function SideNavItemCreate({ header, type }) {
     const { pathname } = useLocation();
@@ -32,7 +33,7 @@ function SideNavItemCreate({ header, type }) {
     }, [productId]);
 
     useEffect(() => {
-        if (productData) {
+        if (productData && productId) {
             dispatch(updateInputProduct(productData));
         }
     }, [productData]);
@@ -40,33 +41,11 @@ function SideNavItemCreate({ header, type }) {
     const onSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
-        const newInputProduct = {};
+        let newInputProduct = {};
 
         for (let key in inputProduct) {
             if (inputProduct[key] !== "" && inputProduct[key] !== 0 && inputProduct[key]) {
                 newInputProduct[key] = inputProduct[key];
-            }
-        }
-
-        let result = {};
-        if (pathname === "/create/item") {
-            result = validateSchema(itemSchema, newInputProduct);
-            if (result) {
-                setError(result);
-            }
-        }
-
-        if (pathname === "/create/vehicle") {
-            result = validateSchema(vehicleSchema, newInputProduct);
-            if (result) {
-                setError(result);
-            }
-        }
-
-        if (pathname === "/create/rental") {
-            result = validateSchema(homeSchema, newInputProduct);
-            if (result) {
-                setError(result);
             }
         }
 
@@ -75,20 +54,111 @@ function SideNavItemCreate({ header, type }) {
         }
 
         formData.append("product", JSON.stringify(newInputProduct));
-        try {
-            if (result) setError(result);
-            if (inputProduct.id) {
-                const productId = inputProduct.id;
-                await dispatch(updateProduct({ productId, formData }));
-            } else {
-                await dispatch(createProduct({ formData }));
-            }
+
+        let result = {};
+        if (pathname === "/create/item") {
+            delete newInputProduct.idsToDelete;
+            result = validateSchema(itemSchema, newInputProduct);
+            console.log(result);
+            if (result) return setError(result);
+            await dispatch(createProduct({ formData }));
             dispatch(resetInputProduct());
             navigate("/selling");
-        } catch (error) {
-            console.error("Error dispatching createProduct:", error);
         }
+
+        if (pathname === "/create/vehicle") {
+            delete newInputProduct.idsToDelete;
+            delete newInputProduct.categoryId;
+            delete newInputProduct.typeOfCategory;
+            result = validateSchema(vehicleSchema, newInputProduct);
+            console.log(result);
+            if (result) return setError(result);
+            await dispatch(createProduct({ formData }));
+            dispatch(resetInputProduct());
+            navigate("/selling");
+        }
+
+        if (pathname === "/create/rental") {
+            delete newInputProduct.idsToDelete;
+            delete newInputProduct.categoryId;
+            delete newInputProduct.typeOfCategory;
+            result = validateSchema(homeSchema, newInputProduct);
+            console.log(result);
+            if (result) return setError(result);
+            await dispatch(createProduct({ formData }));
+            dispatch(resetInputProduct());
+            navigate("/selling");
+        }
+
+        if (pathname === `/update/item/${productId}`) {
+            delete newInputProduct.idsToDelete;
+            delete newInputProduct.userId;
+            delete newInputProduct.usersId;
+            delete newInputProduct.createdAt;
+            delete newInputProduct.image;
+            delete newInputProduct.id;
+            delete newInputProduct.status;
+
+            result = validateSchema(itemSchema, newInputProduct);
+            console.log(result);
+            if (result) return setError(result);
+            await dispatch(updateProduct({ productId, formData }));
+
+            dispatch(resetInputProduct());
+            newInputProduct = {};
+            navigate("/selling");
+        }
+
+        if (pathname === `/update/vehicle/${productId}`) {
+            delete newInputProduct.categoryId;
+            delete newInputProduct.id;
+            delete newInputProduct.status;
+            delete newInputProduct.typeOfCategory;
+            delete newInputProduct.idsToDelete;
+            delete newInputProduct.image;
+            delete newInputProduct.userId;
+            delete newInputProduct.usersId;
+            delete newInputProduct.createdAt;
+
+            result = validateSchema(vehicleSchema, newInputProduct);
+            console.log(result);
+            if (result) return setError(result);
+            await dispatch(updateProduct({ productId, formData }));
+
+            dispatch(resetInputProduct());
+            newInputProduct = {};
+            navigate("/selling");
+        }
+
+        if (pathname === `/update/rental/${productId}`) {
+            delete newInputProduct.idsToDelete;
+            delete newInputProduct.userId;
+            delete newInputProduct.usersId;
+            delete newInputProduct.createdAt;
+            delete newInputProduct.image;
+            delete newInputProduct.categoryId;
+            delete newInputProduct.id;
+            delete newInputProduct.status;
+            delete newInputProduct.typeOfCategory;
+            result = validateSchema(homeSchema, newInputProduct);
+            console.log(result);
+            if (result) return setError(result);
+            await dispatch(updateProduct({ productId, formData }));
+            dispatch(resetInputProduct());
+            newInputProduct = {};
+            navigate("/selling");
+        }
+
+        // try {
+        //     if (result) return setError(result);
+        //     await dispatch(createProduct({ formData }));
+        //     dispatch(resetInputProduct());
+        //     navigate("/selling");
+        // } catch (error) {
+        //     console.error("Error dispatching createProduct:", error);
+        // }
     };
+
     return (
         <>
             <form onSubmit={onSubmit} className="flex flex-col gap-2 h-screen">

@@ -8,6 +8,7 @@ const itemSchema = Joi.object({
     latitude: Joi.required(),
     longitude: Joi.required(),
     categoryId: Joi.required(),
+    description: Joi.string(),
 });
 
 const vehicleSchema = Joi.object({
@@ -20,6 +21,7 @@ const vehicleSchema = Joi.object({
     latitude: Joi.required(),
     longitude: Joi.required(),
     productPrice: Joi.number().min(0).integer().required(),
+    description: Joi.string(),
 });
 
 const homeSchema = Joi.object({
@@ -33,6 +35,7 @@ const homeSchema = Joi.object({
     homeAddress: Joi.string().required(),
     latitude: Joi.required(),
     longitude: Joi.required(),
+    description: Joi.string(),
 });
 const filterPriceSchema = Joi.object({
     minPrice: Joi.number().min(0).integer(),
