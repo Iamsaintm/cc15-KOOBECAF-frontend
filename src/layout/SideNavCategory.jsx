@@ -35,10 +35,11 @@ function SideNavCategory() {
                 product[key] = productPrice[key];
             }
         }
-
         result = validateSchema(filterPriceSchema, product);
         if (result) {
             setError(result);
+        } else {
+            setError({});
         }
         dispatch(setProductPrice({ fieldName, fieldValue }));
     };
