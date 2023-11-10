@@ -6,12 +6,10 @@ import { debounce } from "lodash";
 import { DatePicker, ConfigProvider } from "antd";
 import { fetchAllCategory } from "../../stores/slices/categorySlice";
 import { useNavigate } from "react-router-dom";
-
 import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
 import InputErrorMessage from "../auth/InputErrorMessage";
 
-import { useNavigate } from "react-router-dom";
 function RequiredContainer({ type, error }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();

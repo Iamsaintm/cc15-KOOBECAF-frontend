@@ -2,13 +2,10 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductPrice } from "../stores/slices/productSlice";
-
 import Button from "../components/Button";
 import Search from "../features/filter/Search";
 import Categories from "../features/filter/Categories";
 import InputForm from "../components/InputForm";
-import { useDispatch, useSelector } from "react-redux";
-import { setProductPrice } from "../stores/slices/productSlice";
 import { useEffect, useState } from "react";
 import validateSchema from "../utils/validate-schema";
 import { filterPriceSchema } from "../utils/product-validator";
