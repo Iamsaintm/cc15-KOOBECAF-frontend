@@ -41,6 +41,18 @@ export const createProduct = createAsyncThunk("products/createProducts", async (
     }
 });
 
+export const updateProductStatus = createAsyncThunk("products/updateProductStatus", async (payload, thunkAPI) => {
+    try {
+        const body = {
+            status: payload.fieldValue,
+        };
+        const res = await axios.put(`/product/${payload.productId}`, body);
+        return res.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
 export const deleteProduct = createAsyncThunk("/product/deleteProduct", async (productId, thunkAPI) => {
     try {
         const res = await axios.delete(`/product/${productId}`);
@@ -82,6 +94,7 @@ export const wishListProduct = createAsyncThunk("products/wishListProduct", asyn
         return thunkAPI.rejectWithValue(error.message);
     }
 });
+
 export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async (address) => {
     try {
         const newAxios = axios.create({});
@@ -276,6 +289,7 @@ const productSlice = createSlice({
                 state.loading = false;
                 state.error = payload;
             });
+
         builder
             .addCase(wishListProduct.pending, (state, { payload }) => {
                 state.loading = true;
@@ -289,7 +303,9 @@ const productSlice = createSlice({
             .addCase(wishListProduct.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
-            })
+            });
+
+        builder
             .addCase(fetchGeocoding.pending, (state, { payload }) => {
                 state.loading = true;
                 state.error = "";
@@ -305,6 +321,20 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(fetchGeocoding.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(updateProductStatus.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(updateProductStatus.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(updateProductStatus.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });

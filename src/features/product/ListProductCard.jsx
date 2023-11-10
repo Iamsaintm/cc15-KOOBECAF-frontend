@@ -3,9 +3,16 @@ import { ImBin2 } from "react-icons/im";
 import { FaCog } from "react-icons/fa";
 import Modal from "../../components/Modal";
 import DeleteProductForm from "./DeleteProductForm";
+import InputAvailable from "../../components/InputAvailable";
 
 function ListProductCard({ src, productPrice, productName, status, productDetail, productId }) {
     const [isOpen, setIsOpen] = useState(false);
+
+    const statusAvailable = [
+        { id: 1, status: "AVAILABLE" },
+        { id: 2, status: "SOLD" },
+        { id: 3, status: "NOT_AVAILABLE" },
+    ];
 
     return (
         <>
@@ -21,8 +28,15 @@ function ListProductCard({ src, productPrice, productName, status, productDetail
                             <div className="text-sm">กรุงเทพมหานคร</div>
                         </div>
                         <div className="flex justify-between ">
-                            <div className="">
-                                {status === "AVAILABLE" && (
+                            <div className="flex">
+                                <InputAvailable
+                                    productDetail={productDetail}
+                                    productId={productId}
+                                    status={status}
+                                    data={statusAvailable}
+                                    name={"status"}
+                                />
+                                {/* {status === "AVAILABLE" && (
                                     <div className="w-72 py-1.5 bg-available text-xl rounded-md text-white flex justify-center">
                                         {status}
                                     </div>
@@ -36,7 +50,7 @@ function ListProductCard({ src, productPrice, productName, status, productDetail
                                     <div className="w-72 py-1.5  bg-second text-xl rounded-md text-white flex justify-center">
                                         {status.replace(/_/g, " ")}
                                     </div>
-                                )}
+                                )} */}
                             </div>
 
                             <div className="flex gap-6 items-center cursor-pointer">
