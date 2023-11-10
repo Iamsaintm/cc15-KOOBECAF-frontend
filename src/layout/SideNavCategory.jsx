@@ -1,8 +1,11 @@
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setProductPrice } from "../stores/slices/productSlice";
+
 import Button from "../components/Button";
 import Search from "../features/filter/Search";
 import Categories from "../features/filter/Categories";
-import { useLocation } from "react-router-dom";
 import InputForm from "../components/InputForm";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductPrice } from "../stores/slices/productSlice";

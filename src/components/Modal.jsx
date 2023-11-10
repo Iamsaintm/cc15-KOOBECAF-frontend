@@ -1,4 +1,4 @@
-function Modal({ title, children, maxWidth = 27, open, onClose }) {
+function Modal({ title, children, maxWidth = 27, open, onClose, className }) {
     return (
         <>
             {open && (
@@ -12,7 +12,7 @@ function Modal({ title, children, maxWidth = 27, open, onClose }) {
                             >
                                 <div className="flex justify-between p-4 text-xl border-b">
                                     <div className="invisible">X</div>
-                                    <div className="text-3xl">{title}</div>
+                                    <div className={`text-3xl ${className}`}>{title}</div>
                                     <div className="text-gray-500 cursor-pointer" onClick={onClose}>
                                         X
                                     </div>

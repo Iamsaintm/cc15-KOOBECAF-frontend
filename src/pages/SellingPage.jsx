@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { FaSistrix } from "react-icons/fa6";
-import Button from "../components/Button";
-import ListProductContainer from "../features/product/ListProductContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByUserId, resetSearchProduct } from "../stores/slices/productSlice";
 import { useEffect } from "react";
+import { fetchAllCategory } from "../stores/slices/categorySlice";
+
+import Button from "../components/Button";
+import ListProductContainer from "../features/product/ListProductContainer";
 import Loading from "../components/Loading";
 import Search from "../features/filter/Search";
-import { fetchAllCategory } from "../stores/slices/categorySlice";
 
 function SellingPage() {
     const dispatch = useDispatch();

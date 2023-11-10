@@ -15,7 +15,6 @@ import {
     updateInputProduct,
     updateProduct,
 } from "../stores/slices/productSlice";
-import { _ } from "lodash";
 
 function SideNavItemCreate({ header, type }) {
     const { pathname } = useLocation();
@@ -25,6 +24,7 @@ function SideNavItemCreate({ header, type }) {
     const { authUserData } = useSelector((state) => state.auth);
     const [error, setError] = useState({});
     const { inputProduct, productData } = useSelector((state) => state.product);
+    const { categoryData } = useSelector((state) => state.category);
 
     useEffect(() => {
         if (productId) {
@@ -33,7 +33,10 @@ function SideNavItemCreate({ header, type }) {
     }, [productId]);
 
     useEffect(() => {
-        if (productData && productId) {
+        if (inputProduct.id && productData && productId) {
+            const { typeOfCategory } = categoryData?.find((x) => x.id === productData.categoryId);
+            dispatch(updateInputProduct({ ...productData, typeOfCategory }));
+        } else {
             dispatch(updateInputProduct(productData));
         }
     }, [productData]);
@@ -148,15 +151,6 @@ function SideNavItemCreate({ header, type }) {
             newInputProduct = {};
             navigate("/selling");
         }
-
-        // try {
-        //     if (result) return setError(result);
-        //     await dispatch(createProduct({ formData }));
-        //     dispatch(resetInputProduct());
-        //     navigate("/selling");
-        // } catch (error) {
-        //     console.error("Error dispatching createProduct:", error);
-        // }
     };
 
     return (
