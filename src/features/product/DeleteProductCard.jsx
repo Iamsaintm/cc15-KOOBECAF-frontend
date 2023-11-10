@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, fetchProductByUserId } from "../../stores/slices/productSlice";
@@ -24,7 +25,7 @@ function DeleteProductCard({ productDetail, productId, onClose }) {
             <hr className="border" />
             <div className="flex justify-end">
                 <div className="flex px-3">
-                    <Button className="bg-main-light hover:bg-main-dark " onClick={onClose} text={"Cancel"} />
+                    <Button className="bg-main-light hover:bg-main-dark" onClick={onClose} text={"Cancel"} />
                 </div>
                 <div className="flex">
                     <Button

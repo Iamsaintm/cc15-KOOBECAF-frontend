@@ -33,7 +33,7 @@ function SellingPage() {
                                 <div className="py-3 px-6 w-full mt-16">
                                     <div className="flex items-center bg-white justify-between rounded-lg">
                                         <div className="text-xl font-semibold pl-5">Your listings</div>
-                                        <div className="pr-5">
+                                        <div className="pr-5 ">
                                             <Search
                                                 className="top-[100px] right-[231px]"
                                                 nameTagSearch=""
@@ -52,8 +52,8 @@ function SellingPage() {
                                                 <div className="pt-5 text-xl">
                                                     When you start selling, your listings will appear here.
                                                 </div>
-                                                <div className="flex justify-center w-full py-3 pt-5">
-                                                    <Link className="w-full px-24" to={"/create"}>
+                                                <div className="flex justify-center w-full pt-5">
+                                                    <Link to={"/create"}>
                                                         <Button text={"Create new listing"} />
                                                     </Link>
                                                 </div>

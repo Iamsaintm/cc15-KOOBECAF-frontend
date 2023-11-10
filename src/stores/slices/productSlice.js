@@ -134,8 +134,8 @@ const inputProduct = {
     productPrice: "",
     productImage: [],
     description: " ",
-    latitude: 11.11,
-    longitude: 11.11,
+    latitude: "",
+    longitude: "",
     vehicleType: "",
     vehicleBrand: "",
     vehicleModel: "",
@@ -147,7 +147,7 @@ const inputProduct = {
     homeAddress: "",
     idsToDelete: [],
     categoryId: 0,
-    typeOfCategory: "default",
+    typeOfCategory: "",
 };
 const searchProduct = "";
 const productPrice = {
