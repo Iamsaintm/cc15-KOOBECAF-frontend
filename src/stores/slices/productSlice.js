@@ -133,7 +133,7 @@ const inputProduct = {
     productName: "",
     productPrice: "",
     productImage: [],
-    description: "",
+    description: " ",
     latitude: 11.11,
     longitude: 11.11,
     vehicleType: "",
