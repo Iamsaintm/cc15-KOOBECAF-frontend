@@ -1,9 +1,6 @@
-import Avatar from "../components/Avatar";
 import { useDispatch, useSelector } from "react-redux";
-import PhotoUpload from "../features/product/PhotoUpload";
-import RequiredContainer from "../features/product/RequiredContainer";
-import Button from "../components/Button";
-import DescriptionContainer from "../features/product/DescriptionContainer";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 import {
     createProduct,
     fetchProductById,
@@ -11,8 +8,12 @@ import {
     updateInputProduct,
     updateProduct,
 } from "../stores/slices/productSlice";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+
+import Avatar from "../components/Avatar";
+import PhotoUpload from "../features/product/PhotoUpload";
+import RequiredContainer from "../features/product/RequiredContainer";
+import Button from "../components/Button";
+import DescriptionContainer from "../features/product/DescriptionContainer";
 
 function SideNavItemCreate({ header, type }) {
     const dispatch = useDispatch();

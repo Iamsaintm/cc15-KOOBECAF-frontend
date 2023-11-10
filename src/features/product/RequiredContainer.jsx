@@ -5,9 +5,10 @@ import { fetchGeocoding } from "../../stores/slices/productSlice";
 import { debounce } from "lodash";
 import { DatePicker, ConfigProvider } from "antd";
 import { fetchAllCategory } from "../../stores/slices/categorySlice";
+import { useNavigate } from "react-router-dom";
+
 import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
-import { useNavigate } from "react-router-dom";
 
 function RequiredContainer({ type }) {
     const navigate = useNavigate();
@@ -88,7 +89,7 @@ function RequiredContainer({ type }) {
     );
 
     const handleDebounceInputLocation = useMemo(
-        () => debounce(onChangeInputLocation, 1000, { leading: false }),
+        () => debounce(onChangeInputLocation, 3000, { leading: false }),
         [onChangeInputLocation],
     );
 
@@ -134,14 +135,13 @@ function RequiredContainer({ type }) {
                 <ConfigProvider
                     theme={{
                         token: {
-                            colorTextPlaceholder: "#000000",
+                            colorTextPlaceholder: "#6b7280",
                         },
                     }}
                 >
                     <DatePicker
-                        className="mt-4 rounded-full outline-none border-2 px-4 py-[9px] focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
+                        className="mt-4 rounded-full outline-none border-2 px-4 py-[9px]  focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
                         onChange={onChangeInputYear}
-                        placeholder={inputProduct.vehicleYears || "Select year"}
                         picker="year"
                     />
                 </ConfigProvider>

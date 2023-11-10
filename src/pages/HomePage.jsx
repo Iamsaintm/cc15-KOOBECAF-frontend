@@ -1,9 +1,9 @@
-import ProductContainer from "../features/product/ProductContainer";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchAllProduct } from "../stores/slices/productSlice";
 import { getAccessToken } from "../utils/local-storage";
 import { fetchAllCategory } from "../stores/slices/categorySlice";
+import ProductContainer from "../features/product/ProductContainer";
 
 function HomePage() {
     const dispatch = useDispatch();

@@ -110,7 +110,7 @@ export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async
             params: { address, key: "AIzaSyAD2cnxbl_ndhGSO6emJt0oSrs_Y3aRO3Q" },
             baseURL: "https://maps.googleapis.com/maps/api/geocode",
         });
-        return res.data; //return lat lng
+        return res.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
     }
