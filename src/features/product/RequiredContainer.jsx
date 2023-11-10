@@ -5,9 +5,10 @@ import { fetchGeocoding } from "../../stores/slices/productSlice";
 import { debounce } from "lodash";
 import { DatePicker, ConfigProvider } from "antd";
 import { fetchAllCategory } from "../../stores/slices/categorySlice";
+import { useNavigate } from "react-router-dom";
+
 import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
-import { useNavigate } from "react-router-dom";
 
 function RequiredContainer({ type }) {
     const navigate = useNavigate();
@@ -80,15 +81,15 @@ function RequiredContainer({ type }) {
 
     const onChangeInputLocation = useCallback(
         async (e) => {
-            if (typeof e.target.value === "undefined") return; //ออกนอก Fn เลย if you use useMemo ต้องส่งค่าสักอย่าง " " , undefined
-            if (e.target.value === "") return; //ออกนอก Fn เลย
+            if (typeof e.target.value === "undefined") return;
+            if (e.target.value === "") return;
             dispatch(fetchGeocoding(e.target.value));
         },
         [dispatch],
     );
 
     const handleDebounceInputLocation = useMemo(
-        () => debounce(onChangeInputLocation, 1000, { leading: false }),
+        () => debounce(onChangeInputLocation, 3000, { leading: false }),
         [onChangeInputLocation],
     );
 
@@ -116,9 +117,15 @@ function RequiredContainer({ type }) {
         </>
     );
 
-    if (type === "/create/vehicle") {
+    if (type === "/create/vehicle" || type.includes("/update/vehicle")) {
         inputForm = (
             <>
+                <InputForm
+                    value={inputProduct.productName}
+                    onChange={onChangeInput}
+                    name={"productName"}
+                    placeholder={"Title"}
+                />
                 <InputDropdown
                     value={inputProduct.vehicleType}
                     data={newVehicleTypeData}
@@ -161,9 +168,15 @@ function RequiredContainer({ type }) {
         );
     }
 
-    if (type === "/create/rental") {
+    if (type === "/create/rental" || type.includes("/update/rental")) {
         inputForm = (
             <>
+                <InputForm
+                    value={inputProduct.productName}
+                    onChange={onChangeInput}
+                    name={"productName"}
+                    placeholder={"Title"}
+                />
                 <InputDropdown
                     value={inputProduct.homeProperty}
                     data={newHomePropertyData}

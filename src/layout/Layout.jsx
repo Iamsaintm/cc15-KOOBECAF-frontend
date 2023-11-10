@@ -46,7 +46,7 @@ function Layout() {
         );
     }
 
-    if (pathname === "/create/item") {
+    if (pathname === "/create/item" || pathname.includes("/update/item")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
                 <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
@@ -64,7 +64,7 @@ function Layout() {
         );
     }
 
-    if (pathname === "/create/vehicle") {
+    if (pathname === "/create/vehicle" || pathname.includes("/update/vehicle")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
                 <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
@@ -82,7 +82,7 @@ function Layout() {
         );
     }
 
-    if (pathname === "/create/rental") {
+    if (pathname === "/create/rental" || pathname.includes("/update/rental")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
                 <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
@@ -143,6 +143,7 @@ function Layout() {
                     <Header />
                 </div>
                 <div className="flex w-full">
+                    <div className="h-16"></div>
                     <div className="w-full">
                         <Outlet />
                     </div>
@@ -150,6 +151,7 @@ function Layout() {
             </div>
         );
     }
+
     if (pathname === "/wishlist") {
         sideNav = (
             <div className="flex flex-col h-full w-full">

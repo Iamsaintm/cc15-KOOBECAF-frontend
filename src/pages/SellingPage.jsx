@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { FaSistrix } from "react-icons/fa6";
-import Button from "../components/Button";
-import ListProductContainer from "../features/product/ListProductContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByUserId, resetSearchProduct } from "../stores/slices/productSlice";
 import { useEffect } from "react";
+import { fetchAllCategory } from "../stores/slices/categorySlice";
+
+import Button from "../components/Button";
+import ListProductContainer from "../features/product/ListProductContainer";
 import Loading from "../components/Loading";
 import Search from "../features/filter/Search";
 
@@ -14,6 +16,7 @@ function SellingPage() {
     const { productByUserId, loading } = useSelector((state) => state.product);
     useEffect(() => {
         dispatch(fetchProductByUserId(authUserData?.id));
+        dispatch(fetchAllCategory());
         dispatch(resetSearchProduct());
     }, [authUserData]);
     return (
