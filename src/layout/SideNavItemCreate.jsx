@@ -21,6 +21,7 @@ function SideNavItemCreate({ header, type }) {
     const { productId } = useParams();
     const { authUserData } = useSelector((state) => state.auth);
     const { inputProduct, productData } = useSelector((state) => state.product);
+    const { categoryData } = useSelector((state) => state.category);
 
     useEffect(() => {
         if (productId) {
@@ -29,7 +30,10 @@ function SideNavItemCreate({ header, type }) {
     }, [productId]);
 
     useEffect(() => {
-        if (productData) {
+        if (inputProduct.id) {
+            const { typeOfCategory } = categoryData?.find((x) => x.id === productData.categoryId);
+            dispatch(updateInputProduct({ ...productData, typeOfCategory }));
+        } else {
             dispatch(updateInputProduct(productData));
         }
     }, [productData]);
