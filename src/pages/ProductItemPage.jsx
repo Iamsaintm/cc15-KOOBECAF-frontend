@@ -3,15 +3,17 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { BsFillChatDotsFill, BsFillBookmarkFill } from "react-icons/bs";
 import { fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
-import GoogleMap from "../features/product/GoogleMap";
-import Avatar from "../components/Avatar";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import formatTimeAgo from "../utils/time-ago";
 import { FaArrowLeft, FaArrowRight, FaClock, FaHouse, FaWarehouse } from "react-icons/fa6";
 import { HiMiniBuildingOffice2 } from "react-icons/hi2";
 import { BiSolidBuildingHouse } from "react-icons/bi";
+
 import Slider from "react-slick";
+import formatTimeAgo from "../utils/time-ago";
+import GoogleMap from "../features/product/GoogleMap";
+import Avatar from "../components/Avatar";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function ProductItemPage() {
     const dispatch = useDispatch();

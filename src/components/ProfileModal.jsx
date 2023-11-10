@@ -10,7 +10,7 @@ function ProfileModal({ children, maxWidth = 40, open, onClose }) {
                                 className="rounded-lg w-full bg-second-light shadow-2xl"
                                 style={{ maxWidth: `${maxWidth}rem` }}
                             >
-                                <div className="">{children}</div>
+                                <div>{children}</div>
                             </div>
                         </div>
                     </div>

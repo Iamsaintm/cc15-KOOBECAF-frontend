@@ -17,22 +17,25 @@ function ProductPreview() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        if (pathname === "/create/rental") {
+        if (pathname === "/create/rental" || pathname.includes("/update/rental")) {
             const id = 2;
             const fieldValue = "PROPERTY_FOR_RENT";
             dispatch(setInputProductCategory({ id, fieldValue }));
         }
-        if (pathname === "/create/vehicle") {
+        if (pathname === "/create/vehicle" || pathname.includes("/update/vehicle")) {
             const id = 1;
             const fieldValue = "VEHICLES";
             dispatch(setInputProductCategory({ id, fieldValue }));
         }
-    }, []);
+    }, [authUserData]);
 
-    let newFile = null;
+    let newFile = [];
 
     if (inputProduct.productImage) {
-        newFile = Array.from(inputProduct.productImage);
+        newFile = [...newFile, ...Array.from(inputProduct.productImage)];
+    }
+    if (inputProduct.image) {
+        newFile = [...newFile, ...inputProduct.image];
     }
 
     function NextArrow(props) {
@@ -70,7 +73,9 @@ function ProductPreview() {
                     <img
                         className={`rounded-md ${i === currentSlide ? "border border-gray-100" : "opacity-50"}`}
                         id={i}
-                        src={URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }))}
+                        src={
+                            newFile[i]?.image || URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }))
+                        }
                     />
                 </div>
             );
@@ -97,15 +102,15 @@ function ProductPreview() {
                     </div>
                     <div className="grid grid-cols-2 border rounded-lg ">
                         <div className="flex items-center justify-center w-full overflow-clip drop-shadow-md bg-cover rounded-lg">
-                            {inputProduct.productImage.length !== 0 ? (
+                            {newFile.length !== 0 ? (
                                 <>
                                     <div className="relative w-full -z-20">
                                         <Slider {...settings}>
-                                            {newFile.map((x, idx) => (
+                                            {newFile.map((file, idx) => (
                                                 <div key={idx} className="!flex justify-center bg-black/80">
                                                     <img
                                                         className="w-[400px] aspect-square object-contain rounded-md"
-                                                        src={URL.createObjectURL(inputProduct.productImage[idx])}
+                                                        src={file?.image || URL.createObjectURL(file)}
                                                     />
                                                 </div>
                                             ))}
@@ -114,11 +119,14 @@ function ProductPreview() {
                                             <img
                                                 className="w-full aspect-square object-cover"
                                                 id={currentSlide}
-                                                src={URL.createObjectURL(
-                                                    new Blob([inputProduct.productImage[currentSlide]], {
-                                                        type: "application/zip",
-                                                    }),
-                                                )}
+                                                src={
+                                                    newFile[currentSlide]?.image ||
+                                                    URL.createObjectURL(
+                                                        new Blob([inputProduct.productImage[currentSlide]], {
+                                                            type: "application/zip",
+                                                        }),
+                                                    )
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -160,7 +168,7 @@ function ProductPreview() {
                             <div>
                                 <p className="text-lg mb-2">Seller Information</p>
                                 <div className="flex gap-x-2 items-center">
-                                    <Avatar  src={authUserData?.profileImage} />
+                                    <Avatar src={authUserData?.profileImage} />
                                     <p>
                                         {authUserData?.firstName} {authUserData?.lastName}
                                     </p>

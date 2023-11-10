@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { fetchProductByCategory, resetProductPrice, resetSearchProduct } from "../stores/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
-import ProductByCategoryContainer from "../features/product/ProductByCategoryContainer";
 import { useLocation } from "react-router-dom";
 import { fetchAllCategory } from "../stores/slices/categorySlice";
+import ProductByCategoryContainer from "../features/product/ProductByCategoryContainer";
 
 function CategoryPage() {
     const dispatch = useDispatch();

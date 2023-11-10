@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { FaArrowLeft } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
 import { BsFillBookmarkFill } from "react-icons/bs";
+
 import CategorieItem from "../features/filter/CategorieItem";
 import Avatar from "../components/Avatar";
 import ProfileModal from "../components/ProfileModal";
@@ -38,7 +39,7 @@ function SideNavWishlist() {
                 <hr className="border" />
 
                 <CategorieItem
-                    icons={<Avatar src={authUserData?.profileImage}></Avatar>}
+                    icons={<Avatar src={authUserData?.profileImage} className="" />}
                     onClick={() => {
                         setIsOpen(true);
                     }}

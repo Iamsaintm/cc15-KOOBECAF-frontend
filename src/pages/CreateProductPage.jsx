@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { fetchAllCategory } from "../stores/slices/categorySlice";
 import { useDispatch } from "react-redux";
 import { fetchDataUser } from "../stores/slices/authSlice";

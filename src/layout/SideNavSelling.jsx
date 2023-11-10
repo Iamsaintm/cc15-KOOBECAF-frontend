@@ -45,7 +45,7 @@ function SideNavSelling() {
 
                 <div className="flex flex-col gap-2">
                     <CategorieItem
-                        icons={<Avatar src={authUserData?.profileImage}></Avatar>}
+                        icons={<Avatar src={authUserData?.profileImage} className="" />}
                         onClick={() => {
                             setIsOpen(true);
                         }}
@@ -70,7 +70,7 @@ function SideNavSelling() {
                     </ProfileModal>
                 </div>
 
-                <div className="flex flex-col gap-2 overflow-auto h-screen pb-56 px-2"/>
+                <div className="flex flex-col gap-2 overflow-auto h-screen pb-56 px-2" />
             </div>
         </>
     );

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addAccessToken, removeAccessToken } from "../../utils/local-storage";
-import axios from "../../config/axios";
 import { toast } from "react-toastify";
+import axios from "../../config/axios";
 
 export const registerUser = createAsyncThunk("auths/registerUsers", async (payload, thunkAPI) => {
     try {

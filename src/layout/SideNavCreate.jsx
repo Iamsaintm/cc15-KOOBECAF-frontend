@@ -2,6 +2,7 @@ import { FaTag, FaTags } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+
 import CategorieItem from "../features/filter/CategorieItem";
 import ProfileModal from "../components/ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
@@ -36,7 +37,7 @@ function SideNavCreate() {
                 />
 
                 <CategorieItem
-                    icons={<Avatar src={authUserData?.profileImage} />}
+                    icons={<Avatar src={authUserData?.profileImage} className="" />}
                     onClick={() => {
                         setIsOpen(true);
                     }}
