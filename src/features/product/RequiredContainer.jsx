@@ -18,6 +18,8 @@ function RequiredContainer({ type, error }) {
     const { categoryData } = useSelector((state) => state.category);
     const { inputProduct } = useSelector((state) => state.product);
 
+    console.log(categoryData);
+
     useEffect(() => {
         dispatch(fetchAllCategory());
     }, [authUserData]);
@@ -46,9 +48,19 @@ function RequiredContainer({ type, error }) {
         { id: 2, homeProperty: "SALE" },
     ];
 
-    const newCategoryData = Array.isArray(categoryData)
-        ? [{ id: 0, typeOfCategory: "Category" }, ...categoryData]
-        : [{ id: 0, typeOfCategory: "Category" }];
+    let newCategoryData = null;
+
+    if (type.split("/")[1] + type.split("/")[2] === "updateitem") {
+        let categoryDataUpdate = categoryData?.filter((x) => x.id !== 1 && x.id !== 2);
+        newCategoryData = Array.isArray(categoryDataUpdate)
+            ? [...categoryDataUpdate]
+            : [{ id: 0, typeOfCategory: "Category" }];
+    } else {
+        newCategoryData = Array.isArray(categoryData)
+            ? [{ id: 0, typeOfCategory: "Category" }, ...categoryData]
+            : [{ id: 0, typeOfCategory: "Category" }];
+    }
+
     const newVehicleTypeData = [{ id: 0, vehicleType: "Vehicle type" }, ...vehicleTypes];
     const newHomeTypeData = [{ id: 0, homeType: "Property type" }, ...homeTypes];
     const newHomePropertyData = [{ id: 0, homeProperty: "Home for Sale or Rent" }, ...homePropertys];

@@ -33,17 +33,19 @@ function ProductByCategoryContainer() {
             ) : (
                 <>
                     {product && product?.length > 0 ? (
-                        product?.map((data) => (
-                            <Link key={data.id} to={`/product/${data.id}`} state={{ productDetail: data }}>
-                                <ProductCard
-                                    key={data.id}
-                                    src={data.image[0].image}
-                                    productPrice={data.productPrice}
-                                    productName={data.productName}
-                                    productDetail={data}
-                                />
-                            </Link>
-                        ))
+                        product?.map((data) =>
+                            data.status === "AVAILABLE" ? (
+                                <Link key={data.id} to={`/product/${data.id}`} state={{ productDetail: data }}>
+                                    <ProductCard
+                                        key={data.id}
+                                        src={data.image[0].image}
+                                        productPrice={data.productPrice}
+                                        productName={data.productName}
+                                        productDetail={data}
+                                    />
+                                </Link>
+                            ) : null,
+                        )
                     ) : (
                         <div>Product Not Found</div>
                     )}

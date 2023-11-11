@@ -14,6 +14,7 @@ function ProductContainer() {
             el.productName.toLowerCase().includes(searchProduct.toLowerCase().trim()) ? el : null,
         );
     }
+
     return (
         <>
             {loading ? (
@@ -21,21 +22,23 @@ function ProductContainer() {
             ) : (
                 <>
                     {product && product.length > 0 ? (
-                        product.map((data) => (
-                            <Link
-                                key={data.id}
-                                onClick={() => addPath(pathname)}
-                                to={`/product/${data.id}`}
-                                state={{ productDetail: data }}
-                            >
-                                <ProductCard
-                                    src={data.image[0]?.image}
-                                    productPrice={data.productPrice}
-                                    productName={data.productName}
-                                    productDetail={data}
-                                />
-                            </Link>
-                        ))
+                        product.map((data) =>
+                            data.status === "AVAILABLE" ? (
+                                <Link
+                                    key={data.id}
+                                    onClick={() => addPath(pathname)}
+                                    to={`/product/${data.id}`}
+                                    state={{ productDetail: data }}
+                                >
+                                    <ProductCard
+                                        src={data.image[0]?.image}
+                                        productPrice={data.productPrice}
+                                        productName={data.productName}
+                                        productDetail={data}
+                                    />
+                                </Link>
+                            ) : null,
+                        )
                     ) : (
                         <div>Product not Found</div>
                     )}
