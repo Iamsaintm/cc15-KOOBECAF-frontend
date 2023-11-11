@@ -2,8 +2,10 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import Loading from "../../components/Loading";
+import { addPath } from "../../utils/local-storage";
 
 function ProductContainer() {
+    const { pathname } = useLocation();
     const { productData, loading, searchProduct } = useSelector((state) => state.product);
 
     let product = productData;
@@ -20,7 +22,12 @@ function ProductContainer() {
                 <>
                     {product && product.length > 0 ? (
                         product.map((data) => (
-                            <Link key={data.id} to={`/product/${data.id}`} state={{ productDetail: data }}>
+                            <Link
+                                key={data.id}
+                                onClick={() => addPath(pathname)}
+                                to={`/product/${data.id}`}
+                                state={{ productDetail: data }}
+                            >
                                 <ProductCard
                                     src={data.image[0]?.image}
                                     productPrice={data.productPrice}
