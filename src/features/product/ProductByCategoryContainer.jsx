@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import Loading from "../../components/Loading";
+import { addPath } from "../../utils/local-storage";
 
 function ProductByCategoryContainer() {
+    const { pathname } = useLocation();
     const { productByCategory, loading, searchProduct, productPrice } = useSelector((state) => state.product);
 
     let product = productByCategory;
@@ -35,7 +37,12 @@ function ProductByCategoryContainer() {
                     {product && product?.length > 0 ? (
                         product?.map((data) =>
                             data.status === "AVAILABLE" ? (
-                                <Link key={data.id} to={`/product/${data.id}`} state={{ productDetail: data }}>
+                                <Link
+                                    key={data.id}
+                                    onClick={() => addPath(pathname)}
+                                    to={`/product/${data.id}`}
+                                    state={{ productDetail: data }}
+                                >
                                     <ProductCard
                                         key={data.id}
                                         src={data.image[0].image}

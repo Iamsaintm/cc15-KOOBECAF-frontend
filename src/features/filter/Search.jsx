@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchProduct } from "../../stores/slices/productSlice";
 import SearchInput from "./SearchInput";
 
-function Search({ nameTagSearch = "Marketplace", className, div = "pt-10", placeholder = "ค้นหา Marketplace" }) {
+function Search({ nameTagSearch = "Marketplace", className, div, placeholder = "ค้นหา Marketplace" }) {
     const dispatch = useDispatch();
     const { searchProduct } = useSelector((state) => state.product);
     const onChangeInput = (e) => {
@@ -13,7 +13,7 @@ function Search({ nameTagSearch = "Marketplace", className, div = "pt-10", place
 
     return (
         <>
-            <div className={`pb-2 px-4 ${div}`}>
+            <div className={`w-full relative px-4 ${div}`}>
                 <div className="flex justify-between">
                     <div className="text-2xl font-bold pl-2">{nameTagSearch}</div>
                 </div>

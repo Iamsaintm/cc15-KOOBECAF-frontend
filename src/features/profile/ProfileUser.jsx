@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { FaEdit } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 
@@ -7,13 +6,13 @@ import Avatar from "../../components/Avatar";
 import InputDropdown from "../../components/InputDropdown";
 import CoverImage from "../../components/CoverImage";
 import ProductCardUser from "../../features/profile/ProductCardUser";
+import { addPath } from "../../utils/local-storage";
+import Search from "../filter/Search";
 
 export default function ProfileUser({ onClose, setEditUser }) {
     const { authUserData } = useSelector((state) => state.auth);
-    const [isOpen, setIsOpen] = useState(false);
-    const { productData, loading, searchProduct, productByUserId } = useSelector((state) => state.product);
-
-    const dispatch = useDispatch();
+    const { pathname } = useLocation();
+    const { productByUserId } = useSelector((state) => state.product);
 
     const handleOnClick = () => {
         onClose();
@@ -60,7 +59,7 @@ export default function ProfileUser({ onClose, setEditUser }) {
 
                 <div>
                     <div className="flex items-center px-4 pb-4 gap-4">
-                        {/* <Search className="" nameTagSearch="" div="" placeholder="Search" /> */}
+                        <Search className="" nameTagSearch="" div="" placeholder="Search" />
                         <InputDropdown
                             name={"status"}
                             data={productStatus}
@@ -77,7 +76,15 @@ export default function ProfileUser({ onClose, setEditUser }) {
                     <div className="grid grid-cols-3 justify-between px-4 pb-4 gap-2 overflow-y-auto h-[268px]">
                         {productByUserId && productByUserId.length > 0 ? (
                             productByUserId?.map((data) => (
-                                <Link key={data.id} to={`/product/${data.id}`} state={{ productDetail: data }}>
+                                <Link
+                                    key={data.id}
+                                    onClick={() => {
+                                        addPath(pathname);
+                                        onClose();
+                                    }}
+                                    to={`/product/${data.id}`}
+                                    state={{ productDetail: data }}
+                                >
                                     <ProductCardUser
                                         src={data.image[0]?.image}
                                         productPrice={data.productPrice}
