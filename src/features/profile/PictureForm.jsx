@@ -2,15 +2,7 @@ import { useRef, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import FormButton from "../../components/FormButton";
 
-export default function PictureForm({
-    title,
-    children,
-    initialSrc,
-    input,
-    setInput,
-    inputCoverImage,
-    setInputCoverImage,
-}) {
+export default function PictureForm({ title, children, initialSrc, input, setInput, inputCoverImage }) {
     const inputEl = useRef(null);
 
     return (
@@ -22,7 +14,6 @@ export default function PictureForm({
                 onChange={(e) => {
                     if (e.target.files[0]) {
                         setInput(e.target.files[0]);
-                        setInputCoverImage(e.target.files[0]);
                     }
                 }}
             />

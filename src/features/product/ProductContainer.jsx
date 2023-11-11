@@ -6,7 +6,6 @@ import { addPath } from "../../utils/local-storage";
 
 function ProductContainer() {
     const { pathname } = useLocation();
-    console.log(pathname);
     const { productData, loading, searchProduct } = useSelector((state) => state.product);
 
     let product = productData;

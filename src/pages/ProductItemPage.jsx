@@ -136,7 +136,15 @@ function ProductItemPage() {
                             </div>
                         </div>
                     ) : (
-                        <div className="font-bold text-2xl">{state.productDetail?.productName}</div>
+                        <div className="flex justify-between">
+                            <div className="font-bold text-2xl">{state.productDetail?.productName}</div>
+                            <div
+                                onClick={closePage}
+                                className="flex justify-center mr-2 items-center bg-black/50 w-10 aspect-square rounded-full text-white text-lg cursor-pointer"
+                            >
+                                <FaX />
+                            </div>
+                        </div>
                     )}
                     <div className="text-lg">&#3647; {state.productDetail?.productPrice}</div>
                     {category == 2 ? (
