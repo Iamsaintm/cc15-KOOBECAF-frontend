@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaEdit } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 
@@ -8,28 +8,60 @@ import CoverImage from "../../components/CoverImage";
 import ProductCardUser from "../../features/profile/ProductCardUser";
 import { addPath } from "../../utils/local-storage";
 import Search from "../filter/Search";
+import { resetSearchProductProfile } from "../../stores/slices/productSlice";
+import { useState } from "react";
 
 export default function ProfileUser({ onClose, setEditUser }) {
+    const [status, setStatus] = useState("ALL_PRODUCTS");
+    const [sort, setSort] = useState("SORT_BY");
+    const dispatch = useDispatch();
     const { authUserData } = useSelector((state) => state.auth);
     const { pathname } = useLocation();
-    const { productByUserId } = useSelector((state) => state.product);
+    const { productByUserId, searchProductProfile } = useSelector((state) => state.product);
 
     const handleOnClick = () => {
         onClose();
         setEditUser(true);
+        dispatch(resetSearchProductProfile());
     };
 
     const productStatus = [
+        { id: 0, status: "ALL_PRODUCTS" },
         { id: 1, status: "AVAILABLE" },
         { id: 2, status: "SOLD" },
         { id: 3, status: "NOT_AVAILABLE" },
     ];
 
     const sortBy = [
-        { id: 1, status: "AVAILABLE" },
-        { id: 2, status: "SOLD" },
-        { id: 3, status: "NOT_AVAILABLE" },
+        { id: 0, sort: "SORT_BY" },
+        { id: 1, sort: "newest_first" },
+        { id: 2, sort: "oldest_first" },
     ];
+
+    const onChangeStatus = (e) => {
+        setStatus(e.target.value);
+    };
+
+    const onChangeSort = (e) => {
+        setSort(e.target.value);
+    };
+
+    let product = productByUserId;
+    product = productByUserId?.filter((el) =>
+        el.productName.toLowerCase().includes(searchProductProfile.toLowerCase().trim()) ? el : null,
+    );
+
+    if (status !== "ALL_PRODUCTS") {
+        product = productByUserId?.filter((el) =>
+            el.productName.toLowerCase().includes(searchProductProfile.toLowerCase().trim()) && el.status === status
+                ? el
+                : null,
+        );
+    }
+
+    if (sort === "oldest_first") {
+        product.sort((a, b) => b.id - a.id);
+    }
 
     return (
         <>
@@ -39,7 +71,10 @@ export default function ProfileUser({ onClose, setEditUser }) {
 
                     <div
                         className="absolute text-2xl top-[3px] left-[95%] hover:text-[#959595] text-white cursor-pointer"
-                        onClick={onClose}
+                        onClick={() => {
+                            onClose();
+                            dispatch(resetSearchProductProfile());
+                        }}
                     >
                         X
                     </div>
@@ -59,28 +94,33 @@ export default function ProfileUser({ onClose, setEditUser }) {
 
                 <div>
                     <div className="flex items-center px-4 pb-4 gap-4">
-                        <Search className="" nameTagSearch="" div="" placeholder="Search" />
+                        <Search className="" nameTagSearch="" div="" placeholder="Search" type={"profile"} />
                         <InputDropdown
                             name={"status"}
                             data={productStatus}
                             className={"bg-second hover:bg-second-dark"}
+                            value={status}
+                            onChange={onChangeStatus}
                         />
                         <InputDropdown
-                            name={"status"}
+                            name={"sort"}
                             data={sortBy}
                             className={
                                 " bg-second hover:bg-second-dark focus:border-1 border-second focus:ring-2 focus:ring-second-dark"
                             }
+                            value={sort}
+                            onChange={onChangeSort}
                         />
                     </div>
                     <div className="grid grid-cols-3 justify-between px-4 pb-4 gap-2 overflow-y-auto h-[268px]">
                         {productByUserId && productByUserId.length > 0 ? (
-                            productByUserId?.map((data) => (
+                            product?.map((data) => (
                                 <Link
                                     key={data.id}
                                     onClick={() => {
                                         addPath(pathname);
                                         onClose();
+                                        dispatch(resetSearchProductProfile());
                                     }}
                                     to={`/product/${data.id}`}
                                     state={{ productDetail: data }}

@@ -1,14 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchProduct } from "../../stores/slices/productSlice";
+import { setSearchProduct, setSearchProductProfile } from "../../stores/slices/productSlice";
 import SearchInput from "./SearchInput";
 
-function Search({ nameTagSearch = "Marketplace", className, div, placeholder = "ค้นหา Marketplace" }) {
+function Search({ nameTagSearch = "Marketplace", className, div, placeholder = "ค้นหา Marketplace", type }) {
     const dispatch = useDispatch();
-    const { searchProduct } = useSelector((state) => state.product);
+    const { searchProduct, searchProductProfile } = useSelector((state) => state.product);
     const onChangeInput = (e) => {
         const fieldValue = e.target.value;
-        dispatch(setSearchProduct({ fieldValue }));
+        if (type === "profile") {
+            dispatch(setSearchProductProfile({ fieldValue }));
+        } else {
+            dispatch(setSearchProduct({ fieldValue }));
+        }
     };
 
     return (
@@ -20,7 +24,7 @@ function Search({ nameTagSearch = "Marketplace", className, div, placeholder = "
                 <SearchInput
                     placeholder={placeholder}
                     onChange={onChangeInput}
-                    value={searchProduct}
+                    value={type === "profile" ? searchProductProfile : searchProduct}
                     className={className}
                 />
             </div>
