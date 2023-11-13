@@ -1,4 +1,3 @@
-import React from "react";
 import ProductPreview from "../features/product/ProductPreview";
 import defaultProduct from "../assets/Images/hero-img_copy.jpg";
 

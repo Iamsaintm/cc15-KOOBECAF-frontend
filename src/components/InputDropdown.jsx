@@ -5,7 +5,7 @@ function InputDropdown({ name, value, data, onChange, className }) {
 
     const dataMap = (type) => {
         context = data.map((x) => (
-            <option value={x[type]} key={x.id}>
+            <option value={x[type]} key={x.id} className="bg-white text-black">
                 {x[type].replace(/_/g, " ")}
             </option>
         ));

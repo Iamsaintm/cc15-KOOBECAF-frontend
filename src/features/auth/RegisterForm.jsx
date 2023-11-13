@@ -1,24 +1,10 @@
-import Joi from "joi";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import InputForm from "../../components/InputForm";
 import Button from "../../components/Button";
 import InputErrorMessage from "./InputErrorMessage";
 import { registerUser } from "../../stores/slices/authSlice";
-
-const registerSchema = Joi.object({
-    firstName: Joi.string().trim().required(),
-    lastName: Joi.string().trim().required(),
-    emailOrMobile: Joi.alternatives([
-        Joi.string().email({ tlds: false }),
-        Joi.string().pattern(/^[0-9]{10}$/),
-    ]).required(),
-    password: Joi.string()
-        .pattern(/^[a-zA-Z0-9]{6,30}$/)
-        .trim()
-        .required(),
-    confirmPassword: Joi.string().valid(Joi.ref("password")).trim().required(),
-});
+import { registerSchema } from "../../utils/auth-validator";
 
 const validateRegister = (input) => {
     const { error } = registerSchema.validate(input, { abortEarly: false });
@@ -92,8 +78,7 @@ function RegisterForm() {
                         onChange={onChangeInput}
                         isError={error.password}
                     />
-                        {error.password && <InputErrorMessage message={error.password} />}
-                   
+                    {error.password && <InputErrorMessage message={error.password} />}
                 </div>
                 <div>
                     <InputForm

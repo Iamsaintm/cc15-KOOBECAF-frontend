@@ -50,6 +50,18 @@ export const createProduct = createAsyncThunk("products/createProducts", async (
     }
 });
 
+export const updateProductStatus = createAsyncThunk("products/updateProductStatus", async (payload, thunkAPI) => {
+    try {
+        const body = {
+            status: payload.fieldValue,
+        };
+        const res = await axios.put(`/product/${payload.productId}`, body);
+        return res.data;
+    } catch (error) {
+        toast.error("You can add only 5 photos.");
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
 export const updateProduct = createAsyncThunk("products/updateProducts", async ({ productId, formData }, thunkAPI) => {
     try {
         const res = await axios.patch(`/product/edit/${productId}`, formData, {
@@ -103,6 +115,7 @@ export const wishListProduct = createAsyncThunk("products/wishListProduct", asyn
         return thunkAPI.rejectWithValue(error.message);
     }
 });
+
 export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async (address) => {
     try {
         const newAxios = axios.create({});
@@ -120,7 +133,7 @@ const inputProduct = {
     productName: "",
     productPrice: "",
     productImage: [],
-    description: "",
+    description: " ",
     latitude: 11.11,
     longitude: 11.11,
     vehicleType: "",
@@ -134,7 +147,7 @@ const inputProduct = {
     homeAddress: "",
     idsToDelete: [],
     categoryId: 0,
-    typeOfCategory: "default",
+    typeOfCategory: "",
 };
 const searchProduct = "";
 const productPrice = {
@@ -333,6 +346,7 @@ const productSlice = createSlice({
                 state.loading = false;
                 state.error = payload;
             });
+
         builder
             .addCase(wishListProduct.pending, (state, { payload }) => {
                 state.loading = true;
@@ -347,6 +361,7 @@ const productSlice = createSlice({
                 state.loading = false;
                 state.error = payload;
             });
+
         builder
             .addCase(fetchGeocoding.pending, (state, { payload }) => {
                 state.loading = true;
@@ -363,6 +378,20 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(fetchGeocoding.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(updateProductStatus.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(updateProductStatus.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(updateProductStatus.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });

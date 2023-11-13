@@ -6,11 +6,12 @@ import { debounce } from "lodash";
 import { DatePicker, ConfigProvider } from "antd";
 import { fetchAllCategory } from "../../stores/slices/categorySlice";
 import { useNavigate } from "react-router-dom";
-
 import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
+import InputErrorMessage from "../auth/InputErrorMessage";
+import Autocomplete from "../../components/Autocomplete";
 
-function RequiredContainer({ type }) {
+function RequiredContainer({ type, error }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -46,9 +47,19 @@ function RequiredContainer({ type }) {
         { id: 2, homeProperty: "SALE" },
     ];
 
-    const newCategoryData = Array.isArray(categoryData)
-        ? [{ id: 0, typeOfCategory: "Category" }, ...categoryData]
-        : [{ id: 0, typeOfCategory: "Category" }];
+    let newCategoryData = null;
+
+    if (type.split("/")[1] + type.split("/")[2] === "updateitem") {
+        let categoryDataUpdate = categoryData?.filter((x) => x.id !== 1 && x.id !== 2);
+        newCategoryData = Array.isArray(categoryDataUpdate)
+            ? [...categoryDataUpdate]
+            : [{ id: 0, typeOfCategory: "Category" }];
+    } else {
+        newCategoryData = Array.isArray(categoryData)
+            ? [{ id: 0, typeOfCategory: "Category" }, ...categoryData]
+            : [{ id: 0, typeOfCategory: "Category" }];
+    }
+
     const newVehicleTypeData = [{ id: 0, vehicleType: "Vehicle type" }, ...vehicleTypes];
     const newHomeTypeData = [{ id: 0, homeType: "Property type" }, ...homeTypes];
     const newHomePropertyData = [{ id: 0, homeProperty: "Home for Sale or Rent" }, ...homePropertys];
@@ -79,19 +90,23 @@ function RequiredContainer({ type }) {
         }
     };
 
-    const onChangeInputLocation = useCallback(
-        async (e) => {
-            if (typeof e.target.value === "undefined") return;
-            if (e.target.value === "") return;
-            dispatch(fetchGeocoding(e.target.value));
-        },
-        [dispatch],
-    );
+    const handleSearchLocation = (input) => {
+        dispatch(fetchGeocoding(input));
+    };
 
-    const handleDebounceInputLocation = useMemo(
-        () => debounce(onChangeInputLocation, 3000, { leading: false }),
-        [onChangeInputLocation],
-    );
+    // const onChangeInputLocation = useCallback(
+    //     async (e) => {
+    //         if (typeof e.target.value === "undefined") return;
+    //         if (e.target.value === "") return;
+    //         dispatch(fetchGeocoding(e.target.value));
+    //     },
+    //     [dispatch],
+    // );
+
+    // const handleDebounceInputLocation = useMemo(
+    //     () => debounce(onChangeInputLocation, 1000, { leading: false }),
+    //     [onChangeInputLocation],
+    // );
 
     let inputForm = (
         <>
@@ -101,19 +116,29 @@ function RequiredContainer({ type }) {
                 name={"productName"}
                 placeholder={"Title"}
             />
+            {error.productName && <InputErrorMessage message={"Title is required"} />}
+
             <InputForm
                 value={inputProduct.productPrice}
                 onChange={onChangeInput}
                 name={"productPrice"}
                 placeholder={"Price"}
             />
+            {error.productPrice && <InputErrorMessage message={"Price is required, should be a number."} />}
+
             <InputDropdown
                 value={inputProduct.typeOfCategory}
                 data={newCategoryData}
                 onChange={onChangeInputCategory}
                 name={"typeOfCategory"}
             />
-            <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+            {error.typeOfCategory && <InputErrorMessage message={"Category is required"} />}
+            {/* <InputForm placeholder={"Location"} /> */}
+            <Autocomplete
+                handleSearchLocation={handleSearchLocation}
+                className="absolute top-2 left-2 z-10 w-[300px] p-2 bg-white rounded shadow-md"
+            />
+            {error.latitude && <InputErrorMessage message={"Location is required"} />}
         </>
     );
 
@@ -126,12 +151,14 @@ function RequiredContainer({ type }) {
                     name={"productName"}
                     placeholder={"Title"}
                 />
+                {error.productName && <InputErrorMessage message={"Title is required."} />}
                 <InputDropdown
                     value={inputProduct.vehicleType}
                     data={newVehicleTypeData}
                     onChange={onChangeInput}
                     name={"vehicleType"}
                 />
+                {error.vehicleType && <InputErrorMessage message={"Vehicle type is required."} />}
                 <ConfigProvider
                     theme={{
                         token: {
@@ -145,25 +172,30 @@ function RequiredContainer({ type }) {
                         picker="year"
                     />
                 </ConfigProvider>
+                {error.vehicleYears && <InputErrorMessage message={"Year is required."} />}
                 <InputForm
                     value={inputProduct.vehicleModel}
                     onChange={onChangeInput}
                     name={"vehicleModel"}
                     placeholder={"Model"}
                 />
+                {error.vehicleModel && <InputErrorMessage message={"Model is required."} />}
                 <InputForm
                     value={inputProduct.vehicleBrand}
                     onChange={onChangeInput}
                     name={"vehicleBrand"}
                     placeholder={"Brand"}
                 />
+                {error.vehicleBrand && <InputErrorMessage message={"Brand is required."} />}
                 <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+                {error.latitude && <InputErrorMessage message={"Location is required."} />}
                 <InputForm
                     value={inputProduct.productPrice}
                     onChange={onChangeInput}
                     name={"productPrice"}
                     placeholder={"Price"}
                 />
+                {error.productPrice && <InputErrorMessage message={"Price is required, should be a number."} />}
             </>
         );
     }
@@ -177,43 +209,56 @@ function RequiredContainer({ type }) {
                     name={"productName"}
                     placeholder={"Title"}
                 />
+                {error.productName && <InputErrorMessage message={"Title is required"} />}
                 <InputDropdown
                     value={inputProduct.homeProperty}
                     data={newHomePropertyData}
                     onChange={onChangeInput}
                     name={"homeProperty"}
                 />
+                {error.homeProperty && <InputErrorMessage message={"Home type is required"} />}
                 <InputDropdown
                     value={inputProduct.homeType}
                     data={newHomeTypeData}
                     onChange={onChangeInput}
                     name={"homeType"}
                 />
+                {error.homeType && <InputErrorMessage message={"Property type is required"} />}
                 <InputForm
                     value={inputProduct.bedroomQuantity}
                     onChange={onChangeInput}
                     name={"bedroomQuantity"}
                     placeholder={"Number of bedrooms"}
                 />
+                {error.bedroomQuantity && (
+                    <InputErrorMessage message={"Number of bedrooms are required, should be a number"} />
+                )}
                 <InputForm
                     value={inputProduct.bathroomQuantity}
                     onChange={onChangeInput}
                     name={"bathroomQuantity"}
                     placeholder={"Number of bathrooms"}
                 />
+                {error.bathroomQuantity && (
+                    <InputErrorMessage message={"Number of bathrooms are required, should be a number"} />
+                )}
                 <InputForm
                     value={inputProduct.productPrice}
                     onChange={onChangeInput}
                     name={"productPrice"}
                     placeholder={"Price"}
                 />
+                {error.productPrice && <InputErrorMessage message={"Price is required, should be a number."} />}
+
                 <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+                {error.latitude && <InputErrorMessage message={"Location is required"} />}
                 <InputForm
                     value={inputProduct.homeAddress}
                     onChange={onChangeInput}
                     name={"homeAddress"}
                     placeholder={"Property address"}
                 />
+                {error.homeAddress && <InputErrorMessage message={"Address is required"} />}
             </>
         );
     }
