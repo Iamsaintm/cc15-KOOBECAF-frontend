@@ -134,8 +134,8 @@ const inputProduct = {
     productPrice: "",
     productImage: [],
     description: " ",
-    latitude: "",
-    longitude: "",
+    latitude: 11.11,
+    longitude: 11.11,
     vehicleType: "",
     vehicleBrand: "",
     vehicleModel: "",
@@ -149,7 +149,10 @@ const inputProduct = {
     categoryId: 0,
     typeOfCategory: "",
 };
+
 const searchProduct = "";
+const searchProductProfile = "";
+
 const productPrice = {
     minPrice: "",
     maxPrice: "",
@@ -160,6 +163,7 @@ const productSlice = createSlice({
     initialState: {
         inputProduct,
         searchProduct,
+        searchProductProfile,
         productPrice,
         productData: null,
         productByUserId: null,
@@ -203,6 +207,12 @@ const productSlice = createSlice({
         },
         resetSearchProduct: (state, { payload }) => {
             state.searchProduct = "";
+        },
+        setSearchProductProfile: (state, { payload }) => {
+            state.searchProductProfile = payload.fieldValue;
+        },
+        resetSearchProductProfile: (state, { payload }) => {
+            state.searchProductProfile = "";
         },
         setProductPrice: (state, { payload }) => {
             state.productPrice[payload.fieldName] = payload.fieldValue;
@@ -409,6 +419,8 @@ export const {
     setProductPrice,
     resetProductPrice,
     updateInputProduct,
+    setSearchProductProfile,
+    resetSearchProductProfile,
 } = productSlice.actions;
 
 export default productSlice.reducer;

@@ -4,6 +4,7 @@ import { logout } from "../stores/slices/authSlice";
 import { Link } from "react-router-dom";
 import { logoutProduct, resetInputProduct, resetSearchProduct } from "../stores/slices/productSlice";
 import DropdownUser from "../components/DropdownUser";
+import { removePath } from "../utils/local-storage";
 
 export default function Navbar() {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export default function Navbar() {
             <Link
                 onClick={() => {
                     dispatch(resetInputProduct());
+                    removePath();
                 }}
                 to="/"
             >

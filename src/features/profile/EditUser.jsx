@@ -24,11 +24,15 @@ export default function EditUser({ onClose, setIsOpen }) {
     const dispatch = useDispatch();
 
     const handleOnsave = async (input, inputCoverImage, inputProfileName) => {
+        if (!inputCoverImage) inputCoverImage = authUserData.coverImage;
+        if (!input) input = authUserData.profileImage;
+
         await uploadProfileImage(input);
         await uploadCoverImage(inputCoverImage);
         await uploadProfileName(inputProfileName);
         window.location.reload();
     };
+
     const handleOnClose = () => {
         onClose();
         setIsOpen(true);

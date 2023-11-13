@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BsFillChatDotsFill, BsFillBookmarkFill } from "react-icons/bs";
 import { fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
-import { FaArrowLeft, FaArrowRight, FaClock, FaHouse, FaWarehouse } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight, FaClock, FaHouse, FaWarehouse, FaX } from "react-icons/fa6";
 import { HiMiniBuildingOffice2 } from "react-icons/hi2";
 import { BiSolidBuildingHouse } from "react-icons/bi";
 
@@ -14,8 +14,10 @@ import Avatar from "../components/Avatar";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getPath, removePath } from "../utils/local-storage";
 
 function ProductItemPage() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { isWishList } = useSelector((state) => state.product);
     const { state } = useLocation();
@@ -89,6 +91,11 @@ function ProductItemPage() {
         nextArrow: <NextArrow />,
     };
 
+    const closePage = () => {
+        navigate(getPath());
+        removePath();
+    };
+
     return (
         <>
             <div className="flex w-full h-screen overflow-clip pt-16">
@@ -116,14 +123,28 @@ function ProductItemPage() {
                 </div>
                 <div className="flex flex-col p-4 w-1/3 bg-second-light overflow-auto">
                     {category == 1 ? (
-                        <div className="font-bold text-2xl">
+                        <div className="flex justify-between font-bold text-2xl">
                             <div>
                                 {state.productDetail?.vehicleYears} {state.productDetail?.vehicleBrand}{" "}
                                 {state.productDetail?.vehicleModel}
                             </div>
+                            <div
+                                onClick={closePage}
+                                className="flex justify-center mr-2 items-center bg-black/50 min-w-[40px] max-h-[40px] aspect-square rounded-full text-white text-lg cursor-pointer"
+                            >
+                                <FaX />
+                            </div>
                         </div>
                     ) : (
-                        <div className="font-bold text-2xl">{state.productDetail?.productName}</div>
+                        <div className="flex justify-between">
+                            <div className="font-bold text-2xl">{state.productDetail?.productName}</div>
+                            <div
+                                onClick={closePage}
+                                className="flex justify-center mr-2 items-center bg-black/50 min-w-[40px] max-h-[40px] aspect-square rounded-full text-white text-lg cursor-pointer"
+                            >
+                                <FaX />
+                            </div>
+                        </div>
                     )}
                     <div className="text-lg">&#3647; {state.productDetail?.productPrice}</div>
                     {category == 2 ? (

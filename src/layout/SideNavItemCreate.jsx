@@ -36,7 +36,7 @@ function SideNavItemCreate({ header, type }) {
         if (inputProduct.id && productData && productId) {
             const { typeOfCategory } = categoryData?.find((x) => x.id === productData.categoryId);
             dispatch(updateInputProduct({ ...productData, typeOfCategory }));
-        } else {
+        } else if (pathname.split("/")[1] === "update") {
             dispatch(updateInputProduct(productData));
         }
     }, [productData]);
@@ -62,7 +62,6 @@ function SideNavItemCreate({ header, type }) {
         if (pathname === "/create/item") {
             delete newInputProduct.idsToDelete;
             result = validateSchema(itemSchema, newInputProduct);
-            console.log(result);
             if (result) return setError(result);
             await dispatch(createProduct({ formData }));
             dispatch(resetInputProduct());
@@ -74,7 +73,6 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.categoryId;
             delete newInputProduct.typeOfCategory;
             result = validateSchema(vehicleSchema, newInputProduct);
-            console.log(result);
             if (result) return setError(result);
             await dispatch(createProduct({ formData }));
             dispatch(resetInputProduct());
@@ -86,7 +84,6 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.categoryId;
             delete newInputProduct.typeOfCategory;
             result = validateSchema(homeSchema, newInputProduct);
-            console.log(result);
             if (result) return setError(result);
             await dispatch(createProduct({ formData }));
             dispatch(resetInputProduct());
@@ -103,7 +100,6 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.status;
 
             result = validateSchema(itemSchema, newInputProduct);
-            console.log(result);
             if (result) return setError(result);
             await dispatch(updateProduct({ productId, formData }));
 
@@ -124,7 +120,6 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.createdAt;
 
             result = validateSchema(vehicleSchema, newInputProduct);
-            console.log(result);
             if (result) return setError(result);
             await dispatch(updateProduct({ productId, formData }));
 
@@ -144,7 +139,6 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.status;
             delete newInputProduct.typeOfCategory;
             result = validateSchema(homeSchema, newInputProduct);
-            console.log(result);
             if (result) return setError(result);
             await dispatch(updateProduct({ productId, formData }));
             dispatch(resetInputProduct());
