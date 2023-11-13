@@ -11,6 +11,7 @@ import CategoryPage from "../pages/CategoryPage";
 import ProductItemPage from "../pages/ProductItemPage";
 import WishlistPage from "../pages/WishlistPage";
 import ErrorPage from "../features/product/ErrorPage";
+import SubscribePage from "../pages/SubscribePage";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +22,6 @@ const router = createBrowserRouter([
                     <Layout />
                 </div>
             </Authenticated>
-            
         ),
         children: [
             { path: "", element: <HomePage /> },
@@ -36,6 +36,7 @@ const router = createBrowserRouter([
             { path: "/update/vehicle/:productId", element: <CreateItemProductPage /> },
             { path: "/update/rental/:productId", element: <CreateItemProductPage /> },
             { path: "/product/:productId", element: <ProductItemPage /> },
+            { path: "/payment", element: <SubscribePage /> },
         ],
         errorElement: <ErrorPage />,
     },

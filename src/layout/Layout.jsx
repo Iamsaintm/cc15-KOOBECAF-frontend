@@ -170,6 +170,21 @@ function Layout() {
         );
     }
 
+    if (pathname.includes("/payment")) {
+        sideNav = (
+            <div className="flex flex-col h-full w-full">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                    <Header />
+                </div>
+                <div className="flex w-full">
+                    <div className="w-full">
+                        <Outlet />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return <>{sideNav}</>;
 }
 
