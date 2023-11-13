@@ -130,7 +130,7 @@ function ProductItemPage() {
                             </div>
                             <div
                                 onClick={closePage}
-                                className="flex justify-center mr-2 items-center bg-black/50 w-10 aspect-square rounded-full text-white text-lg cursor-pointer"
+                                className="flex justify-center mr-2 items-center bg-black/50 min-w-[40px] max-h-[40px] aspect-square rounded-full text-white text-lg cursor-pointer"
                             >
                                 <FaX />
                             </div>
@@ -140,7 +140,7 @@ function ProductItemPage() {
                             <div className="font-bold text-2xl">{state.productDetail?.productName}</div>
                             <div
                                 onClick={closePage}
-                                className="flex justify-center mr-2 items-center bg-black/50 w-10 aspect-square rounded-full text-white text-lg cursor-pointer"
+                                className="flex justify-center mr-2 items-center bg-black/50 min-w-[40px] max-h-[40px] aspect-square rounded-full text-white text-lg cursor-pointer"
                             >
                                 <FaX />
                             </div>
