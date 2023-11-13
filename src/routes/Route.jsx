@@ -36,7 +36,7 @@ const router = createBrowserRouter([
             { path: "/update/vehicle/:productId", element: <CreateItemProductPage /> },
             { path: "/update/rental/:productId", element: <CreateItemProductPage /> },
             { path: "/product/:productId", element: <ProductItemPage /> },
-            { path: "/payment", element: <SubscribePage /> },
+            { path: "/subscribe", element: <SubscribePage /> },
         ],
         errorElement: <ErrorPage />,
     },

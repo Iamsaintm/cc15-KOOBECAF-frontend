@@ -14,7 +14,7 @@ function SideNav() {
         <>
             <div className="flex flex-col gap-2 pb-4 border-b-2">
                 <div className="sticky">
-                    <Search />
+                    <Search div={"pt-10 pb-2"} />
                     <div className="px-4  ">
                         <CategorieItem icons={<FaStore />} title={"Browse All"} isActive={pathname === "/"} />
                     </div>

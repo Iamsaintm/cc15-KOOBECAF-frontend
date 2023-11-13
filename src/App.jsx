@@ -6,13 +6,18 @@ import { fetchDataUser } from "./stores/slices/authSlice";
 import Route from "./routes/Route";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { fetchProductByUserId } from "./stores/slices/productSlice";
 
 function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (getAccessToken()) {
-            dispatch(fetchDataUser());
+            dispatch(fetchDataUser())
+                .unwrap()
+                .then((res) => {
+                    dispatch(fetchProductByUserId(res.user.id));
+                });
         }
     }, []);
 

@@ -13,11 +13,11 @@ function Layout() {
 
     let sideNav = (
         <div className="flex flex-col h-full w-full">
-            <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+            <div className="fixed w-full top-0 bg-dark-night h-16 z-20">
                 <Header />
             </div>
             <div className="flex w-full">
-                <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                <div className="fixed top-0 pt-12 bg-second-light min-w-[360px] z-10">
                     <SideNav />
                 </div>
                 <div className="w-full">
@@ -31,11 +31,11 @@ function Layout() {
     if (pathname === "/create") {
         sideNav = (
             <div className="flex flex-col h-full w-full">
-                <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
+                <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-20">
                     <Header />
                 </div>
                 <div className="flex w-full">
-                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px] z-10">
                         <SideNavCreate />
                     </div>
                     <div className="w-full">
@@ -49,11 +49,11 @@ function Layout() {
     if (pathname === "/create/item" || pathname.includes("/update/item")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
-                <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
+                <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-20">
                     <Header />
                 </div>
                 <div className="flex w-full">
-                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px] z-10">
                         <SideNavItemCreate header={"Item for sale"} type={pathname} />
                     </div>
                     <div className="w-full">
@@ -67,11 +67,11 @@ function Layout() {
     if (pathname === "/create/vehicle" || pathname.includes("/update/vehicle")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
-                <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
+                <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-20">
                     <Header />
                 </div>
                 <div className="flex w-full">
-                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px] z-10">
                         <SideNavItemCreate header={"Vehicle type"} type={pathname} />
                     </div>
                     <div className="w-full">
@@ -85,11 +85,11 @@ function Layout() {
     if (pathname === "/create/rental" || pathname.includes("/update/rental")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
-                <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-10">
+                <div className="fixed w-[360px] top-0 bg-dark-night h-16 z-20">
                     <Header />
                 </div>
                 <div className="flex w-full">
-                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px] z-10">
                         <SideNavItemCreate header={"New Home Listing"} type={pathname} />
                     </div>
                     <div className="w-full">
@@ -103,11 +103,11 @@ function Layout() {
     if (pathname.startsWith("/category/")) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
-                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-20">
                     <Header />
                 </div>
                 <div className="flex w-full">
-                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px] z-10">
                         <SideNavCategory />
                     </div>
                     <div className="w-full">
@@ -121,11 +121,11 @@ function Layout() {
     if (pathname === "/selling") {
         sideNav = (
             <div className="flex flex-col h-full w-full">
-                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-20">
                     <Header />
                 </div>
                 <div className="flex w-full">
-                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px] z-10">
                         <SideNavSelling />
                     </div>
                     <div className="w-full">
@@ -139,7 +139,7 @@ function Layout() {
     if (pathname === `/product/${params.productId}`) {
         sideNav = (
             <div className="flex flex-col h-full w-full">
-                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-20">
                     <Header />
                 </div>
                 <div className="flex w-full">
@@ -155,11 +155,11 @@ function Layout() {
     if (pathname === "/wishlist") {
         sideNav = (
             <div className="flex flex-col h-full w-full">
-                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-20">
                     <Header />
                 </div>
                 <div className="flex w-full">
-                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px] z-10">
                         <SideNavWishlist />
                     </div>
                     <div className="w-full">
@@ -170,16 +170,12 @@ function Layout() {
         );
     }
 
-    if (pathname.includes("/payment")) {
+    if (pathname.includes("/subscribe")) {
         sideNav = (
-            <div className="flex flex-col h-full w-full">
-                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
-                    <Header />
-                </div>
-                <div className="flex w-full">
-                    <div className="w-full">
-                        <Outlet />
-                    </div>
+            <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                <Header />
+                <div className="w-full bg-main-light h-screen">
+                    <Outlet />
                 </div>
             </div>
         );

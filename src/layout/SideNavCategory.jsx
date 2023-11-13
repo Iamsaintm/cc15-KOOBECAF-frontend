@@ -48,7 +48,7 @@ function SideNavCategory() {
         <>
             <div className="flex flex-col gap-2 pb-4 border-b-2">
                 <div className="sticky">
-                    <Search nameTagSearch={`${nameTagSearch}`} />
+                    <Search div={"pt-10"} nameTagSearch={`${nameTagSearch}`} />
                 </div>
                 <div className="flex justify-center w-full">
                     <Link className="w-full px-20" to={"/create"}>

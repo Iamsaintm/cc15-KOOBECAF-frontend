@@ -1,71 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { BsFillPersonFill } from "react-icons/bs";
+import SubscribeContainer from "../features/subscribe/SubscribeContainer";
 
-const ProductDisplay = () => (
-    <section className="flex justify-center mt-20">
-        <div>
-            <div>
-                <h3>Starter plan</h3>
-                <h5>159.00 / month</h5>
-            </div>
-        </div>
-        <form>
-            <input type="hidden" name="lookup_key" value="standard_monthly" />
-            <button type="submit">
-                <Link to={"https://buy.stripe.com/test_3cs8xG0pteo13g46oo"}>Checkout</Link>
-            </button>
-        </form>
-    </section>
-);
-
-const SuccessDisplay = ({ sessionId }) => {
+function SubscribePage() {
     return (
-        <section className="flex justify-center">
-            <div>
-                <div>
-                    <h3>Subscription to starter plan successful!</h3>
+        <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col justify-center items-center h-full mt-16">
+                <div className="text-5xl font-fontHeader text-main-dark ">KOOBECAF Premium</div>
+                <div className="text-2xl">Products will be at the top and able to use feature filter map by radius</div>
+            </div>
+
+            <div className="flex justify-center items-center w-1/3 mt-16">
+                <div className="rounded-lg bg-white shadow-2xl border">
+                    <div className="flex  items-center text-xl border-b px-8 py-4">
+                        <div className="pr-3 text-[2rem]">
+                            <BsFillPersonFill />
+                        </div>
+                        <div className="text-2xl">Individual</div>
+                    </div>
+                    <div className="px-8 py-4">
+                        <div className="text-xl ">Monthly</div>
+                        <div className="font-semibold text-2xl py-2">THB 159.00/month</div>
+                        <div className="">
+                            You’ll be automatically charged the price every month starting on the first billing date
+                            until you cancel your subscription. Cancel anytime. No refunds or credits for partial
+                            billing periods.
+                        </div>
+                    </div>
+                    <SubscribeContainer />
                 </div>
             </div>
-            <form>
-                <input type="hidden" id="session-id" name="session_id" value={sessionId} />
-                <button id="checkout-and-portal-button" type="submit">
-                    Manage your billing information
-                </button>
-            </form>
-        </section>
+        </div>
     );
-};
-
-const Message = ({ message }) => (
-    <section>
-        <p>{message}</p>
-    </section>
-);
-
-export default function SubscribePage() {
-    let [message, setMessage] = useState("");
-    let [success, setSuccess] = useState(false);
-    let [sessionId, setSessionId] = useState("");
-
-    useEffect(() => {
-        const query = new URLSearchParams(window.location.search);
-
-        if (query.get("success")) {
-            setSuccess(true);
-            setSessionId(query.get("session_id"));
-        }
-
-        if (query.get("canceled")) {
-            setSuccess(false);
-            setMessage("Order canceled -- continue to shop around and checkout when you're ready.");
-        }
-    }, [sessionId]);
-
-    if (!success && message === "") {
-        return <ProductDisplay />;
-    } else if (success && sessionId !== "") {
-        return <SuccessDisplay sessionId={sessionId} />;
-    } else {
-        return <Message message={message} />;
-    }
 }
+
+export default SubscribePage;
