@@ -73,6 +73,8 @@ export default function DropdownUser() {
                         className="flex gap-4 p-2 items-center cursor-pointer hover:bg-gray-100 rounded-xl"
                         onClick={() => {
                             dispatch(logout());
+                            dispatch(logoutProduct());
+                            dispatch(resetSearchProduct());
                         }}
                     >
                         <div className="flex flex-1 justify-end items-center gap-4 ">
