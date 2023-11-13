@@ -170,6 +170,17 @@ function Layout() {
         );
     }
 
+    if (pathname === "/subscribe") {
+        sideNav = (
+            <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                <Header />
+                <div className="w-full bg-main-light h-screen">
+                    <Outlet />
+                </div>
+            </div>
+        );
+    }
+
     return <>{sideNav}</>;
 }
 
