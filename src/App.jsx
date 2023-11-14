@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getAccessToken } from "./utils/local-storage";
 import { fetchDataUser } from "./stores/slices/authSlice";
 import Route from "./routes/Route";
+import "react-loading-skeleton/dist/skeleton.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { fetchProductByUserId } from "./stores/slices/productSlice";
