@@ -12,6 +12,8 @@ import ProductItemPage from "../pages/ProductItemPage";
 import WishlistPage from "../pages/WishlistPage";
 import ErrorPage from "../features/product/ErrorPage";
 import SubscribePage from "../pages/SubscribePage";
+import PaymentSuccessful from "../features/subscribe/PaymentSuccessful";
+import PaymentFailed from "../features/subscribe/PaymentFailed";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +39,8 @@ const router = createBrowserRouter([
             { path: "/update/rental/:productId", element: <CreateItemProductPage /> },
             { path: "/product/:productId", element: <ProductItemPage /> },
             { path: "/subscribe", element: <SubscribePage /> },
+            { path: "/paymentSuccessful", element: <PaymentSuccessful /> },
+            { path: "/paymentFailed", element: <PaymentFailed /> },
         ],
         // errorElement: <ErrorPage />,
     },

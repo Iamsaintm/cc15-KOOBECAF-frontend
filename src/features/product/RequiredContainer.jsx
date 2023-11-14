@@ -161,6 +161,7 @@ function RequiredContainer({ type, error }) {
                         className="mt-4 rounded-full outline-none border-2 px-4 py-[9px]  focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
                         onChange={onChangeInputYear}
                         picker="year"
+                        placeholder={type.split("/")[1] === "update" ? inputProduct.vehicleYears : "Select year"}
                     />
                 </ConfigProvider>
                 {error.vehicleYears && <InputErrorMessage message={"Year is required."} />}
