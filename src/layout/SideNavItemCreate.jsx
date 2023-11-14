@@ -165,7 +165,7 @@ function SideNavItemCreate({ header, type }) {
                     <PhotoUpload />
                     <RequiredContainer type={type} error={error} />
                     <div className="flex flex-col gap-4">
-                        <DescriptionContainer />
+                        <DescriptionContainer error={error} />
                         {inputProduct.id ? (
                             <Button type={"submit"} text={"Update"} />
                         ) : (
