@@ -59,7 +59,7 @@ export default function ProfileUser({ onClose, setEditUser }) {
         );
     }
 
-    if (sort === "oldest_first") {
+    if (sort === "newest_first" || sort === "SORT_BY") {
         product.sort((a, b) => b.id - a.id);
     }
 
@@ -94,7 +94,7 @@ export default function ProfileUser({ onClose, setEditUser }) {
 
                 <div>
                     <div className="flex items-center px-4 pb-4 gap-4">
-                        <Search className="" nameTagSearch="" div="" placeholder="Search" type={"profile"} />
+                        <Search className="" nameTagSearch="" div="px-0" placeholder="Search" type={"profile"} />
                         <InputDropdown
                             name={"status"}
                             data={productStatus}
