@@ -2,10 +2,12 @@ import { useEffect } from "react";
 import { fetchAllCategory } from "../stores/slices/categorySlice";
 import { useDispatch } from "react-redux";
 import { fetchDataUser } from "../stores/slices/authSlice";
-import CreateProductCard from "../features/product/CreateProductCard";
 import { fetchAllProduct, fetchProductByUserId } from "../stores/slices/productSlice";
 
+import CreateProductCard from "../features/product/CreateProductCard";
+
 function CreateProductPage() {
+
     const dispatch = useDispatch();
 
     useEffect(() => {

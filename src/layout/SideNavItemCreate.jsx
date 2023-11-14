@@ -15,16 +15,26 @@ import {
     updateInputProduct,
     updateProduct,
 } from "../stores/slices/productSlice";
+import { useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_MAPS_API_KEY } from "../config/env";
 
 function SideNavItemCreate({ header, type }) {
-    const { pathname } = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const { productId } = useParams();
     const { authUserData } = useSelector((state) => state.auth);
     const [error, setError] = useState({});
     const { inputProduct, productData } = useSelector((state) => state.product);
     const { categoryData } = useSelector((state) => state.category);
+    const [libraries, setLibraries] = useState(["places"]);
+    const [trigger, setTrigger] = useState(false);
+
+    const { isLoaded } = useJsApiLoader({
+        id: "google-map-script",
+        googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+        libraries,
+    });
 
     useEffect(() => {
         if (productId) {
@@ -149,31 +159,35 @@ function SideNavItemCreate({ header, type }) {
 
     return (
         <>
-            <form onSubmit={onSubmit} className="flex flex-col gap-2 h-screen">
-                <div className="sticky h-6"></div>
-                <div className="flex flex-col gap-2 px-4">
-                    <div className="text-2xl font-bold">{header}</div>
-                    <div className="flex gap-3 items-center">
-                        <Avatar src={authUserData?.profileImage} />
-                        <div>
-                            {authUserData?.firstName} {authUserData?.lastName}
+            {isLoaded ? (
+                <form onSubmit={onSubmit} className="flex flex-col gap-2 h-screen">
+                    <div className="sticky h-6"></div>
+                    <div className="flex flex-col gap-2 px-4">
+                        <div className="text-2xl font-bold">{header}</div>
+                        <div className="flex gap-3 items-center">
+                            <Avatar src={authUserData?.profileImage} />
+                            <div>
+                                {authUserData?.firstName} {authUserData?.lastName}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="border-b-2 mb-2 pb-2"></div>
-                <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
-                    <PhotoUpload />
-                    <RequiredContainer type={type} error={error} />
-                    <div className="flex flex-col gap-4">
-                        <DescriptionContainer />
-                        {inputProduct.id ? (
-                            <Button type={"submit"} text={"Update"} />
-                        ) : (
-                            <Button type={"submit"} text={"Create"} />
-                        )}
+                    <div className="border-b-2 mb-2 pb-2"></div>
+                    <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
+                        <PhotoUpload />
+                        <RequiredContainer type={type} error={error} />
+                        <div className="flex flex-col gap-4">
+                            <DescriptionContainer error={error} />
+                            {inputProduct.id ? (
+                                <Button type={"submit"} text={"Update"} />
+                            ) : (
+                                <Button type={"submit"} text={"Create"} />
+                            )}
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            ) : (
+                <></>
+            )}
         </>
     );
 }

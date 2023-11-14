@@ -149,7 +149,10 @@ const inputProduct = {
     categoryId: 0,
     typeOfCategory: "",
 };
+
 const searchProduct = "";
+const searchProductProfile = "";
+
 const productPrice = {
     minPrice: "",
     maxPrice: "",
@@ -158,8 +161,10 @@ const productPrice = {
 const productSlice = createSlice({
     name: "product",
     initialState: {
+        inputLocation: [],
         inputProduct,
         searchProduct,
+        searchProductProfile,
         productPrice,
         productData: null,
         productByUserId: null,
@@ -175,6 +180,9 @@ const productSlice = createSlice({
         errorMessage: false,
     },
     reducers: {
+        setInputLocation: (state, { payload }) => {
+            state.inputLocation = payload.fieldLocation;
+        },
         logoutProduct: (state, { payload }) => {
             state.productData = null;
         },
@@ -203,6 +211,12 @@ const productSlice = createSlice({
         },
         resetSearchProduct: (state, { payload }) => {
             state.searchProduct = "";
+        },
+        setSearchProductProfile: (state, { payload }) => {
+            state.searchProductProfile = payload.fieldValue;
+        },
+        resetSearchProductProfile: (state, { payload }) => {
+            state.searchProductProfile = "";
         },
         setProductPrice: (state, { payload }) => {
             state.productPrice[payload.fieldName] = payload.fieldValue;
@@ -399,7 +413,7 @@ const productSlice = createSlice({
 });
 
 export const {
-    logoutProduct,
+    inputLocation: logoutProduct,
     setInputProduct,
     setInputProductCategory,
     setInputProductImage,
@@ -409,6 +423,9 @@ export const {
     setProductPrice,
     resetProductPrice,
     updateInputProduct,
+    setSearchProductProfile,
+    resetSearchProductProfile,
+    setInputLocation,
 } = productSlice.actions;
 
 export default productSlice.reducer;

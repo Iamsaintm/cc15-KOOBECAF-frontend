@@ -90,24 +90,6 @@ function RequiredContainer({ type, error }) {
         }
     };
 
-    const handleSearchLocation = (input) => {
-        dispatch(fetchGeocoding(input));
-    };
-
-    // const onChangeInputLocation = useCallback(
-    //     async (e) => {
-    //         if (typeof e.target.value === "undefined") return;
-    //         if (e.target.value === "") return;
-    //         dispatch(fetchGeocoding(e.target.value));
-    //     },
-    //     [dispatch],
-    // );
-
-    // const handleDebounceInputLocation = useMemo(
-    //     () => debounce(onChangeInputLocation, 1000, { leading: false }),
-    //     [onChangeInputLocation],
-    // );
-
     let inputForm = (
         <>
             <InputForm
@@ -133,11 +115,8 @@ function RequiredContainer({ type, error }) {
                 name={"typeOfCategory"}
             />
             {error.typeOfCategory && <InputErrorMessage message={"Category is required"} />}
-            {/* <InputForm placeholder={"Location"} /> */}
-            <Autocomplete
-                handleSearchLocation={handleSearchLocation}
-                className="absolute top-2 left-2 z-10 w-[300px] p-2 bg-white rounded shadow-md"
-            />
+
+            <Autocomplete placeholder={"Location"} />
             {error.latitude && <InputErrorMessage message={"Location is required"} />}
         </>
     );

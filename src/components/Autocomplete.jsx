@@ -1,56 +1,43 @@
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
-import { fetchGeocoding } from "../stores/slices/productSlice";
-import { debounce } from "lodash";
+import { setInputProduct, setInputLocation } from "../stores/slices/productSlice";
+import { useDispatch } from "react-redux";
 
-export default function Autocomplete({
-    // onChange, placeholder
-    handleSearchLocation,
-}) {
+export default function Autocomplete({ onChange, placeholder, handleSearchLocation }) {
+    const dispatch = useDispatch();
+
     const {
         ready,
         value,
         setValue,
         suggestions: { status, data },
         clearSuggestions,
-    } = usePlacesAutocomplete();
-
-    const onChangeInputLocation = useCallback(
-      async (e) => {
-          if (typeof e.target.value === "undefined") return;
-          if (e.target.value === "") return;
-          dispatch(fetchGeocoding(e.target.value));
-      },
-      [dispatch],
-    );
-
-    const handleDebounceInputLocation = useMemo(
-      () => debounce(onChangeInputLocation, 1000, { leading: false }),
-      [onChangeInputLocation],
-    );
+    } = usePlacesAutocomplete({ debounce: 600 });
 
     const handleSelectLocation = async (address) => {
-        console.log(address,"hello");
-
         setValue(address, false);
         clearSuggestions();
 
         const results = await getGeocode({ address });
         const { lat, lng } = getLatLng(results[0]);
-        console.log({ lat, lng });
+        let fieldName = "latitude";
+        let fieldValue = lat;
+        let fieldLocation = results[0].formatted_address;
 
-        handleSearchLocation({ lat, lng });
+        dispatch(setInputProduct({ fieldName, fieldValue }));
+
+        fieldName = "longitude";
+        fieldValue = lng;
+        dispatch(setInputProduct({ fieldName, fieldValue }));
+
+        dispatch(setInputLocation({ fieldLocation }));
     };
 
-    if (!ready) return null;
-
     return (
-        <div>
+        <div className="pt-4">
             <input
-                className="z-10 w-full p-2 bg-white rounded shadow-md border-2 border-cyan-500"
+                className="z-10 w-full px-4 py-2 bg-white rounded-full shadow-md border-2 focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
                 value={value}
-                disabled={!ready}
                 onChange={(e) => setValue(e.target.value)}
-                // onChange={onChange}
                 placeholder={placeholder}
             />
             <div className="bg-white">

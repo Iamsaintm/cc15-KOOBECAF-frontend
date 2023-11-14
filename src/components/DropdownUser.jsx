@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BiLogOut } from "react-icons/bi";
@@ -57,7 +56,10 @@ export default function DropdownUser() {
                 <div className=" w-96 absolute bg-white right-0 translate-y-1 border rounded-xl shadow-xl p-2">
                     <div
                         className="flex gap-4 p-2 item-center hover:bg-gray-100 rounded-xl"
-                        onClick={() => setIsOpenModal(true)}
+                        onClick={() => {
+                            setIsOpenModal(true);
+                            setIsOpen(false);
+                        }}
                     >
                         <Avatar src={authUserData?.profileImage} />
                         <div>
@@ -73,6 +75,8 @@ export default function DropdownUser() {
                         className="flex gap-4 p-2 items-center cursor-pointer hover:bg-gray-100 rounded-xl"
                         onClick={() => {
                             dispatch(logout());
+                            dispatch(logoutProduct());
+                            dispatch(resetSearchProduct());
                         }}
                     >
                         <div className="flex flex-1 justify-end items-center gap-4 ">

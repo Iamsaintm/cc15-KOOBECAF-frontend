@@ -1,4 +1,4 @@
-function ProfileModal({ children, maxWidth = 40, open, onClose }) {
+function ProfileModal({ children, maxWidth = 40, open }) {
     return (
         <>
             {open && (
