@@ -19,9 +19,9 @@ function SubscribePage() {
                     </div>
                     <div className="px-8 py-4">
                         <div className="text-xl ">Monthly</div>
-                        <div className="font-semibold text-2xl py-2">THB 159.00/month</div>
+                        <div className="font-semibold text-2xl py-2">THB 159.00/month</div>
                         <div className="">
-                            You’ll be automatically charged the price every month starting on the first billing date
+                            You'll be automatically charged the price every month starting on the first billing date
                             until you cancel your subscription. Cancel anytime. No refunds or credits for partial
                             billing periods.
                         </div>
