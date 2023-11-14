@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             { path: "/product/:productId", element: <ProductItemPage /> },
             { path: "/subscribe", element: <SubscribePage /> },
         ],
-        errorElement: <ErrorPage />,
+        // errorElement: <ErrorPage />,
     },
     {
         path: "/login",
