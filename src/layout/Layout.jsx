@@ -170,7 +170,11 @@ function Layout() {
         );
     }
 
-    if (pathname.includes("/subscribe")) {
+    if (
+        pathname.includes("/subscribe") ||
+        pathname.includes("/paymentSuccessful") ||
+        pathname.includes("/paymentFailed")
+    ) {
         sideNav = (
             <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
                 <Header />

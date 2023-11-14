@@ -2,9 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "../../config/axios";
 
-export const registerUser = createAsyncThunk("auths/registerUsers", async (payload, thunkAPI) => {
+export const subscribe = createAsyncThunk("payment/subscribe", async (lookup_key, thunkAPI) => {
     try {
-        const res = await axios.post("/auth/register", payload);
+        const res = await axios.post("/payment", { lookup_key });
+        return res.data;
+    } catch (error) {
+        toast.error(error.response.data.message);
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
+export const createSubscribe = createAsyncThunk("payment/createSubscribe", async (transactionId, thunkAPI) => {
+    try {
+        const res = await axios.post(`/payment/${transactionId}`);
         return res.data;
     } catch (error) {
         toast.error(error.response.data.message);
@@ -16,7 +26,6 @@ const paymentSlice = createSlice({
     name: "payment",
     initialState: {
         paymentData: null,
-        paymentLink: null,
         loading: false,
         error: "",
         success: false,
@@ -24,16 +33,29 @@ const paymentSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(registerUser.pending, (state, { payload }) => {
+            .addCase(subscribe.pending, (state, { payload }) => {
                 state.loading = true;
                 state.error = "";
             })
-            .addCase(registerUser.fulfilled, (state, { payload }) => {
-                state.paymentLink = payload.user;
+            .addCase(subscribe.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.success = true;
             })
-            .addCase(registerUser.rejected, (state, { payload }) => {
+            .addCase(subscribe.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(createSubscribe.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(createSubscribe.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(createSubscribe.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });
