@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useEffect } from "react";
+import { useCallback, useMemo, useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setInputProduct, setInputProductCategory } from "../../stores/slices/productSlice";
 import { fetchGeocoding } from "../../stores/slices/productSlice";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
 import InputErrorMessage from "../auth/InputErrorMessage";
+import Skeleton from "react-loading-skeleton";
 
 function RequiredContainer({ type, error }) {
     const navigate = useNavigate();
@@ -17,6 +18,14 @@ function RequiredContainer({ type, error }) {
     const { authUserData } = useSelector((state) => state.auth);
     const { categoryData } = useSelector((state) => state.category);
     const { inputProduct } = useSelector((state) => state.product);
+    const [skeleton, setSkeleton] = useState(false);
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1200);
+        return () => clearTimeout(id);
+    }, []);
 
     useEffect(() => {
         dispatch(fetchAllCategory());
@@ -103,32 +112,46 @@ function RequiredContainer({ type, error }) {
         [onChangeInputLocation],
     );
 
-    let inputForm = (
+    let inputForm = ( 
+
         <>
+        {skeleton ? (
+
             <InputForm
                 value={inputProduct.productName}
                 onChange={onChangeInput}
                 name={"productName"}
                 placeholder={"Title"}
             />
+            ):( <Skeleton containerClassName="flex-1" height={50} />)}
             {error.productName && <InputErrorMessage message={"Title is required"} />}
 
-            <InputForm
-                value={inputProduct.productPrice}
-                onChange={onChangeInput}
-                name={"productPrice"}
-                placeholder={"Price"}
-            />
+            {skeleton ? ( 
+
+                <InputForm
+                    value={inputProduct.productPrice}
+                    onChange={onChangeInput}
+                    name={"productPrice"}
+                    placeholder={"Price"}
+                />
+            ) : (<Skeleton containerClassName="flex-1" height={50} />)}
+
             {error.productPrice && <InputErrorMessage message={"Price is required, should be a number."} />}
 
-            <InputDropdown
-                value={inputProduct.typeOfCategory}
-                data={newCategoryData}
-                onChange={onChangeInputCategory}
-                name={"typeOfCategory"}
-            />
+                {skeleton ?(
+
+                    <InputDropdown
+                        value={inputProduct.typeOfCategory}
+                        data={newCategoryData}
+                        onChange={onChangeInputCategory}
+                        name={"typeOfCategory"}
+                    />
+                ) : ( <Skeleton containerClassName="flex-1" height={50} />)}
             {error.typeOfCategory && <InputErrorMessage message={"Category is required"} />}
-            <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+            {skeleton ? (
+
+                <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+            ) :(<Skeleton containerClassName="flex-1" height={50} />)}
             {error.latitude && <InputErrorMessage message={"Location is required"} />}
         </>
     );
