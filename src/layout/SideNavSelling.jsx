@@ -49,7 +49,6 @@ function SideNavSelling() {
                         title={"Your listings"}
                     />
                 </div>
-
                 <hr className="border" />
                 {skeleton ? (
                     <div className="flex flex-col gap-2">
@@ -66,6 +65,7 @@ function SideNavSelling() {
                                 onClose={() => {
                                     setIsOpen(false);
                                 }}
+                                title={"Marketplace profile"}
                             />
                         </ProfileModal>
 
