@@ -60,7 +60,7 @@ export default function ProfileUser({ onClose, setEditUser }) {
     }
 
     if (sort === "newest_first" || sort === "SORT_BY") {
-        product.sort((a, b) => b.id - a.id);
+        product?.sort((a, b) => b.id - a.id);
     }
 
     return (
