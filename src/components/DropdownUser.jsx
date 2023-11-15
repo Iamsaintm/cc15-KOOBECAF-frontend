@@ -9,7 +9,7 @@ import ProfileUser from "../features/profile/ProfileUser";
 import EditUser from "../features/profile/EditUser";
 
 export default function DropdownUser() {
-    const { authUserData, loading } = useSelector((state) => state.auth);
+    const { authUserData } = useSelector((state) => state.auth);
     const [editUser, setEditUser] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenModal, setIsOpenModal] = useState(false);
