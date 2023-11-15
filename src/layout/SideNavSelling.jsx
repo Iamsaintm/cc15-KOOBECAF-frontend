@@ -40,9 +40,7 @@ function SideNavSelling() {
                         title={"Your listings"}
                     />
                 </div>
-
                 <hr className="border" />
-
                 <div className="flex flex-col gap-2">
                     <CategorieItem
                         icons={<Avatar src={authUserData?.profileImage} className="" />}

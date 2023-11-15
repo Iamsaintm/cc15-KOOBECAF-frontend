@@ -4,21 +4,15 @@ import ProductCard from "./ProductCard";
 import Loading from "../../components/Loading";
 import { addPath } from "../../utils/local-storage";
 
-function ProductContainer({ page }) {
+function ProductContainer() {
     const { pathname } = useLocation();
-    const { productData, loading, searchProduct, productByPage } = useSelector((state) => state.product);
+    const { productData, loading, searchProduct } = useSelector((state) => state.product);
 
     let product = null;
 
-    if (searchProduct.length !== 0) {
-        product = productData?.filter((el) =>
-            el.productName.toLowerCase().includes(searchProduct.toLowerCase().trim()) ? el : null,
-        );
-    } else {
-        product = productByPage?.filter((el) =>
-            el.productName.toLowerCase().includes(searchProduct.toLowerCase().trim()) ? el : null,
-        );
-    }
+    product = productData?.filter((el) =>
+        el.productName.toLowerCase().includes(searchProduct.toLowerCase().trim()) ? el : null,
+    );
 
     return (
         <>
@@ -40,7 +34,6 @@ function ProductContainer({ page }) {
                                         productPrice={data.productPrice}
                                         productName={data.productName}
                                         productDetail={data}
-                                        page={page}
                                     />
                                 </Link>
                             ) : null,

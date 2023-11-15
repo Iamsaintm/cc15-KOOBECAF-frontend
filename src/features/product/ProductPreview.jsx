@@ -13,7 +13,7 @@ function ProductPreview() {
     const dispatch = useDispatch();
     const { authUserData } = useSelector((state) => state.auth);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const { inputProduct } = useSelector((state) => state.product);
+    const { inputProduct, inputLocation } = useSelector((state) => state.product);
     const { pathname } = useLocation();
 
     useEffect(() => {
@@ -160,9 +160,7 @@ function ProductPreview() {
                                         : "Description will appear here."}
                                 </p>
                                 <GoogleMapInput className="py-2" />
-                                {/* <p className="truncate font-thin">
-                                    กรุงเทพมหานคร อมรรัฒนโกสินธ์ มหิมนราทิเบท อเนกประสงค์ อนงค์ สวัสดี
-                                </p> */}
+                                <p className="truncate font-thin">{inputLocation[0]?.formatted_address}</p>
                             </div>
 
                             <div>
