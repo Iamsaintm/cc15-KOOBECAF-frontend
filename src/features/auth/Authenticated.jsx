@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 
 function Authenticated({ children }) {
     const authUser = getAccessToken();
-    // const user = useSelector((state) => state.auth.authUserData);
+    const user = useSelector((state) => state.auth.authUserData);
 
-    if (!authUser) {
+    if (!authUser && !user) {
         return <Navigate to="/login" />;
     }
 
