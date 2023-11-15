@@ -14,7 +14,7 @@ function ProductPreview() {
     const dispatch = useDispatch();
     const { authUserData } = useSelector((state) => state.auth);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const { inputProduct } = useSelector((state) => state.product);
+    const { inputProduct, inputLocation } = useSelector((state) => state.product);
     const { pathname } = useLocation();
     const [skeleton, setSkeleton] = useState(false);
 
@@ -146,14 +146,15 @@ function ProductPreview() {
                                 </>
                             ) : (
                                 <div className="bg-empty h-full w-full">
-                                    {skeleton ?(
-
-                                    <div className="flex h-full flex-col justify-center items-center">
-                                        <div className="text-2xl font-semibold">Your Listing Preview</div>
-                                        <div>As you create your listing, your can preview</div>
-                                        <div>how it will appear to others on Marketplace.</div>
-                                    </div>
-                                    ):( <Skeleton containerClassName="flex-1" height={500} />)}
+                                    {skeleton ? (
+                                        <div className="flex h-full flex-col justify-center items-center">
+                                            <div className="text-2xl font-semibold">Your Listing Preview</div>
+                                            <div>As you create your listing, your can preview</div>
+                                            <div>how it will appear to others on Marketplace.</div>
+                                        </div>
+                                    ) : (
+                                        <Skeleton containerClassName="flex-1" height={500} />
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -168,11 +169,11 @@ function ProductPreview() {
                                     )}
                                 </p>
                                 <p className="font-thin">
-                                    {skeleton ?(
-<>
-฿ {inputProduct.productPrice ? inputProduct.productPrice : "0"}
-</>
-                                    ):(<Skeleton containerClassName="flex-1" height={40} />)}
+                                    {skeleton ? (
+                                        <>฿ {inputProduct.productPrice ? inputProduct.productPrice : "0"}</>
+                                    ) : (
+                                        <Skeleton containerClassName="flex-1" height={40} />
+                                    )}
                                 </p>
                             </div>
 
@@ -188,7 +189,10 @@ function ProductPreview() {
                                     <Skeleton containerClassName="flex-1" height={40} />
                                 )}
                                 {skeleton ? (
-                                    <GoogleMapInput className="py-2" />
+                                    <>
+                                        <GoogleMapInput className="py-2" />
+                                        <p className="truncate font-thin">{inputLocation[0]?.formatted_address}</p>
+                                    </>
                                 ) : (
                                     <Skeleton containerClassName="flex-1" height={120} />
                                 )}
@@ -199,15 +203,16 @@ function ProductPreview() {
 
                             <div>
                                 <p className="text-lg mb-2">Seller Information</p>
-                                {skeleton ?( 
-
-                                <div className="flex gap-x-2 items-center">
-                                    <Avatar src={authUserData?.profileImage} />
-                                    <p>
-                                        {authUserData?.firstName} {authUserData?.lastName}
-                                    </p>
-                                </div>
-                                ) :(<Skeleton containerClassName="flex-1" height={40} />)}
+                                {skeleton ? (
+                                    <div className="flex gap-x-2 items-center">
+                                        <Avatar src={authUserData?.profileImage} />
+                                        <p>
+                                            {authUserData?.firstName} {authUserData?.lastName}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <Skeleton containerClassName="flex-1" height={40} />
+                                )}
                             </div>
                             <div className="flex px-8">
                                 <Button type={"submit"} text={"Message"} className="my-4" />

@@ -111,7 +111,6 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.status;
             delete newInputProduct.point;
             result = validateSchema(itemSchema, newInputProduct);
-            console.log(result);
             if (result) return setError(result);
             await dispatch(updateProduct({ productId, formData }));
             dispatch(resetInputProduct());
