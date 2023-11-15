@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -23,6 +23,15 @@ export const fetchProductById = createAsyncThunk("products/fetchProductById", as
 export const fetchProductByUserId = createAsyncThunk("product/fetchProductByUserId", async (userId, thunkAPI) => {
     try {
         const res = await axios.get(`/product/search/${userId}`);
+        return res.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
+export const fetchProductByPage = createAsyncThunk("products/fetchProductByPage", async (page, thunkAPI) => {
+    try {
+        const res = await axios.get(`/product/page/?_page=${page}`);
         return res.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -170,6 +179,7 @@ const productSlice = createSlice({
         productByUserId: null,
         productByCategory: null,
         productByProductId: null,
+        productByPage: null,
         isWishList: false,
         myWishListProduct: null,
         deleteProduct: null,
@@ -229,6 +239,7 @@ const productSlice = createSlice({
         builder
             .addCase(fetchAllProduct.pending, (state, { payload }) => {
                 state.loading = true;
+                state.skeleton = true;
                 state.error = "";
             })
             .addCase(fetchAllProduct.fulfilled, (state, { payload }) => {
@@ -406,6 +417,30 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(updateProductStatus.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(fetchProductByPage.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(fetchProductByPage.fulfilled, (state, { payload }) => {
+                if (state.productByPage === null) {
+                    state.productByPage = payload.targetProduct;
+                } else {
+                    if (payload.page === "1") {
+                        state.productByPage = state.productByPage?.filter(
+                            (x, idx) => x.id !== payload.targetProduct[idx].id,
+                        );
+                    }
+                    state.productByPage = [...state.productByPage, ...payload.targetProduct];
+                }
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(fetchProductByPage.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });

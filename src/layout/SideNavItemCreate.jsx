@@ -108,11 +108,14 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.image;
             delete newInputProduct.id;
             delete newInputProduct.status;
-
+            delete newInputProduct.point;
+            console.log("first");
             result = validateSchema(itemSchema, newInputProduct);
+            console.log(result);
             if (result) return setError(result);
+            console.log("3");
             await dispatch(updateProduct({ productId, formData }));
-
+            console.log("2");
             dispatch(resetInputProduct());
             newInputProduct = {};
             navigate("/selling");
@@ -128,6 +131,7 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.userId;
             delete newInputProduct.usersId;
             delete newInputProduct.createdAt;
+            delete newInputProduct.point;
 
             result = validateSchema(vehicleSchema, newInputProduct);
             if (result) return setError(result);
@@ -148,6 +152,7 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.id;
             delete newInputProduct.status;
             delete newInputProduct.typeOfCategory;
+            delete newInputProduct.point;
             result = validateSchema(homeSchema, newInputProduct);
             if (result) return setError(result);
             await dispatch(updateProduct({ productId, formData }));
