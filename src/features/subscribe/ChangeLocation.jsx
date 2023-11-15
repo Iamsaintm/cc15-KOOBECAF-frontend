@@ -1,5 +1,6 @@
-import React from "react";
 import InputForm from "../../components/InputForm";
+import Autocomplete from "../../components/Autocomplete";
+import SubscriptGoogleMap from "../../features/subscribe/SubscribeGoogleMap";
 import Button from "../../components/Button";
 
 export default function ChangeLocation({ onClose, setIsOpen }) {
@@ -14,7 +15,7 @@ export default function ChangeLocation({ onClose, setIsOpen }) {
                     <div className="relative">
                         <p className="text-2xl font-bold">Change Location</p>
                         <div
-                            className="absolute bottom-1 left-[330px] text-2xl hover:text-[#959595] cursor-pointer"
+                            className="absolute bottom-1 left-[370px] text-2xl hover:text-[#959595] cursor-pointer"
                             onClick={handleOnClose}
                         >
                             X
@@ -22,9 +23,25 @@ export default function ChangeLocation({ onClose, setIsOpen }) {
                     </div>
                     <div className="border w-full" />
                 </div>
-                <div>
-                    <InputForm placeholder="location" className="rounded-sm" />
-                    <InputForm placeholder="Radius" />
+
+                <div className=" px-4 pb-4 gap-y-4">
+                    <div className="gap-y-4">
+                        <p>Search by city</p>
+                        <Autocomplete placeholder={"Location"} className={"rounded-md"} />
+                        <InputForm placeholder="Radius" />
+                        <div className="py-4">
+                            <SubscriptGoogleMap />
+                        </div>
+                    </div>
+                    <div className="border w-full" />
+                    <div className="flex justify-end">
+                        <div className="w-20 pt-4">
+                            <Button
+                                text="Apply"
+                                className="rounded-md text-white bg-main hover:bg-main-dark text-sm font-semibold"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

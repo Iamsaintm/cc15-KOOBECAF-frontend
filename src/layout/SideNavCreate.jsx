@@ -8,6 +8,7 @@ import ProfileModal from "../components/ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
 import EditUser from "../features/profile/EditUser";
 import Avatar from "../components/Avatar";
+import ChangeLocation from "../features/subscribe/changelocation";
 
 function SideNavCreate() {
     const { authUserData, loading } = useSelector((state) => state.auth);
@@ -51,9 +52,18 @@ function SideNavCreate() {
                         }}
                     />
                 </ProfileModal>
-
+                {/* 
                 <ProfileModal open={editUser}>
                     <EditUser
+                        setIsOpen={setIsOpen}
+                        onClose={() => {
+                            setEditUser(false);
+                        }}
+                    />
+                </ProfileModal> */}
+
+                <ProfileModal open={editUser}>
+                    <ChangeLocation
                         setIsOpen={setIsOpen}
                         onClose={() => {
                             setEditUser(false);

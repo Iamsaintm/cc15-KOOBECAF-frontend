@@ -166,7 +166,7 @@ function RequiredContainer({ type, error }) {
                     placeholder={"Brand"}
                 />
                 {error.vehicleBrand && <InputErrorMessage message={"Brand is required."} />}
-                <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+                <Autocomplete placeholder={"Location"} />
                 {error.latitude && <InputErrorMessage message={"Location is required."} />}
                 <InputForm
                     value={inputProduct.productPrice}
@@ -229,7 +229,7 @@ function RequiredContainer({ type, error }) {
                 />
                 {error.productPrice && <InputErrorMessage message={"Price is required, should be a number."} />}
 
-                <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+                <Autocomplete placeholder={"Location"} />
                 {error.latitude && <InputErrorMessage message={"Location is required"} />}
                 <InputForm
                     value={inputProduct.homeAddress}
