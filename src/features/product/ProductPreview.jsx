@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { setInputProductCategory } from "../../stores/slices/productSlice";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import Skeleton from "react-loading-skeleton";
 
 function ProductPreview() {
     const dispatch = useDispatch();
@@ -15,6 +16,14 @@ function ProductPreview() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const { inputProduct } = useSelector((state) => state.product);
     const { pathname } = useLocation();
+    const [skeleton, setSkeleton] = useState(false);
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1200);
+        return () => clearTimeout(id);
+    }, []);
 
     useEffect(() => {
         if (pathname === "/create/rental" || pathname.includes("/update/rental")) {
@@ -104,40 +113,47 @@ function ProductPreview() {
                         <div className="flex items-center justify-center w-full overflow-clip drop-shadow-md bg-cover rounded-lg">
                             {newFile.length !== 0 ? (
                                 <>
-                                    <div className="relative w-full -z-20">
-                                        <Slider {...settings}>
-                                            {newFile.map((file, idx) => (
-                                                <div key={idx} className="!flex justify-center bg-black/80">
-                                                    <img
-                                                        className="w-[400px] aspect-square object-contain rounded-md"
-                                                        src={file?.image || URL.createObjectURL(file)}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </Slider>
-                                        <div className="absolute -top-1/2 -left-1/4 blur-md -z-10 w-[150%] aspect-square">
-                                            <img
-                                                className="w-full aspect-square object-cover"
-                                                id={currentSlide}
-                                                src={
-                                                    newFile[currentSlide]?.image ||
-                                                    URL.createObjectURL(
-                                                        new Blob([inputProduct.productImage[currentSlide]], {
-                                                            type: "application/zip",
-                                                        }),
-                                                    )
-                                                }
-                                            />
+                                    {skeleton ? (
+                                        <div className="relative w-full -z-20">
+                                            <Slider {...settings}>
+                                                {newFile.map((file, idx) => (
+                                                    <div key={idx} className="!flex justify-center bg-black/80">
+                                                        <img
+                                                            className="w-[400px] aspect-square object-contain rounded-md"
+                                                            src={file?.image || URL.createObjectURL(file)}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </Slider>
+                                            <div className="absolute -top-1/2 -left-1/4 blur-md -z-10 w-[150%] aspect-square">
+                                                <img
+                                                    className="w-full aspect-square object-cover"
+                                                    id={currentSlide}
+                                                    src={
+                                                        newFile[currentSlide]?.image ||
+                                                        URL.createObjectURL(
+                                                            new Blob([inputProduct.productImage[currentSlide]], {
+                                                                type: "application/zip",
+                                                            }),
+                                                        )
+                                                    }
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
+                                    ) : (
+                                        <Skeleton containerClassName="flex-1" height={500} />
+                                    )}
                                 </>
                             ) : (
                                 <div className="bg-empty h-full w-full">
+                                    {skeleton ?(
+
                                     <div className="flex h-full flex-col justify-center items-center">
                                         <div className="text-2xl font-semibold">Your Listing Preview</div>
                                         <div>As you create your listing, your can preview</div>
                                         <div>how it will appear to others on Marketplace.</div>
                                     </div>
+                                    ):( <Skeleton containerClassName="flex-1" height={500} />)}
                                 </div>
                             )}
                         </div>
@@ -145,21 +161,37 @@ function ProductPreview() {
                         <div className="flex flex-1 flex-col gap-y-2 w-full p-3 ">
                             <div>
                                 <p className="truncate text-lg mb-2">
-                                    {inputProduct.productName ? inputProduct.productName : "Title"}
+                                    {skeleton ? (
+                                        <>{inputProduct.productName ? inputProduct.productName : "Title"}</>
+                                    ) : (
+                                        <Skeleton containerClassName="flex-1" height={40} />
+                                    )}
                                 </p>
                                 <p className="font-thin">
-                                    ฿ {inputProduct.productPrice ? inputProduct.productPrice : "0"}
+                                    {skeleton ?(
+<>
+฿ {inputProduct.productPrice ? inputProduct.productPrice : "0"}
+</>
+                                    ):(<Skeleton containerClassName="flex-1" height={40} />)}
                                 </p>
                             </div>
 
                             <div className="border-b pb-2">
                                 <p className="text-lg mb-2">Description</p>
-                                <p className="break-all font-thin">
-                                    {inputProduct.description
-                                        ? inputProduct.description
-                                        : "Description will appear here."}
-                                </p>
-                                <GoogleMapInput className="py-2" />
+                                {skeleton ? (
+                                    <p className="break-all font-thin">
+                                        {inputProduct.description
+                                            ? inputProduct.description
+                                            : "Description will appear here."}
+                                    </p>
+                                ) : (
+                                    <Skeleton containerClassName="flex-1" height={40} />
+                                )}
+                                {skeleton ? (
+                                    <GoogleMapInput className="py-2" />
+                                ) : (
+                                    <Skeleton containerClassName="flex-1" height={120} />
+                                )}
                                 {/* <p className="truncate font-thin">
                                     กรุงเทพมหานคร อมรรัฒนโกสินธ์ มหิมนราทิเบท อเนกประสงค์ อนงค์ สวัสดี
                                 </p> */}
@@ -167,12 +199,15 @@ function ProductPreview() {
 
                             <div>
                                 <p className="text-lg mb-2">Seller Information</p>
+                                {skeleton ?( 
+
                                 <div className="flex gap-x-2 items-center">
                                     <Avatar src={authUserData?.profileImage} />
                                     <p>
                                         {authUserData?.firstName} {authUserData?.lastName}
                                     </p>
                                 </div>
+                                ) :(<Skeleton containerClassName="flex-1" height={40} />)}
                             </div>
                             <div className="flex px-8">
                                 <Button type={"submit"} text={"Message"} className="my-4" />
