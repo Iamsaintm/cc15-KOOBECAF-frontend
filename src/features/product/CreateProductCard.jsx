@@ -1,6 +1,17 @@
+import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 
 function CreateProductCard({ src, header, content, to }) {
+    const [skeleton, setSkeleton] = useState(false);
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1200);
+        return () => clearTimeout(id);
+    }, []);
+
     return (
         <>
             <Link
@@ -8,10 +19,15 @@ function CreateProductCard({ src, header, content, to }) {
                 className="flex flex-col justify-center items-center gap-2 bg-white shadow-md shadow-main rounded-lg"
             >
                 <div className="w-16 bg-blue-200 aspect-square rounded-full">
-                    <img src={src} className="h-full w-full object-cover object-center lg:h-full lg:w-full" />
+                    <img
+                        src={skeleton ? src : <Skeleton width={80} height={80} />}
+                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                    />
                 </div>
-                <div className="mt-1 text-sm text-gray-500">{header}</div>
-                <div className="mt-1 text-sm text-gray-500">{content}</div>
+                <div className="mt-1 text-sm text-gray-500">{skeleton ? header : <Skeleton width={100} />}</div>
+                <div className="mt-1 text-sm text-gray-500">
+                    {skeleton ? content : <Skeleton width={130} count={3} />}
+                </div>
             </Link>
         </>
     );

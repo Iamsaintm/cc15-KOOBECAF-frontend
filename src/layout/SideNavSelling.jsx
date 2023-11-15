@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { FaTags, FaArrowLeft } from "react-icons/fa6";
@@ -9,12 +9,21 @@ import Avatar from "../components/Avatar";
 import EditUser from "../features/profile/EditUser";
 import ProfileModal from "../components/ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
+import Skeleton from "react-loading-skeleton";
 
 function SideNavSelling() {
     const [isOpen, setIsOpen] = useState(false);
     const [editUser, setEditUser] = useState(false);
     const { authUserData } = useSelector((state) => state.auth);
     const { pathname } = useLocation();
+    const [skeleton, setSkeleton] = useState(false);
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1200);
+        return () => clearTimeout(id);
+    }, []);
 
     return (
         <>
@@ -41,32 +50,40 @@ function SideNavSelling() {
                     />
                 </div>
                 <hr className="border" />
-                <div className="flex flex-col gap-2">
-                    <CategorieItem
-                        icons={<Avatar src={authUserData?.profileImage} className="" />}
-                        onClick={() => {
-                            setIsOpen(true);
-                        }}
-                        title={"Marketplace profile"}
-                    />
-                    <ProfileModal open={isOpen}>
-                        <ProfileUser
-                            setEditUser={setEditUser}
-                            onClose={() => {
-                                setIsOpen(false);
+                {skeleton ? (
+                    <div className="flex flex-col gap-2">
+                        <CategorieItem
+                            icons={<Avatar src={authUserData?.profileImage} className="" />}
+                            onClick={() => {
+                                setIsOpen(true);
                             }}
+                            title={"Marketplace profile"}
                         />
-                    </ProfileModal>
+                        <ProfileModal open={isOpen}>
+                            <ProfileUser
+                                setEditUser={setEditUser}
+                                onClose={() => {
+                                    setIsOpen(false);
+                                }}
+                                title={"Marketplace profile"}
+                            />
+                        </ProfileModal>
 
-                    <ProfileModal open={editUser}>
-                        <EditUser
-                            setIsOpen={setIsOpen}
-                            onClose={() => {
-                                setEditUser(false);
-                            }}
-                        />
-                    </ProfileModal>
-                </div>
+                        <ProfileModal open={editUser}>
+                            <EditUser
+                                setIsOpen={setIsOpen}
+                                onClose={() => {
+                                    setEditUser(false);
+                                }}
+                            />
+                        </ProfileModal>
+                    </div>
+                ) : (
+                    <div className="flex gap-4 my-[6px] mx-2">
+                        <Skeleton width={40} height={40} circle={true} />
+                        <Skeleton containerClassName="flex-1" height={40} />
+                    </div>
+                )}
 
                 <div className="flex flex-col gap-2 overflow-auto h-screen pb-56 px-2" />
             </div>

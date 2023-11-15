@@ -99,13 +99,10 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.id;
             delete newInputProduct.status;
             delete newInputProduct.point;
-            console.log("first");
+
             result = validateSchema(itemSchema, newInputProduct);
-            console.log(result);
             if (result) return setError(result);
-            console.log("3");
             await dispatch(updateProduct({ productId, formData }));
-            console.log("2");
             dispatch(resetInputProduct());
             newInputProduct = {};
             navigate("/selling");
