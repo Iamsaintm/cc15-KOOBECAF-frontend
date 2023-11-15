@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaArrowLeft } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
@@ -9,12 +9,23 @@ import Avatar from "../components/Avatar";
 import ProfileModal from "../components/ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
 import EditUser from "../features/profile/EditUser";
+import Skeleton from "react-loading-skeleton";
 
 function SideNavWishlist() {
     const [isOpen, setIsOpen] = useState(false);
     const [editUser, setEditUser] = useState(false);
-    const { authUserData, loading } = useSelector((state) => state.auth);
+    const { authUserData } = useSelector((state) => state.auth);
     const { pathname } = useLocation();
+    const [page, setPage] = useState(1);
+    const [skeleton, setSkeleton] = useState(false);
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1000);
+        return () => clearTimeout(id);
+    }, [page]);
+
     return (
         <>
             <div className="flex flex-col gap-2 px-4">
@@ -37,31 +48,39 @@ function SideNavWishlist() {
                 </div>
 
                 <hr className="border" />
+                {skeleton ? (
+                    <div>
+                        <CategorieItem
+                            icons={<Avatar src={authUserData?.profileImage} className="" />}
+                            onClick={() => {
+                                setIsOpen(true);
+                            }}
+                            title={"Marketplace profile"}
+                        />
+                        <ProfileModal open={isOpen}>
+                            <ProfileUser
+                                setEditUser={setEditUser}
+                                onClose={() => {
+                                    setIsOpen(false);
+                                }}
+                            />
+                        </ProfileModal>
 
-                <CategorieItem
-                    icons={<Avatar src={authUserData?.profileImage} className="" />}
-                    onClick={() => {
-                        setIsOpen(true);
-                    }}
-                    title={"Marketplace profile"}
-                />
-                <ProfileModal open={isOpen}>
-                    <ProfileUser
-                        setEditUser={setEditUser}
-                        onClose={() => {
-                            setIsOpen(false);
-                        }}
-                    />
-                </ProfileModal>
-
-                <ProfileModal open={editUser}>
-                    <EditUser
-                        setIsOpen={setIsOpen}
-                        onClose={() => {
-                            setEditUser(false);
-                        }}
-                    />
-                </ProfileModal>
+                        <ProfileModal open={editUser}>
+                            <EditUser
+                                setIsOpen={setIsOpen}
+                                onClose={() => {
+                                    setEditUser(false);
+                                }}
+                            />
+                        </ProfileModal>
+                    </div>
+                ) : (
+                    <div className="flex gap-4 my-[6px] mx-2">
+                        <Skeleton width={40} height={40} circle={true} />
+                        <Skeleton containerClassName="flex-1" height={40} />
+                    </div>
+                )}
 
                 <div className="flex flex-col gap-2 overflow-auto h-screen pb-56 px-2" />
             </div>
