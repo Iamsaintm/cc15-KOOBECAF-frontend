@@ -2,12 +2,17 @@ import InputForm from "../../components/InputForm";
 import Autocomplete from "../../components/Autocomplete";
 import SubscriptGoogleMap from "../../features/subscribe/SubscribeGoogleMap";
 import Button from "../../components/Button";
+import { Link } from "react-router-dom";
 
 export default function ChangeLocation({ onClose }) {
+    const handleApply = () => {
+        onclose();
+    };
+    
     const handleOnClick = () => {
         onClose();
     };
-    
+
     return (
         <>
             <div className="bg-white rounded-lg">
@@ -37,6 +42,7 @@ export default function ChangeLocation({ onClose }) {
                     <div className="flex justify-end">
                         <div className="w-20 pt-4">
                             <Button
+                                onClick={handleApply}
                                 text="Apply"
                                 className="rounded-md text-white bg-main hover:bg-main-dark text-sm font-semibold"
                             />

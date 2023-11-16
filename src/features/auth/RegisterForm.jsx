@@ -91,8 +91,10 @@ function RegisterForm() {
                     />
                     {error.confirmPassword && <InputErrorMessage message={error.confirmPassword} />}
                 </div>
-                <div className="pt-4">
-                    <Button type={"submit"} text={"Sign up"} />
+                <div className="flex justify-end">
+                    <div className="pt-4">
+                        <Button type={"submit"} text={"Sign up"} />
+                    </div>
                 </div>
             </form>
         </>
