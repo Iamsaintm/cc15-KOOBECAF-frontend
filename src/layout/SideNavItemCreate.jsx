@@ -8,11 +8,9 @@ import DescriptionContainer from "../features/product/DescriptionContainer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import validateSchema from "../utils/validate-schema";
 import { itemSchema, vehicleSchema, homeSchema } from "../utils/product-validator";
-import { useJsApiLoader } from "@react-google-maps/api";
-import { GOOGLE_MAPS_CONFIG } from "../config/env";
 import {
     createProduct,
-    fetchProductById,
+    fetchProductByProductId,
     resetInputProduct,
     updateInputProduct,
     updateProduct,
@@ -27,15 +25,12 @@ function SideNavItemCreate({ header, type }) {
     const { productId } = useParams();
     const { authUserData } = useSelector((state) => state.auth);
     const [error, setError] = useState({});
-    const { inputProduct, productData, loading } = useSelector((state) => state.product);
+    const { inputProduct, productByProductId, loading } = useSelector((state) => state.product);
 
     const { categoryData } = useSelector((state) => state.category);
-    const [libraries, setLibraries] = useState(["places"]);
-    const [trigger, setTrigger] = useState(false);
-
-    const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_CONFIG);
 
     const [skeleton, setSkeleton] = useState(false);
+
     useEffect(() => {
         const id = setTimeout(() => {
             setSkeleton(true);
@@ -45,18 +40,18 @@ function SideNavItemCreate({ header, type }) {
 
     useEffect(() => {
         if (productId) {
-            dispatch(fetchProductById(productId));
+            dispatch(fetchProductByProductId(productId));
         }
     }, [productId]);
 
     useEffect(() => {
-        if (inputProduct.id && productData && productId) {
-            const { typeOfCategory } = categoryData?.find((x) => x.id === productData.categoryId);
-            dispatch(updateInputProduct({ ...productData, typeOfCategory }));
+        if (inputProduct.id && productByProductId && productId) {
+            const { typeOfCategory } = categoryData?.find((x) => x.id === productByProductId.categoryId);
+            dispatch(updateInputProduct({ ...productByProductId, typeOfCategory }));
         } else if (pathname.split("/")[1] === "update") {
-            dispatch(updateInputProduct(productData));
+            dispatch(updateInputProduct(productByProductId));
         }
-    }, [productData]);
+    }, [productByProductId]);
 
     const onSubmit = async (e) => {
         e.preventDefault();

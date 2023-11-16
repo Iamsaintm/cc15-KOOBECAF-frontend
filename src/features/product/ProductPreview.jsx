@@ -16,7 +16,7 @@ import googleAxios from "../../config/googleAxios";
 function ProductPreview() {
     const dispatch = useDispatch();
 
-    // const [location, setLocation] = useState("");
+    const [location, setLocation] = useState("");
 
     const [currentSlide, setCurrentSlide] = useState(0);
     const [skeleton, setSkeleton] = useState(false);
@@ -25,19 +25,25 @@ function ProductPreview() {
     const { inputProduct, inputLocation, loading } = useSelector((state) => state.product);
     const { pathname } = useLocation();
 
-    // useEffect(() => {
-    //     dispatch(fetchProductByProductId(productId))
-    //         .unwrap()
-    //         .then((res) => {
-    //             const result = googleAxios
-    //                 .get(
-    //                     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${res.product.latitude},${res.product.longitude}&key=${GOOGLE_MAPS_API_KEY}`,
-    //                 )
-    //                 .then((res) => {
-    //                     setLocation(res.data.results[0].formatted_address);
-    //                 });
-    //         });
-    // }, []);
+    console.log(pathname);
+    console.log(productId);
+    console.log(inputLocation);
+
+    useEffect(() => {
+        if (productId) {
+            dispatch(fetchProductByProductId(productId))
+                .unwrap()
+                .then((res) => {
+                    googleAxios
+                        .get(
+                            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${res.product.latitude},${res.product.longitude}&key=${GOOGLE_MAPS_API_KEY}`,
+                        )
+                        .then((res) => {
+                            setLocation(res.data.results[0].formatted_address);
+                        });
+                });
+        }
+    }, []);
 
     useEffect(() => {
         const id = setTimeout(() => {
@@ -212,7 +218,9 @@ function ProductPreview() {
                                 {skeleton && !loading ? (
                                     <>
                                         <GoogleMapInput className="py-2" />
-                                        <p className="truncate font-thin">ฟหกดรีัะพำกดเ้</p>
+                                        <p className="truncate font-thin">
+                                            {inputLocation.length !== 0 ? inputLocation : location}
+                                        </p>
                                     </>
                                 ) : (
                                     <Skeleton containerClassName="flex-1" height={120} />

@@ -48,7 +48,6 @@ function PhotoUpload() {
         if (fieldValue.length === productImageAmount.length) {
             fieldName = "image";
             fieldValue = inputProduct.image.filter((x) => x.id !== id);
-            console.log(fieldValue, "fieldValue in...");
         }
 
         dispatch(setInputProduct({ fieldName, fieldValue }));
