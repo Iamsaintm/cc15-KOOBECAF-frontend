@@ -224,6 +224,9 @@ const productSlice = createSlice({
         resetProductPrice: (state, { payload }) => {
             state.productPrice = productPrice;
         },
+        resetLocation: () => {
+            state.inputLocation = [];
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -428,6 +431,7 @@ export const {
     setSearchProductProfile,
     resetSearchProductProfile,
     setInputLocation,
+    resetLocation,
 } = productSlice.actions;
 
 export default productSlice.reducer;
