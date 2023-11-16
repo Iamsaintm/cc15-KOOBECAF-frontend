@@ -8,6 +8,8 @@ import DescriptionContainer from "../features/product/DescriptionContainer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import validateSchema from "../utils/validate-schema";
 import { itemSchema, vehicleSchema, homeSchema } from "../utils/product-validator";
+import { useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_MAPS_CONFIG } from "../config/env";
 import {
     createProduct,
     fetchProductById,
@@ -19,15 +21,19 @@ import {
 import Skeleton from "react-loading-skeleton";
 
 function SideNavItemCreate({ header, type }) {
-    const { pathname } = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const { productId } = useParams();
     const { authUserData } = useSelector((state) => state.auth);
     const [error, setError] = useState({});
     const { inputProduct, productData, loading } = useSelector((state) => state.product);
 
     const { categoryData } = useSelector((state) => state.category);
+    const [libraries, setLibraries] = useState(["places"]);
+    const [trigger, setTrigger] = useState(false);
+
+    const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_CONFIG);
 
     const [skeleton, setSkeleton] = useState(false);
     useEffect(() => {
@@ -185,6 +191,7 @@ function SideNavItemCreate({ header, type }) {
                         )}
                     </div>
                 </div>
+
                 <div className="border-b-2 mb-2 pb-2"></div>
                 <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
                     <PhotoUpload />

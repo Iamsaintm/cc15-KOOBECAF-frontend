@@ -1,23 +1,19 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import ProductCard from "./ProductCard";
-import Loading from "../../components/Loading";
 import { addPath } from "../../utils/local-storage";
+import ProductCard from "./ProductCard";
 
 function ProductContainer() {
     const { pathname } = useLocation();
     const { productData, loading, searchProduct } = useSelector((state) => state.product);
-
-    let product = null;
-
-    product = productData?.filter((el) =>
+    let product = productData?.filter((el) =>
         el.productName.toLowerCase().includes(searchProduct.toLowerCase().trim()) ? el : null,
     );
 
     return (
         <>
             {loading ? (
-                <Loading />
+                <>ABC</>
             ) : (
                 <>
                     {product && product.length > 0 ? (

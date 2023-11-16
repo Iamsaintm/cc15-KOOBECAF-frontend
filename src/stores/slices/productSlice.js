@@ -180,6 +180,9 @@ const productSlice = createSlice({
         errorMessage: false,
     },
     reducers: {
+        setInputLocation: (state, { payload }) => {
+            state.inputLocation = payload.fieldLocation;
+        },
         logoutProduct: (state, { payload }) => {
             state.productData = null;
         },
@@ -412,7 +415,7 @@ const productSlice = createSlice({
 });
 
 export const {
-    logoutProduct,
+    inputLocation: logoutProduct,
     setInputProduct,
     setInputProductCategory,
     setInputProductImage,
@@ -424,6 +427,7 @@ export const {
     updateInputProduct,
     setSearchProductProfile,
     resetSearchProductProfile,
+    setInputLocation,
 } = productSlice.actions;
 
 export default productSlice.reducer;

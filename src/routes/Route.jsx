@@ -10,7 +10,7 @@ import SellingPage from "../pages/SellingPage";
 import CategoryPage from "../pages/CategoryPage";
 import ProductItemPage from "../pages/ProductItemPage";
 import WishlistPage from "../pages/WishlistPage";
-import ErrorPage from "../features/product/ErrorPage";
+// import ErrorPage from "../features/product/ErrorPage";
 import SubscribePage from "../pages/SubscribePage";
 import PaymentSuccessful from "../features/subscribe/PaymentSuccessful";
 import PaymentFailed from "../features/subscribe/PaymentFailed";
@@ -24,6 +24,7 @@ const router = createBrowserRouter([
                     <Layout />
                 </div>
             </Authenticated>
+            
         ),
         children: [
             { path: "", element: <HomePage /> },

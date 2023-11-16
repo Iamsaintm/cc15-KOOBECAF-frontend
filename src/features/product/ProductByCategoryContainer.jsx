@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import ProductCard from "./ProductCard";
-import Loading from "../../components/Loading";
 import { addPath } from "../../utils/local-storage";
+import ProductCard from "./ProductCard";
 
 function ProductByCategoryContainer() {
     const { pathname } = useLocation();
@@ -31,7 +30,7 @@ function ProductByCategoryContainer() {
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <>
                     {product && product?.length > 0 ? (

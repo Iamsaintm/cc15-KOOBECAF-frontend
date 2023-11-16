@@ -1,17 +1,42 @@
 import { useEffect, useState } from "react";
 import { ImBin2 } from "react-icons/im";
 import { FaEdit } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
+import { GOOGLE_MAPS_API_KEY } from "../../config/env";
+import { fetchProductByProductId } from "../../stores/slices/productSlice";
+import { useDispatch } from "react-redux";
+
+import googleAxios from "../../config/googleAxios";
 import Modal from "../../components/Modal";
 import DeleteProductForm from "./DeleteProductForm";
 import InputAvailable from "../../components/InputAvailable";
-import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
 function ListProductCard({ src, productPrice, productName, status, productDetail, productId }) {
-    const [isOpenDelete, setIsOpenDelete] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const params = useParams();
+
+    const [location, setLocation] = useState("");
+    const [isOpenDelete, setIsOpenDelete] = useState(false);
     const [page, setPage] = useState(1);
     const [skeleton, setSkeleton] = useState(false);
+
+    // useEffect(() => {
+    //     dispatch(fetchProductByProductId(productId))
+    //         .unwrap()
+    //         .then((res) => {
+    //             console.log("res", res);
+    //             const result = googleAxios
+    //                 .get(
+    //                     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${res.product.latitude},${res.product.longitude}&key=${GOOGLE_MAPS_API_KEY}`,
+    //                 )
+    //                 .then((res) => {
+    //                     console.log("res", res);
+    //                     setLocation(res.data.results[0].formatted_address);
+    //                 });
+    //         });
+    // }, []);
 
     useEffect(() => {
         const id = setTimeout(() => {
@@ -54,10 +79,9 @@ function ListProductCard({ src, productPrice, productName, status, productDetail
                                 {skeleton ? productName : <Skeleton width={200} />}
                             </div>
                             <div className="">
-                                {" "}
                                 {skeleton ? <> &#3647; {productPrice} </> : <Skeleton width={200} />}
                             </div>
-                            <div className="text-sm">{skeleton ? "กรุงเทพมหานคร" : <Skeleton width={200} />}</div>
+                            <div className="text-sm">{skeleton ? <></> : <Skeleton width={200} />}</div>
                         </div>
                         <div className="flex justify-between ">
                             {skeleton ? (

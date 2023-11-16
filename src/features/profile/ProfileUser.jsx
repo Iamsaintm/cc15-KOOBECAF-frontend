@@ -132,7 +132,7 @@ export default function ProfileUser({ onClose, setEditUser }) {
                             onChange={onChangeSort}
                         />
                     </div>
-                    <div className="grid grid-cols-3 justify-between px-4 pb-4 gap-2 overflow-y-auto h-[268px]">
+                    <div className="grid grid-cols-3 justify-between px-4 pb-4 gap-2 overflow-y-auto h-[264px]">
                         {productByUserId && productByUserId.length > 0 ? (
                             product?.map((data) => (
                                 <Link
