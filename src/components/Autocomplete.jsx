@@ -18,6 +18,7 @@ export default function Autocomplete({ onChange, placeholder, handleSearchLocati
         clearSuggestions();
 
         const results = await getGeocode({ address });
+        
         const { lat, lng } = getLatLng(results[0]);
         let fieldName = "latitude";
         let fieldValue = lat;
