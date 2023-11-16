@@ -8,6 +8,8 @@ import DescriptionContainer from "../features/product/DescriptionContainer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import validateSchema from "../utils/validate-schema";
 import { itemSchema, vehicleSchema, homeSchema } from "../utils/product-validator";
+import { useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_MAPS_CONFIG } from "../config/env";
 import {
     createProduct,
     fetchProductById,
@@ -15,8 +17,8 @@ import {
     updateInputProduct,
     updateProduct,
 } from "../stores/slices/productSlice";
-import { useJsApiLoader } from "@react-google-maps/api";
-import { GOOGLE_MAPS_CONFIG } from "../config/env";
+
+import Skeleton from "react-loading-skeleton";
 
 function SideNavItemCreate({ header, type }) {
     const dispatch = useDispatch();
@@ -25,12 +27,21 @@ function SideNavItemCreate({ header, type }) {
     const { productId } = useParams();
     const { authUserData } = useSelector((state) => state.auth);
     const [error, setError] = useState({});
-    const { inputProduct, productData } = useSelector((state) => state.product);
+    const { inputProduct, productData, loading } = useSelector((state) => state.product);
+
     const { categoryData } = useSelector((state) => state.category);
     const [libraries, setLibraries] = useState(["places"]);
     const [trigger, setTrigger] = useState(false);
 
     const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_CONFIG);
+
+    const [skeleton, setSkeleton] = useState(false);
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1200);
+        return () => clearTimeout(id);
+    }, []);
 
     useEffect(() => {
         if (productId) {
@@ -105,13 +116,9 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.id;
             delete newInputProduct.status;
             delete newInputProduct.point;
-            console.log("first");
             result = validateSchema(itemSchema, newInputProduct);
-            console.log(result);
             if (result) return setError(result);
-            console.log("3");
             await dispatch(updateProduct({ productId, formData }));
-            console.log("2");
             dispatch(resetInputProduct());
             newInputProduct = {};
             navigate("/selling");
@@ -160,35 +167,45 @@ function SideNavItemCreate({ header, type }) {
 
     return (
         <>
-            {isLoaded ? (
-                <form onSubmit={onSubmit} className="flex flex-col gap-2 h-screen">
-                    <div className="sticky h-6"></div>
-                    <div className="flex flex-col gap-2 px-4">
-                        <div className="text-2xl font-bold">{header}</div>
-                        <div className="flex gap-3 items-center">
+            <form onSubmit={onSubmit} className="flex flex-col gap-2 h-screen">
+                <div className="sticky h-6"></div>
+                <div className="flex flex-col gap-2 px-4">
+                    <div className="text-2xl font-bold">{header}</div>
+                    <div className="flex gap-3 items-center">
+                        {skeleton && !loading ? (
                             <Avatar src={authUserData?.profileImage} />
+                        ) : (
+                            <div className="flex gap-3 items-center">
+                                <Skeleton width={40} height={40} circle={true} />
+                                <Skeleton containerClassName="flex-1" height={40} />
+                            </div>
+                        )}
+                        {skeleton && !loading ? (
                             <div>
                                 {authUserData?.firstName} {authUserData?.lastName}
                             </div>
-                        </div>
+                        ) : (
+                            <div className="flex gap-3 items-center">
+                                <Skeleton containerClassName="flex-1" width={200} />
+                            </div>
+                        )}
                     </div>
-                    <div className="border-b-2 mb-2 pb-2"></div>
-                    <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
-                        <PhotoUpload />
-                        <RequiredContainer type={type} error={error} />
-                        <div className="flex flex-col gap-4">
-                            <DescriptionContainer error={error} />
-                            {inputProduct.id ? (
-                                <Button type={"submit"} text={"Update"} />
-                            ) : (
-                                <Button type={"submit"} text={"Create"} />
-                            )}
-                        </div>
+                </div>
+
+                <div className="border-b-2 mb-2 pb-2"></div>
+                <div className="flex flex-col gap-4 overflow-auto h-screen pb-16 px-4">
+                    <PhotoUpload />
+                    <RequiredContainer type={type} error={error} />
+                    <div className="flex flex-col gap-4">
+                        <DescriptionContainer error={error} />
+                        {inputProduct.id ? (
+                            <Button type={"submit"} text={"Update"} />
+                        ) : (
+                            <Button type={"submit"} text={"Create"} />
+                        )}
                     </div>
-                </form>
-            ) : (
-                <></>
-            )}
+                </div>
+            </form>
         </>
     );
 }

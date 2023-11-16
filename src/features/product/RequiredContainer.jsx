@@ -1,8 +1,6 @@
-import { useCallback, useMemo, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setInputProduct, setInputProductCategory } from "../../stores/slices/productSlice";
-import { fetchGeocoding } from "../../stores/slices/productSlice";
-import { debounce } from "lodash";
 import { DatePicker, ConfigProvider } from "antd";
 import { fetchAllCategory } from "../../stores/slices/categorySlice";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +8,7 @@ import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
 import InputErrorMessage from "../auth/InputErrorMessage";
 import Autocomplete from "../../components/Autocomplete";
+import Skeleton from "react-loading-skeleton";
 
 function RequiredContainer({ type, error }) {
     const navigate = useNavigate();
@@ -17,7 +16,15 @@ function RequiredContainer({ type, error }) {
 
     const { authUserData } = useSelector((state) => state.auth);
     const { categoryData } = useSelector((state) => state.category);
-    const { inputProduct } = useSelector((state) => state.product);
+    const { inputProduct, loading } = useSelector((state) => state.product);
+    const [skeleton, setSkeleton] = useState(false);
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1200);
+        return () => clearTimeout(id);
+    }, []);
 
     useEffect(() => {
         dispatch(fetchAllCategory());
@@ -92,31 +99,48 @@ function RequiredContainer({ type, error }) {
 
     let inputForm = (
         <>
-            <InputForm
-                value={inputProduct.productName}
-                onChange={onChangeInput}
-                name={"productName"}
-                placeholder={"Title"}
-            />
+            {skeleton && !loading ? (
+                <InputForm
+                    value={inputProduct.productName}
+                    onChange={onChangeInput}
+                    name={"productName"}
+                    placeholder={"Title"}
+                />
+            ) : (
+                <Skeleton containerClassName="flex-1" height={50} />
+            )}
             {error.productName && <InputErrorMessage message={"Title is required"} />}
 
-            <InputForm
-                value={inputProduct.productPrice}
-                onChange={onChangeInput}
-                name={"productPrice"}
-                placeholder={"Price"}
-            />
+            {skeleton && !loading ? (
+                <InputForm
+                    value={inputProduct.productPrice}
+                    onChange={onChangeInput}
+                    name={"productPrice"}
+                    placeholder={"Price"}
+                />
+            ) : (
+                <Skeleton containerClassName="flex-1" height={50} />
+            )}
+
             {error.productPrice && <InputErrorMessage message={"Price is required, should be a number."} />}
 
-            <InputDropdown
-                value={inputProduct.typeOfCategory}
-                data={newCategoryData}
-                onChange={onChangeInputCategory}
-                name={"typeOfCategory"}
-            />
+            {skeleton && !loading ? (
+                <InputDropdown
+                    value={inputProduct.typeOfCategory}
+                    data={newCategoryData}
+                    onChange={onChangeInputCategory}
+                    name={"typeOfCategory"}
+                />
+            ) : (
+                <Skeleton containerClassName="flex-1" height={50} />
+            )}
             {error.typeOfCategory && <InputErrorMessage message={"Category is required"} />}
 
-            <Autocomplete placeholder={"Location"} />
+            {skeleton && !loading ? (
+                <Autocomplete placeholder={"Location"} />
+            ) : (
+                <Skeleton containerClassName="flex-1" height={50} />
+            )}
             {error.latitude && <InputErrorMessage message={"Location is required"} />}
         </>
     );
@@ -124,57 +148,85 @@ function RequiredContainer({ type, error }) {
     if (type === "/create/vehicle" || type.includes("/update/vehicle")) {
         inputForm = (
             <>
-                <InputForm
-                    value={inputProduct.productName}
-                    onChange={onChangeInput}
-                    name={"productName"}
-                    placeholder={"Title"}
-                />
-                {error.productName && <InputErrorMessage message={"Title is required."} />}
-                <InputDropdown
-                    value={inputProduct.vehicleType}
-                    data={newVehicleTypeData}
-                    onChange={onChangeInput}
-                    name={"vehicleType"}
-                />
-                {error.vehicleType && <InputErrorMessage message={"Vehicle type is required."} />}
-                <ConfigProvider
-                    theme={{
-                        token: {
-                            colorTextPlaceholder: "#6b7280",
-                        },
-                    }}
-                >
-                    <DatePicker
-                        className="mt-4 rounded-full outline-none border-2 px-4 py-[9px]  focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
-                        onChange={onChangeInputYear}
-                        picker="year"
-                        placeholder={type.split("/")[1] === "update" ? inputProduct.vehicleYears : "Select year"}
+                {skeleton && !loading ? (
+                    <InputForm
+                        value={inputProduct.productName}
+                        onChange={onChangeInput}
+                        name={"productName"}
+                        placeholder={"Title"}
                     />
-                </ConfigProvider>
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
+                {error.productName && <InputErrorMessage message={"Title is required."} />}
+                {skeleton && !loading ? (
+                    <InputDropdown
+                        value={inputProduct.vehicleType}
+                        data={newVehicleTypeData}
+                        onChange={onChangeInput}
+                        name={"vehicleType"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
+                {error.vehicleType && <InputErrorMessage message={"Vehicle type is required."} />}
+                {skeleton && !loading ? (
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                                colorTextPlaceholder: "#6b7280",
+                            },
+                        }}
+                    >
+                        <DatePicker
+                            className="mt-4 rounded-full outline-none border-2 px-4 py-[9px]  focus:border-1 border-main focus:ring-2 focus:ring-main-dark"
+                            onChange={onChangeInputYear}
+                            picker="year"
+                            placeholder={type.split("/")[1] === "update" ? inputProduct.vehicleYears : "Select year"}
+                        />
+                    </ConfigProvider>
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.vehicleYears && <InputErrorMessage message={"Year is required."} />}
-                <InputForm
-                    value={inputProduct.vehicleModel}
-                    onChange={onChangeInput}
-                    name={"vehicleModel"}
-                    placeholder={"Model"}
-                />
+                {skeleton && !loading ? (
+                    <InputForm
+                        value={inputProduct.vehicleModel}
+                        onChange={onChangeInput}
+                        name={"vehicleModel"}
+                        placeholder={"Model"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.vehicleModel && <InputErrorMessage message={"Model is required."} />}
-                <InputForm
-                    value={inputProduct.vehicleBrand}
-                    onChange={onChangeInput}
-                    name={"vehicleBrand"}
-                    placeholder={"Brand"}
-                />
+                {skeleton && !loading ? (
+                    <InputForm
+                        value={inputProduct.vehicleBrand}
+                        onChange={onChangeInput}
+                        name={"vehicleBrand"}
+                        placeholder={"Brand"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.vehicleBrand && <InputErrorMessage message={"Brand is required."} />}
-                <Autocomplete placeholder={"Location"} />
+                {skeleton && !loading ? (
+                    <Autocomplete placeholder={"Location"} />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.latitude && <InputErrorMessage message={"Location is required."} />}
-                <InputForm
-                    value={inputProduct.productPrice}
-                    onChange={onChangeInput}
-                    name={"productPrice"}
-                    placeholder={"Price"}
-                />
+                {skeleton && !loading ? (
+                    <InputForm
+                        value={inputProduct.productPrice}
+                        onChange={onChangeInput}
+                        name={"productPrice"}
+                        placeholder={"Price"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.productPrice && <InputErrorMessage message={"Price is required, should be a number."} />}
             </>
         );
@@ -183,61 +235,92 @@ function RequiredContainer({ type, error }) {
     if (type === "/create/rental" || type.includes("/update/rental")) {
         inputForm = (
             <>
-                <InputForm
-                    value={inputProduct.productName}
-                    onChange={onChangeInput}
-                    name={"productName"}
-                    placeholder={"Title"}
-                />
+                {skeleton && !loading ? (
+                    <InputForm
+                        value={inputProduct.productName}
+                        onChange={onChangeInput}
+                        name={"productName"}
+                        placeholder={"Title"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.productName && <InputErrorMessage message={"Title is required"} />}
-                <InputDropdown
-                    value={inputProduct.homeProperty}
-                    data={newHomePropertyData}
-                    onChange={onChangeInput}
-                    name={"homeProperty"}
-                />
+                {skeleton && !loading ? (
+                    <InputDropdown
+                        value={inputProduct.homeProperty}
+                        data={newHomePropertyData}
+                        onChange={onChangeInput}
+                        name={"homeProperty"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.homeProperty && <InputErrorMessage message={"Home type is required"} />}
-                <InputDropdown
-                    value={inputProduct.homeType}
-                    data={newHomeTypeData}
-                    onChange={onChangeInput}
-                    name={"homeType"}
-                />
+                {skeleton && !loading ? (
+                    <InputDropdown
+                        value={inputProduct.homeType}
+                        data={newHomeTypeData}
+                        onChange={onChangeInput}
+                        name={"homeType"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.homeType && <InputErrorMessage message={"Property type is required"} />}
-                <InputForm
-                    value={inputProduct.bedroomQuantity}
-                    onChange={onChangeInput}
-                    name={"bedroomQuantity"}
-                    placeholder={"Number of bedrooms"}
-                />
+                {skeleton && !loading ? (
+                    <InputForm
+                        value={inputProduct.bedroomQuantity}
+                        onChange={onChangeInput}
+                        name={"bedroomQuantity"}
+                        placeholder={"Number of bedrooms"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.bedroomQuantity && (
                     <InputErrorMessage message={"Number of bedrooms are required, should be a number"} />
                 )}
-                <InputForm
-                    value={inputProduct.bathroomQuantity}
-                    onChange={onChangeInput}
-                    name={"bathroomQuantity"}
-                    placeholder={"Number of bathrooms"}
-                />
+                {skeleton && !loading ? (
+                    <InputForm
+                        value={inputProduct.bathroomQuantity}
+                        onChange={onChangeInput}
+                        name={"bathroomQuantity"}
+                        placeholder={"Number of bathrooms"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.bathroomQuantity && (
                     <InputErrorMessage message={"Number of bathrooms are required, should be a number"} />
                 )}
-                <InputForm
-                    value={inputProduct.productPrice}
-                    onChange={onChangeInput}
-                    name={"productPrice"}
-                    placeholder={"Price"}
-                />
+                {skeleton && !loading ? (
+                    <InputForm
+                        value={inputProduct.productPrice}
+                        onChange={onChangeInput}
+                        name={"productPrice"}
+                        placeholder={"Price"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.productPrice && <InputErrorMessage message={"Price is required, should be a number."} />}
-
-                <Autocomplete placeholder={"Location"} />
+                {skeleton && !loading ? (
+                    <Autocomplete placeholder={"Location"} />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.latitude && <InputErrorMessage message={"Location is required"} />}
-                <InputForm
-                    value={inputProduct.homeAddress}
-                    onChange={onChangeInput}
-                    name={"homeAddress"}
-                    placeholder={"Property address"}
-                />
+                {skeleton && !loading ? (
+                    <InputForm
+                        value={inputProduct.homeAddress}
+                        onChange={onChangeInput}
+                        name={"homeAddress"}
+                        placeholder={"Property address"}
+                    />
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={50} />
+                )}
                 {error.homeAddress && <InputErrorMessage message={"Address is required"} />}
             </>
         );

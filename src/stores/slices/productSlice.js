@@ -29,15 +29,6 @@ export const fetchProductByUserId = createAsyncThunk("product/fetchProductByUser
     }
 });
 
-export const fetchProductByPage = createAsyncThunk("products/fetchProductByPage", async (page, thunkAPI) => {
-    try {
-        const res = await axios.get(`/product/page/?_page=${page}`);
-        return res.data;
-    } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
-    }
-});
-
 export const fetchWishlist = createAsyncThunk("product/fetchWishlist", async (payload, thunkAPI) => {
     try {
         const res = await axios.get("/product/wishlist");
@@ -179,7 +170,6 @@ const productSlice = createSlice({
         productByUserId: null,
         productByCategory: null,
         productByProductId: null,
-        productByPage: null,
         isWishList: false,
         myWishListProduct: null,
         deleteProduct: null,
@@ -394,6 +384,7 @@ const productSlice = createSlice({
             })
             .addCase(fetchGeocoding.fulfilled, (state, { payload }) => {
                 const payloadData = payload.results;
+                state.inputLocation = payloadData;
                 if (payloadData.length != 0) {
                     const location = payloadData[0].geometry.location;
                     state.inputProduct.latitude = location.lat;
@@ -417,30 +408,6 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(updateProductStatus.rejected, (state, { payload }) => {
-                state.loading = false;
-                state.error = payload;
-            });
-
-        builder
-            .addCase(fetchProductByPage.pending, (state, { payload }) => {
-                state.loading = true;
-                state.error = "";
-            })
-            .addCase(fetchProductByPage.fulfilled, (state, { payload }) => {
-                if (state.productByPage === null) {
-                    state.productByPage = payload.targetProduct;
-                } else {
-                    if (payload.page === "1") {
-                        state.productByPage = state.productByPage?.filter(
-                            (x, idx) => x.id !== payload.targetProduct[idx].id,
-                        );
-                    }
-                    state.productByPage = [...state.productByPage, ...payload.targetProduct];
-                }
-                state.loading = false;
-                state.success = true;
-            })
-            .addCase(fetchProductByPage.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });

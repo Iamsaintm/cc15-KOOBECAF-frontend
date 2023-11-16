@@ -26,7 +26,7 @@ function WishlistPage() {
                             </div>
                         </div>
                     ) : (
-                        <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-12 px-12 bg-white mt-10">
+                        <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-12 px-12 bg-white mt-10">
                             <WishlistContainer />
                         </div>
                     )}
