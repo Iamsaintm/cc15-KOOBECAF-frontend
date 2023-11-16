@@ -166,7 +166,7 @@ function SideNavItemCreate({ header, type }) {
                 <div className="flex flex-col gap-2 px-4">
                     <div className="text-2xl font-bold">{header}</div>
                     <div className="flex gap-3 items-center">
-                        {skeleton ? (
+                        {skeleton && !loading ? (
                             <Avatar src={authUserData?.profileImage} />
                         ) : (
                             <div className="flex gap-3 items-center">
@@ -174,7 +174,7 @@ function SideNavItemCreate({ header, type }) {
                                 <Skeleton containerClassName="flex-1" height={40} />
                             </div>
                         )}
-                        {skeleton ? (
+                        {skeleton && !loading ? (
                             <div>
                                 {authUserData?.firstName} {authUserData?.lastName}
                             </div>

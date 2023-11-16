@@ -14,7 +14,7 @@ function ProductPreview() {
     const dispatch = useDispatch();
     const { authUserData } = useSelector((state) => state.auth);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const { inputProduct, inputLocation } = useSelector((state) => state.product);
+    const { inputProduct, inputLocation, loading } = useSelector((state) => state.product);
     const { pathname } = useLocation();
     const [skeleton, setSkeleton] = useState(false);
 
@@ -113,7 +113,7 @@ function ProductPreview() {
                         <div className="flex items-center justify-center w-full overflow-clip drop-shadow-md bg-cover rounded-lg">
                             {newFile.length !== 0 ? (
                                 <>
-                                    {skeleton ? (
+                                    {skeleton && !loading ? (
                                         <div className="relative w-full -z-20">
                                             <Slider {...settings}>
                                                 {newFile.map((file, idx) => (
@@ -146,7 +146,7 @@ function ProductPreview() {
                                 </>
                             ) : (
                                 <div className="bg-empty h-full w-full">
-                                    {skeleton ? (
+                                    {skeleton && !loading ? (
                                         <div className="flex h-full flex-col justify-center items-center">
                                             <div className="text-2xl font-semibold">Your Listing Preview</div>
                                             <div>As you create your listing, your can preview</div>
@@ -162,14 +162,14 @@ function ProductPreview() {
                         <div className="flex flex-1 flex-col gap-y-2 w-full p-3 ">
                             <div>
                                 <p className="truncate text-lg mb-2">
-                                    {skeleton ? (
+                                    {skeleton && !loading ? (
                                         <>{inputProduct.productName ? inputProduct.productName : "Title"}</>
                                     ) : (
                                         <Skeleton containerClassName="flex-1" height={40} />
                                     )}
                                 </p>
                                 <p className="font-thin">
-                                    {skeleton ? (
+                                    {skeleton && !loading ? (
                                         <>฿ {inputProduct.productPrice ? inputProduct.productPrice : "0"}</>
                                     ) : (
                                         <Skeleton containerClassName="flex-1" height={40} />
@@ -179,7 +179,7 @@ function ProductPreview() {
 
                             <div className="border-b pb-2">
                                 <p className="text-lg mb-2">Description</p>
-                                {skeleton ? (
+                                {skeleton && !loading ? (
                                     <p className="break-all font-thin">
                                         {inputProduct.description
                                             ? inputProduct.description
@@ -188,7 +188,7 @@ function ProductPreview() {
                                 ) : (
                                     <Skeleton containerClassName="flex-1" height={40} />
                                 )}
-                                {skeleton ? (
+                                {skeleton && !loading ? (
                                     <>
                                         <GoogleMapInput className="py-2" />
                                         <p className="truncate font-thin">{inputLocation[0]?.formatted_address}</p>
@@ -196,14 +196,11 @@ function ProductPreview() {
                                 ) : (
                                     <Skeleton containerClassName="flex-1" height={120} />
                                 )}
-                                {/* <p className="truncate font-thin">
-                                    กรุงเทพมหานคร อมรรัฒนโกสินธ์ มหิมนราทิเบท อเนกประสงค์ อนงค์ สวัสดี
-                                </p> */}
                             </div>
 
                             <div>
                                 <p className="text-lg mb-2">Seller Information</p>
-                                {skeleton ? (
+                                {skeleton && !loading ? (
                                     <div className="flex gap-x-2 items-center">
                                         <Avatar src={authUserData?.profileImage} />
                                         <p>

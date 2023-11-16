@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 
 function PhotoUpload() {
     const dispatch = useDispatch();
-    const { inputProduct } = useSelector((state) => state.product);
-    const { errorMessage } = useSelector((state) => state.product);
+    const { inputProduct, errorMessage, loading } = useSelector((state) => state.product);
 
     const idsToDelete = inputProduct.idsToDelete || [];
 
@@ -42,13 +41,14 @@ function PhotoUpload() {
     }
 
     const amountPhoto = newFile?.length;
-    const deleteImage = (index) => {
+    const deleteImage = (index, id) => {
         let fieldName = "productImage";
         const productImageAmount = Array.from(inputProduct.productImage);
         let fieldValue = productImageAmount.filter((x, idx) => idx !== index);
         if (fieldValue.length === productImageAmount.length) {
             fieldName = "image";
-            fieldValue = inputProduct.image.filter((x, idx) => idx !== index);
+            fieldValue = inputProduct.image.filter((x) => x.id !== id);
+            console.log(fieldValue, "fieldValue in...");
         }
 
         dispatch(setInputProduct({ fieldName, fieldValue }));
@@ -64,91 +64,89 @@ function PhotoUpload() {
             <div className="flex flex-col gap-2">
                 <div className="text-xl font-bold">Photo Upload</div>
                 {skeleton ? (
+                    <div className="flex flex-col">
+                        <div className={`${errorMessage ? "text-error" : ""}`}>Photos - {amountPhoto}/5</div>
 
-                <div className="flex flex-col">
-                    <div className={`${errorMessage ? "text-error" : ""}`}>Photos - {amountPhoto}/5</div>
-
-                    {newFile.length > 0 && (
-                        
-                        <>
-                            <div className="flex gap-1 flex-wrap w-[300px]">
-                                
-                                {newFile.map((file, idx) => (
-                                    <>
-                                    {skeleton ? (
-                                        <div
-                                            key={idx}
-                                            className={`relative rounded-md border-2 ${
-                                                errorMessage ? "border-error/50" : ""
-                                            } w-24`}
-                                        >
-                                                <img
-                                                    className="w-24 aspect-square rounded-md hover:brightness-50"
-                                                    src={file.image || URL.createObjectURL(file)}
-                                                    alt=""
-                                                />
-
+                        {newFile.length > 0 && (
+                            <>
+                                <div className="flex gap-1 flex-wrap w-[300px]">
+                                    {newFile.map((file, idx) => (
+                                        <div key={idx}>
+                                            {skeleton && !loading ? (
                                                 <div
-                                                    onClick={() => {
-                                                        deleteImage(idx);
-                                                    }}
-                                                    className={`flex justify-center absolute top-0 right-0 w-7 aspect-square rounded-full bg-white border-2 ${
-                                                        errorMessage ? "border-error/50" : "border-slate-300"
-                                                    } hover:bg-slate-200`}
+                                                    className={`relative rounded-md border-2 ${
+                                                        errorMessage ? "border-error/50" : ""
+                                                    } w-24`}
                                                 >
-                                                    x
-                                                </div>
-                                                </div>
-                                        ) : (
-                                            <Skeleton width={94} height={94} square={true} />
-                                            )}
-                                            </>
-                                ))}
-                                {skeleton ? (
-                                    <label
-                                        className={`flex flex-col gap-2 justify-center items-center border-2 ${
-                                            errorMessage ? "border-error/50" : ""
-                                        } bg-white rounded-md h-24 w-24 cursor-pointer`}
-                                    >
-                                        <div className="flex text-xl justify-center items-center bg-[#d9d9d9] w-10 aspect-square rounded-full">
-                                            <FaCamera />
-                                        </div>
-                                        <div className="text-sm font-semibold">Add Photo</div>
-                                        <input
-                                            name="productImage"
-                                            onChange={onChangeInput}
-                                            type="file"
-                                            className="hidden"
-                                            multiple
-                                        />
-                                    </label>
-                                ) : (
-                                    <Skeleton width={90} height={90} square={true} />
-                                )}
-                            </div>
-                            {errorMessage && <div className="text-error">You can add up to 5 photos.</div>}
-                        </>
-                    )}
+                                                    <img
+                                                        className="w-24 aspect-square rounded-md hover:brightness-50"
+                                                        src={file.image || URL.createObjectURL(file)}
+                                                        alt=""
+                                                    />
 
-                    {newFile.length === 0 && (
-                        <>
-                            <label className="flex flex-col gap-2 justify-center items-center border-2 bg-white rounded-md h-48 cursor-pointer">
-                                <div className="flex text-2xl justify-center items-center bg-[#d9d9d9] w-12 aspect-square rounded-full">
-                                    <FaCamera />
+                                                    <div
+                                                        onClick={() => {
+                                                            deleteImage(idx, file.id);
+                                                        }}
+                                                        className={`flex justify-center absolute top-0 right-0 w-7 aspect-square rounded-full bg-white border-2 ${
+                                                            errorMessage ? "border-error/50" : "border-slate-300"
+                                                        } hover:bg-slate-200`}
+                                                    >
+                                                        x
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <Skeleton width={94} height={94} square={true} />
+                                            )}
+                                        </div>
+                                    ))}
+                                    {skeleton && !loading ? (
+                                        <label
+                                            className={`flex flex-col gap-2 justify-center items-center border-2 ${
+                                                errorMessage ? "border-error/50" : ""
+                                            } bg-white rounded-md h-24 w-24 cursor-pointer`}
+                                        >
+                                            <div className="flex text-xl justify-center items-center bg-[#d9d9d9] w-10 aspect-square rounded-full">
+                                                <FaCamera />
+                                            </div>
+                                            <div className="text-sm font-semibold">Add Photo</div>
+                                            <input
+                                                name="productImage"
+                                                onChange={onChangeInput}
+                                                type="file"
+                                                className="hidden"
+                                                multiple
+                                            />
+                                        </label>
+                                    ) : (
+                                        <Skeleton width={90} height={90} square={true} />
+                                    )}
                                 </div>
-                                <div className="font-semibold">Add Photo</div>
-                                <input
-                                    name="productImage"
-                                    onChange={onChangeInput}
-                                    type="file"
-                                    className="hidden"
-                                    multiple
-                                />
-                            </label>
-                        </>
-                    )}
-                </div>
-                ):( <Skeleton containerClassName="flex-1" height={180} /> )}
+                                {errorMessage && <div className="text-error">You can add up to 5 photos.</div>}
+                            </>
+                        )}
+
+                        {newFile.length === 0 && (
+                            <>
+                                <label className="flex flex-col gap-2 justify-center items-center border-2 bg-white rounded-md h-48 cursor-pointer">
+                                    <div className="flex text-2xl justify-center items-center bg-[#d9d9d9] w-12 aspect-square rounded-full">
+                                        <FaCamera />
+                                    </div>
+                                    <div className="font-semibold">Add Photo</div>
+                                    <input
+                                        name="productImage"
+                                        onChange={onChangeInput}
+                                        type="file"
+                                        className="hidden"
+                                        multiple
+                                    />
+                                </label>
+                            </>
+                        )}
+                    </div>
+                ) : (
+                    <Skeleton containerClassName="flex-1" height={180} />
+                )}
             </div>
         </>
     );

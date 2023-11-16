@@ -76,10 +76,14 @@ export default function ProfileUser({ onClose, setEditUser }) {
         <>
             <div className="bg-white rounded-lg">
                 <div className="relative">
-                    {skeleton ?( 
-
-                        <CoverImage className="rounded-t-lg bg-cover w-full h-[200px] " src={authUserData?.coverImage} />
-                    ) :(<Skeleton containerClassName="flex-1" height={200} />)}
+                    {skeleton ? (
+                        <CoverImage
+                            className="rounded-t-lg bg-cover w-full h-[200px] "
+                            src={authUserData?.coverImage}
+                        />
+                    ) : (
+                        <Skeleton containerClassName="flex-1" height={200} />
+                    )}
 
                     <div
                         className="absolute text-2xl top-[3px] left-[95%] hover:text-[#959595] text-white cursor-pointer"
@@ -98,19 +102,18 @@ export default function ProfileUser({ onClose, setEditUser }) {
                             {authUserData?.firstName} {authUserData?.lastName}
                         </div>
                     </div>
-                        
-                    <div className="absolute top-[37%] left-[39%]">
-                        {skeleton ?(
 
+                    <div className="absolute top-[37%] left-[39%]">
+                        {skeleton ? (
                             <Avatar className="w-36" src={authUserData?.profileImage} />
-                        ) :( <Skeleton width={150} height={150} circle={true}/>)}
-                        
+                        ) : (
+                            <Skeleton width={150} height={150} circle={true} />
+                        )}
                     </div>
                 </div>
 
                 <div>
                     <div className="flex items-center px-4 pb-4 gap-4">
-                        
                         <Search className="" nameTagSearch="" div="px-0" placeholder="Search" type={"profile"} />
                         <InputDropdown
                             name={"status"}
