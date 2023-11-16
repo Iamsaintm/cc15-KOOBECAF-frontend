@@ -16,7 +16,7 @@ import {
     updateProduct,
 } from "../stores/slices/productSlice";
 import { useJsApiLoader } from "@react-google-maps/api";
-import { GOOGLE_MAPS_API_KEY } from "../config/env";
+import { GOOGLE_MAPS_CONFIG } from "../config/env";
 
 function SideNavItemCreate({ header, type }) {
     const dispatch = useDispatch();
@@ -30,11 +30,7 @@ function SideNavItemCreate({ header, type }) {
     const [libraries, setLibraries] = useState(["places"]);
     const [trigger, setTrigger] = useState(false);
 
-    const { isLoaded } = useJsApiLoader({
-        id: "google-map-script",
-        googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-        libraries,
-    });
+    const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_CONFIG);
 
     useEffect(() => {
         if (productId) {
