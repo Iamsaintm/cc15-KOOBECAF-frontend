@@ -16,6 +16,8 @@ import {
     updateProduct,
 } from "../stores/slices/productSlice";
 
+import Skeleton from "react-loading-skeleton";
+
 function SideNavItemCreate({ header, type }) {
     const { pathname } = useLocation();
     const dispatch = useDispatch();
@@ -23,8 +25,17 @@ function SideNavItemCreate({ header, type }) {
     const { productId } = useParams();
     const { authUserData } = useSelector((state) => state.auth);
     const [error, setError] = useState({});
-    const { inputProduct, productData } = useSelector((state) => state.product);
+    const { inputProduct, productData, loading } = useSelector((state) => state.product);
+
     const { categoryData } = useSelector((state) => state.category);
+
+    const [skeleton, setSkeleton] = useState(false);
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1200);
+        return () => clearTimeout(id);
+    }, []);
 
     useEffect(() => {
         if (productId) {
@@ -99,7 +110,6 @@ function SideNavItemCreate({ header, type }) {
             delete newInputProduct.id;
             delete newInputProduct.status;
             delete newInputProduct.point;
-
             result = validateSchema(itemSchema, newInputProduct);
             if (result) return setError(result);
             await dispatch(updateProduct({ productId, formData }));
@@ -156,10 +166,23 @@ function SideNavItemCreate({ header, type }) {
                 <div className="flex flex-col gap-2 px-4">
                     <div className="text-2xl font-bold">{header}</div>
                     <div className="flex gap-3 items-center">
-                        <Avatar src={authUserData?.profileImage} />
-                        <div>
-                            {authUserData?.firstName} {authUserData?.lastName}
-                        </div>
+                        {skeleton && !loading ? (
+                            <Avatar src={authUserData?.profileImage} />
+                        ) : (
+                            <div className="flex gap-3 items-center">
+                                <Skeleton width={40} height={40} circle={true} />
+                                <Skeleton containerClassName="flex-1" height={40} />
+                            </div>
+                        )}
+                        {skeleton && !loading ? (
+                            <div>
+                                {authUserData?.firstName} {authUserData?.lastName}
+                            </div>
+                        ) : (
+                            <div className="flex gap-3 items-center">
+                                <Skeleton containerClassName="flex-1" width={200} />
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="border-b-2 mb-2 pb-2"></div>

@@ -7,6 +7,7 @@ import Avatar from "../../components/Avatar";
 import PictureForm from "./PictureForm";
 import CoverImage from "../../components/CoverImage";
 import Button from "../../components/Button";
+import Skeleton from "react-loading-skeleton";
 
 export default function EditUser({ onClose, setIsOpen }) {
     const [loading, setLoading] = useState(false);
@@ -149,7 +150,11 @@ export default function EditUser({ onClose, setIsOpen }) {
                     >
                         {(src, onClick) => (
                             <div onClick={onClick} className="flex justify-center">
-                                <Avatar className="w-[150px]" src={src} />
+                                {loading ? (
+                                    <Skeleton width={150} height={150} circle={true} />
+                                ) : (
+                                    <Avatar className="w-[150px]" src={src} />
+                                )}
                             </div>
                         )}
                     </PictureForm>
@@ -163,7 +168,11 @@ export default function EditUser({ onClose, setIsOpen }) {
                         >
                             {(src, onClick) => (
                                 <div onClick={onClick}>
-                                    <CoverImage src={src} />
+                                    {loading ? (
+                                        <Skeleton containerClassName="flex-1" height={200} />
+                                    ) : (
+                                        <CoverImage src={src} />
+                                    )}
                                 </div>
                             )}
                         </PictureForm>

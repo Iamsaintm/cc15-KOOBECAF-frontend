@@ -9,7 +9,9 @@ import ProductCardUser from "../../features/profile/ProductCardUser";
 import { addPath } from "../../utils/local-storage";
 import Search from "../filter/Search";
 import { resetSearchProductProfile } from "../../stores/slices/productSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import Skeleton from "react-loading-skeleton";
 
 export default function ProfileUser({ onClose, setEditUser }) {
     const [status, setStatus] = useState("ALL_PRODUCTS");
@@ -18,6 +20,13 @@ export default function ProfileUser({ onClose, setEditUser }) {
     const { authUserData } = useSelector((state) => state.auth);
     const { pathname } = useLocation();
     const { productByUserId, searchProductProfile } = useSelector((state) => state.product);
+    const [skeleton, setSkeleton] = useState(false);
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1200);
+        return () => clearTimeout(id);
+    }, []);
 
     const handleOnClick = () => {
         onClose();
@@ -67,7 +76,14 @@ export default function ProfileUser({ onClose, setEditUser }) {
         <>
             <div className="bg-white rounded-lg">
                 <div className="relative">
-                    <CoverImage className="rounded-t-lg bg-cover w-full h-[200px] " src={authUserData?.coverImage} />
+                    {skeleton ? (
+                        <CoverImage
+                            className="rounded-t-lg bg-cover w-full h-[200px] "
+                            src={authUserData?.coverImage}
+                        />
+                    ) : (
+                        <Skeleton containerClassName="flex-1" height={200} />
+                    )}
 
                     <div
                         className="absolute text-2xl top-[3px] left-[95%] hover:text-[#959595] text-white cursor-pointer"
@@ -88,7 +104,11 @@ export default function ProfileUser({ onClose, setEditUser }) {
                     </div>
 
                     <div className="absolute top-[37%] left-[39%]">
-                        <Avatar className="w-36" src={authUserData?.profileImage} />
+                        {skeleton ? (
+                            <Avatar className="w-36" src={authUserData?.profileImage} />
+                        ) : (
+                            <Skeleton width={150} height={150} circle={true} />
+                        )}
                     </div>
                 </div>
 
