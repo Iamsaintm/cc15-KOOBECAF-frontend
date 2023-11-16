@@ -50,6 +50,15 @@ export const updateProfileName = createAsyncThunk("/user/updateProfileName", asy
     }
 });
 
+export const unSubscribe = createAsyncThunk("/user/unSubscribe", async (payload, thunkAPI) => {
+    try {
+        const res = await axios.patch("/user/unSubscribe", payload);
+        return res.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -137,6 +146,19 @@ const authSlice = createSlice({
                 state.success = true;
             })
             .addCase(updateProfileName.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+        builder
+            .addCase(unSubscribe.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(unSubscribe.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(unSubscribe.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });
