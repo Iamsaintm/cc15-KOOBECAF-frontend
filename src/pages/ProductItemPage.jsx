@@ -90,6 +90,8 @@ function ProductItemPage() {
         );
     }
 
+    console.log(location);
+
     const settings = {
         customPaging: function (i) {
             return (
@@ -222,7 +224,7 @@ function ProductItemPage() {
                         <div className="font-bold text-xl">Description</div>
                         <div className="w-full">{state.productDetail.description}</div>
                     </div>
-                    <GoogleMap />
+                    <GoogleMap type={"productPage"} />
                     <p className="truncate font-thin">{location}</p>
 
                     <div className="flex flex-col py-4 gap-3 border-t mt-4">

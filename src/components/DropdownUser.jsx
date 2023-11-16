@@ -7,6 +7,7 @@ import Avatar from "./Avatar";
 import ProfileModal from "./ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
 import EditUser from "../features/profile/EditUser";
+import { logoutProduct, resetSearchProduct } from "../stores/slices/productSlice";
 
 export default function DropdownUser() {
     const { authUserData } = useSelector((state) => state.auth);

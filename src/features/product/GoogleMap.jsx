@@ -5,17 +5,24 @@ import { GOOGLE_MAPS_API_KEY, GOOGLE_MAPS_CONFIG } from "../../config/env";
 import { useEffect } from "react";
 import { useRef } from "react";
 
-const GoogleMapInput = ({ className }) => {
-    const { inputProduct, loading } = useSelector((state) => state.product);
+const GoogleMapInput = ({ className, type }) => {
+    const { inputProduct, productByProductId, loading } = useSelector((state) => state.product);
 
     const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_CONFIG);
 
     const geometry = useMemo(() => {
         return {
-            lat: inputProduct.latitude,
-            lng: inputProduct.longitude,
+            lat: inputProduct?.latitude,
+            lng: inputProduct?.longitude,
         };
     }, [inputProduct.latitude, inputProduct.longitude]);
+
+    const geometry2 = useMemo(() => {
+        return {
+            lat: productByProductId?.latitude,
+            lng: productByProductId?.longitude,
+        };
+    }, [productByProductId]);
 
     if (!isLoaded) {
         return <div>Loading</div>;
@@ -23,8 +30,12 @@ const GoogleMapInput = ({ className }) => {
 
     return (
         <div className={className}>
-            <GoogleMap zoom={16} center={geometry} mapContainerStyle={{ width: "100%", height: 200 }}>
-                <MarkerF position={geometry} />
+            <GoogleMap
+                zoom={16}
+                center={type === "productPage" ? geometry2 : geometry}
+                mapContainerStyle={{ width: "100%", height: 200 }}
+            >
+                <MarkerF position={type === "productPage" ? geometry2 : geometry} />
             </GoogleMap>
         </div>
     );
