@@ -5,6 +5,9 @@ import { fetchDataUser } from "../stores/slices/authSlice";
 import CreateProductCard from "../features/product/CreateProductCard";
 import { fetchAllProduct, fetchProductByUserId } from "../stores/slices/productSlice";
 import Skeleton from "react-loading-skeleton";
+import item from "../assets/Images/item.png";
+import vehicle from "../assets/Images/vehicle.png";
+import home from "../assets/Images/home.png";
 
 function CreateProductPage() {
     const dispatch = useDispatch();
@@ -30,19 +33,19 @@ function CreateProductPage() {
     const menu = [
         {
             id: 1,
-            src: "",
-            header: "Item for Sale",
+            src: item,
+            header: <div className="font-semibold">Item for Sale</div>,
             to: "/create/item",
             content: (
                 <>
-                    create a single listing <br /> for one or more items <br /> to sell.
+                    Create a single listing for <br /> one or more items to sell.
                 </>
             ),
         },
         {
             id: 2,
-            src: "",
-            header: "Vehicle for Sale",
+            src: vehicle,
+            header: <div className="font-semibold">Vehicle for Sale</div>,
             to: "/create/vehicle",
             content: (
                 <>
@@ -52,16 +55,13 @@ function CreateProductPage() {
         },
         {
             id: 3,
-            src: "",
-            header: (
-                <>
-                    Home for Sale or <br /> Rent
-                </>
-            ),
+            src: home,
+            header: <div className="font-semibold">Home for Sale or Rent</div>,
             to: "/create/rental",
             content: (
                 <>
-                    List a house or <br /> apartment for sale or rent. <br /> rent.
+                    List a house or apartment
+                    <br /> for sale or rent.
                 </>
             ),
         },
