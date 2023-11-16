@@ -27,7 +27,7 @@ function HomePage() {
             dispatch(unSubscribe());
         }
     }
-    console.log("authUserData", authUserData);
+    
     return (
         <>
             <div className="flex w-full bg-second-light h-screen">

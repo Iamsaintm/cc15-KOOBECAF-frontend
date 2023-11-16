@@ -3,11 +3,11 @@ import Autocomplete from "../../components/Autocomplete";
 import SubscriptGoogleMap from "../../features/subscribe/SubscribeGoogleMap";
 import Button from "../../components/Button";
 
-export default function ChangeLocation({ onClose, setIsOpen }) {
-    const handleOnClose = () => {
+export default function ChangeLocation({ onClose }) {
+    const handleOnClick = () => {
         onClose();
-        setIsOpen(true);
     };
+    
     return (
         <>
             <div className="bg-white rounded-lg">
@@ -16,7 +16,7 @@ export default function ChangeLocation({ onClose, setIsOpen }) {
                         <p className="text-2xl font-bold">Change Location</p>
                         <div
                             className="absolute bottom-1 left-[370px] text-2xl hover:text-[#959595] cursor-pointer"
-                            onClick={handleOnClose}
+                            onClick={handleOnClick}
                         >
                             X
                         </div>

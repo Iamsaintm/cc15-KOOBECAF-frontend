@@ -14,6 +14,7 @@ import WishlistPage from "../pages/WishlistPage";
 import SubscribePage from "../pages/SubscribePage";
 import PaymentSuccessful from "../features/subscribe/PaymentSuccessful";
 import PaymentFailed from "../features/subscribe/PaymentFailed";
+import bgLogin from "../assets/Images/bgLogin.png";
 
 const router = createBrowserRouter([
     {
@@ -24,7 +25,6 @@ const router = createBrowserRouter([
                     <Layout />
                 </div>
             </Authenticated>
-            
         ),
         children: [
             { path: "", element: <HomePage /> },
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         path: "/login",
         element: (
             <RedirectIfAuthenticated>
-                <div className="h-screen">
+                <div className="h-screen bg-cover" style={{ backgroundImage: `url(${bgLogin})` }}>
                     <LoginPage />
                 </div>
             </RedirectIfAuthenticated>
