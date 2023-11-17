@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import ListChatCard from "./ListChatCard";
 import { getInbox } from "../../stores/slices/chatSlice";
 import { useEffect } from "react";
+import ListChatCard from "./ListChatCard";
 
 function ListChatContainer() {
     const dispatch = useDispatch();
