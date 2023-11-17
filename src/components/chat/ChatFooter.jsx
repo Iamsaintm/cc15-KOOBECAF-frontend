@@ -50,14 +50,10 @@ function ChatFooter({ socket, productDetail, setMessages }) {
     };
 
     return (
-        <div className="flex p-3 bg-dark-night bottom-0">
-            <div className="relative" ref={dropDownEl}>
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    text={"emoji"}
-                    className="mx-3 flex justify-center items-center"
-                >
-                    <MdOutlineEmojiEmotions className="text-3xl text-orange-300" />
+        <div className="flex p-3 bg-dark-night bottom-0 rounded-b-xl">
+            <div className="relative flex mx-6" ref={dropDownEl}>
+                <button onClick={() => setIsOpen(!isOpen)} text={"emoji"}>
+                    <MdOutlineEmojiEmotions className="text-3xl text-second leading-6" />
                 </button>
                 {isOpen && (
                     <div className="absolute bottom-0 left-0">
@@ -74,12 +70,12 @@ function ChatFooter({ socket, productDetail, setMessages }) {
                 <input
                     type="text"
                     placeholder="Write Something"
-                    className="h-full w-5/6 rounded-xl border-solid outline-none "
+                    className="h-full w-full rounded-xl border-solid outline-none "
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyDown={handleTyping}
                 />
-                <button className="text-white mr-10 border px-3 py-1 rounded-lg"> Send </button>
+                <button className="text-white mx-6 border px-3 py-1 rounded-lg bg-second-dark"> Send </button>
             </form>
         </div>
     );
