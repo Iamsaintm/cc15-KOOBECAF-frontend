@@ -1,29 +1,53 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
 import { BsFillChatDotsFill, BsFillBookmarkFill } from "react-icons/bs";
 import { fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
-import GoogleMap from "../features/product/GoogleMap";
-import Avatar from "../components/Avatar";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import formatTimeAgo from "../utils/time-ago";
-import { FaArrowLeft, FaArrowRight, FaClock, FaHouse, FaWarehouse } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight, FaClock, FaHouse, FaWarehouse, FaX } from "react-icons/fa6";
 import { HiMiniBuildingOffice2 } from "react-icons/hi2";
 import { BiSolidBuildingHouse } from "react-icons/bi";
+import { GOOGLE_MAPS_API_KEY } from "../config/env";
+import { getPath, removePath } from "../utils/local-storage";
+
 import Slider from "react-slick";
+import formatTimeAgo from "../utils/time-ago";
+import GoogleMap from "../features/product/GoogleMap";
+import Avatar from "../components/Avatar";
+import googleAxios from "../config/googleAxios";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function ProductItemPage() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const { productId } = useParams();
     const { isWishList } = useSelector((state) => state.product);
     const { authUserData } = useSelector((state) => state?.auth);
     const { state } = useLocation();
+
+    const [location, setLocation] = useState("");
     const [isActive, setIsActive] = useState(false);
     const [images, setImages] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
     const category = state.productDetail.categoryId;
     const seller = state.productDetail.userId;
     const client = authUserData?.id;
+
+    useEffect(() => {
+        dispatch(fetchProductByProductId(productId))
+            .unwrap()
+            .then((res) => {
+                googleAxios
+                    .get(
+                        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${res.product.latitude},${res.product.longitude}&key=${GOOGLE_MAPS_API_KEY}`,
+                    )
+                    .then((res) => {
+                        setLocation(res.data.results[0].formatted_address);
+                    });
+            });
+    }, []);
 
     useEffect(() => {
         setIsActive(isWishList);
@@ -90,6 +114,11 @@ function ProductItemPage() {
         nextArrow: <NextArrow />,
     };
 
+    const closePage = () => {
+        navigate(getPath());
+        removePath();
+    };
+
     return (
         <>
             <div className="flex w-full h-screen overflow-clip pt-16">
@@ -117,14 +146,28 @@ function ProductItemPage() {
                 </div>
                 <div className="flex flex-col p-4 w-1/3 bg-second-light overflow-auto">
                     {category == 1 ? (
-                        <div className="font-bold text-2xl">
+                        <div className="flex justify-between font-bold text-2xl">
                             <div>
-                                {state.productDetail?.vehicleYears} {state.productDetail?.vehicleBrand}{" "}
+                                {state.productDetail?.vehicleYears} {state.productDetail?.vehicleBrand}
                                 {state.productDetail?.vehicleModel}
+                            </div>
+                            <div
+                                onClick={closePage}
+                                className="flex justify-center mr-2 items-center bg-black/50 min-w-[40px] max-h-[40px] aspect-square rounded-full text-white text-lg cursor-pointer"
+                            >
+                                <FaX />
                             </div>
                         </div>
                     ) : (
-                        <div className="font-bold text-2xl">{state.productDetail?.productName}</div>
+                        <div className="flex justify-between">
+                            <div className="font-bold text-2xl">{state.productDetail?.productName}</div>
+                            <div
+                                onClick={closePage}
+                                className="flex justify-center mr-2 items-center bg-black/50 min-w-[40px] max-h-[40px] aspect-square rounded-full text-white text-lg cursor-pointer"
+                            >
+                                <FaX />
+                            </div>
+                        </div>
                     )}
                     <div className="text-lg">&#3647; {state.productDetail?.productPrice}</div>
                     {category == 2 ? (
@@ -191,7 +234,9 @@ function ProductItemPage() {
                         <div className="font-bold text-xl">Description</div>
                         <div className="w-full">{state.productDetail.description}</div>
                     </div>
-                    <GoogleMap />
+                    <GoogleMap type={"productPage"} />
+                    <p className="truncate font-thin">{location}</p>
+
                     <div className="flex flex-col py-4 gap-3 border-t mt-4">
                         <div className="font-bold text-xl">Seller information</div>
                         <div className="flex gap-3 items-center ">

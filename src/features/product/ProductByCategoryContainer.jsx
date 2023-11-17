@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { addPath } from "../../utils/local-storage";
 import ProductCard from "./ProductCard";
-import Loading from "../../components/Loading";
 
 function ProductByCategoryContainer() {
+    const { pathname } = useLocation();
     const { productByCategory, loading, searchProduct, productPrice } = useSelector((state) => state.product);
 
     let product = productByCategory;
@@ -29,21 +30,28 @@ function ProductByCategoryContainer() {
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <>
                     {product && product?.length > 0 ? (
-                        product?.map((data) => (
-                            <Link key={data.id} to={`/product/${data.id}`} state={{ productDetail: data }}>
-                                <ProductCard
+                        product?.map((data) =>
+                            data.status === "AVAILABLE" ? (
+                                <Link
                                     key={data.id}
-                                    src={data.image[0].image}
-                                    productPrice={data.productPrice}
-                                    productName={data.productName}
-                                    productDetail={data}
-                                />
-                            </Link>
-                        ))
+                                    onClick={() => addPath(pathname)}
+                                    to={`/product/${data.id}`}
+                                    state={{ productDetail: data }}
+                                >
+                                    <ProductCard
+                                        key={data.id}
+                                        src={data.image[0].image}
+                                        productPrice={data.productPrice}
+                                        productName={data.productName}
+                                        productDetail={data}
+                                    />
+                                </Link>
+                            ) : null,
+                        )
                     ) : (
                         <div>Product Not Found</div>
                     )}

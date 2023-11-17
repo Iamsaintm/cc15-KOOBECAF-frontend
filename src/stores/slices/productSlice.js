@@ -1,10 +1,19 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 export const fetchAllProduct = createAsyncThunk("products/fetchAllProducts", async (payload, thunkAPI) => {
     try {
         const res = await axios.get("/product/allProduct");
+        return res.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
+export const fetchProductById = createAsyncThunk("products/fetchProductById", async (productId, thunkAPI) => {
+    try {
+        const res = await axios.get(`/product/${productId}`);
         return res.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -32,6 +41,30 @@ export const fetchWishlist = createAsyncThunk("product/fetchWishlist", async (pa
 export const createProduct = createAsyncThunk("products/createProducts", async ({ formData }, thunkAPI) => {
     try {
         const res = await axios.post("/product/create", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        return res.data;
+    } catch (error) {
+        toast.error("You can add only 5 photos.");
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+
+export const updateProductStatus = createAsyncThunk("products/updateProductStatus", async (payload, thunkAPI) => {
+    try {
+        const body = {
+            status: payload.fieldValue,
+        };
+        const res = await axios.put(`/product/${payload.productId}`, body);
+        return res.data;
+    } catch (error) {
+        toast.error("You can add only 5 photos.");
+        return thunkAPI.rejectWithValue(error.message);
+    }
+});
+export const updateProduct = createAsyncThunk("products/updateProducts", async ({ productId, formData }, thunkAPI) => {
+    try {
+        const res = await axios.patch(`/product/edit/${productId}`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
         });
         return res.data;
@@ -82,6 +115,7 @@ export const wishListProduct = createAsyncThunk("products/wishListProduct", asyn
         return thunkAPI.rejectWithValue(error.message);
     }
 });
+
 export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async (address) => {
     try {
         const newAxios = axios.create({});
@@ -89,7 +123,7 @@ export const fetchGeocoding = createAsyncThunk("products/fetchGeocodings", async
             params: { address, key: "AIzaSyAD2cnxbl_ndhGSO6emJt0oSrs_Y3aRO3Q" },
             baseURL: "https://maps.googleapis.com/maps/api/geocode",
         });
-        return res.data; //return lat lng
+        return res.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
     }
@@ -99,7 +133,7 @@ const inputProduct = {
     productName: "",
     productPrice: "",
     productImage: [],
-    description: "",
+    description: " ",
     latitude: 11.11,
     longitude: 11.11,
     vehicleType: "",
@@ -111,11 +145,14 @@ const inputProduct = {
     bedroomQuantity: "",
     bathroomQuantity: "",
     homeAddress: "",
+    idsToDelete: [],
     categoryId: 0,
-    typeOfCategory: "default",
+    typeOfCategory: "",
 };
 
 const searchProduct = "";
+const searchProductProfile = "";
+
 const productPrice = {
     minPrice: "",
     maxPrice: "",
@@ -124,8 +161,10 @@ const productPrice = {
 const productSlice = createSlice({
     name: "product",
     initialState: {
+        inputLocation: [],
         inputProduct,
         searchProduct,
+        searchProductProfile,
         productPrice,
         productData: null,
         productByUserId: null,
@@ -141,14 +180,23 @@ const productSlice = createSlice({
         errorMessage: false,
     },
     reducers: {
+        setInputLocation: (state, { payload }) => {
+            state.inputLocation = payload.fieldLocation;
+        },
         logoutProduct: (state, { payload }) => {
             state.productData = null;
         },
         setInputProduct: (state, { payload }) => {
             state.inputProduct[payload.fieldName] = payload.fieldValue;
-            Array.from(state.inputProduct.productImage).length > 5
+
+            Array.from(state.inputProduct?.productImage || 0).length +
+                Array.from(state.inputProduct?.image || 0).length >
+            5
                 ? (state.errorMessage = true)
                 : (state.errorMessage = false);
+        },
+        updateInputProduct: (state, { payload }) => {
+            state.inputProduct = { ...state.inputProduct, ...payload };
         },
         setInputProductCategory: (state, { payload }) => {
             state.inputProduct.categoryId = payload.id;
@@ -164,17 +212,27 @@ const productSlice = createSlice({
         resetSearchProduct: (state, { payload }) => {
             state.searchProduct = "";
         },
+        setSearchProductProfile: (state, { payload }) => {
+            state.searchProductProfile = payload.fieldValue;
+        },
+        resetSearchProductProfile: (state, { payload }) => {
+            state.searchProductProfile = "";
+        },
         setProductPrice: (state, { payload }) => {
             state.productPrice[payload.fieldName] = payload.fieldValue;
         },
         resetProductPrice: (state, { payload }) => {
             state.productPrice = productPrice;
         },
+        resetLocation: () => {
+            state.inputLocation = [];
+        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchAllProduct.pending, (state, { payload }) => {
                 state.loading = true;
+                state.skeleton = true;
                 state.error = "";
             })
             .addCase(fetchAllProduct.fulfilled, (state, { payload }) => {
@@ -183,6 +241,21 @@ const productSlice = createSlice({
                 state.success = true;
             })
             .addCase(fetchAllProduct.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
+            .addCase(fetchProductById.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(fetchProductById.fulfilled, (state, { payload }) => {
+                state.productData = payload.product;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(fetchProductById.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
             });
@@ -233,6 +306,21 @@ const productSlice = createSlice({
             });
 
         builder
+            .addCase(updateProduct.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(updateProduct.fulfilled, (state, { payload }) => {
+                state.productByUserId = payload.product;
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(updateProduct.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
+
+        builder
             .addCase(deleteProduct.pending, (state, { payload }) => {
                 state.loading = true;
                 state.error = "";
@@ -276,6 +364,7 @@ const productSlice = createSlice({
                 state.loading = false;
                 state.error = payload;
             });
+
         builder
             .addCase(wishListProduct.pending, (state, { payload }) => {
                 state.loading = true;
@@ -289,13 +378,16 @@ const productSlice = createSlice({
             .addCase(wishListProduct.rejected, (state, { payload }) => {
                 state.loading = false;
                 state.error = payload;
-            })
+            });
+
+        builder
             .addCase(fetchGeocoding.pending, (state, { payload }) => {
                 state.loading = true;
                 state.error = "";
             })
             .addCase(fetchGeocoding.fulfilled, (state, { payload }) => {
                 const payloadData = payload.results;
+                state.inputLocation = payloadData;
                 if (payloadData.length != 0) {
                     const location = payloadData[0].geometry.location;
                     state.inputProduct.latitude = location.lat;
@@ -308,11 +400,25 @@ const productSlice = createSlice({
                 state.loading = false;
                 state.error = payload;
             });
+
+        builder
+            .addCase(updateProductStatus.pending, (state, { payload }) => {
+                state.loading = true;
+                state.error = "";
+            })
+            .addCase(updateProductStatus.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(updateProductStatus.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
     },
 });
 
 export const {
-    logoutProduct,
+    inputLocation: logoutProduct,
     setInputProduct,
     setInputProductCategory,
     setInputProductImage,
@@ -321,6 +427,11 @@ export const {
     resetSearchProduct,
     setProductPrice,
     resetProductPrice,
+    updateInputProduct,
+    setSearchProductProfile,
+    resetSearchProductProfile,
+    setInputLocation,
+    resetLocation,
 } = productSlice.actions;
 
 export default productSlice.reducer;

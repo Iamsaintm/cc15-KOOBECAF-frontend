@@ -6,7 +6,7 @@ function Authenticated({ children }) {
     const authUser = getAccessToken();
     const user = useSelector((state) => state.auth.authUserData);
 
-    if (!user && !authUser) {
+    if (!authUser && !user) {
         return <Navigate to="/login" />;
     }
 

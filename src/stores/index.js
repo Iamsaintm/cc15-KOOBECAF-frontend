@@ -3,6 +3,7 @@ import authSlice from "./slices/authSlice";
 import productSlice from "./slices/productSlice";
 import categorySlice from "./slices/categorySlice";
 import chatSlice from "./slices/chatSlice";
+import paymentSlice from "./slices/paymentSlice";
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         product: productSlice,
         category: categorySlice,
         chat: chatSlice,
+        payment: paymentSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

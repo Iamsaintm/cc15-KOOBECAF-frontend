@@ -1,34 +1,39 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { addPath } from "../../utils/local-storage";
 import ProductCard from "./ProductCard";
-import Loading from "../../components/Loading";
 
 function ProductContainer() {
+    const { pathname } = useLocation();
     const { productData, loading, searchProduct } = useSelector((state) => state.product);
+    let product = productData?.filter((el) =>
+        el.productName.toLowerCase().includes(searchProduct.toLowerCase().trim()) ? el : null,
+    );
 
-    let product = productData;
-    if (searchProduct.length !== 0) {
-        product = productData?.filter((el) =>
-            el.productName.toLowerCase().includes(searchProduct.toLowerCase().trim()) ? el : null,
-        );
-    }
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <>
                     {product && product.length > 0 ? (
-                        product.map((data) => (
-                            <Link key={data.id} to={`/product/${data.id}`} state={{ productDetail: data }}>
-                                <ProductCard
-                                    src={data.image[0]?.image}
-                                    productPrice={data.productPrice}
-                                    productName={data.productName}
-                                    productDetail={data}
-                                />
-                            </Link>
-                        ))
+                        product?.map((data) =>
+                            data.status === "AVAILABLE" ? (
+                                <Link
+                                    key={data.id}
+                                    onClick={() => addPath(pathname)}
+                                    to={`/product/${data.id}`}
+                                    state={{ productDetail: data }}
+                                >
+                                    <ProductCard
+                                        src={data.image[0]?.image}
+                                        productPrice={data.productPrice}
+                                        productName={data.productName}
+                                        productDetail={data}
+                                    />
+                                </Link>
+                            ) : null,
+                        )
                     ) : (
                         <div>Product not Found</div>
                     )}
