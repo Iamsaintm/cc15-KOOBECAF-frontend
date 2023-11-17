@@ -6,6 +6,7 @@ import SideNavItemCreate from "./SideNavItemCreate";
 import SideNavSelling from "./SideNavSelling";
 import SideNavCategory from "./SideNavCategory";
 import SideNavWishlist from "./SideNavWishlist";
+import MessageInbox from "./MessageInbox";
 
 function Layout() {
     const { pathname } = useLocation();
@@ -20,9 +21,13 @@ function Layout() {
                 <div className="fixed top-0 pt-12 bg-second-light min-w-[360px] z-10">
                     <SideNav />
                 </div>
+
                 <div className="w-full">
                     <div className="h-16"></div>
                     <Outlet />
+                </div>
+                <div className="fixed right-4 bottom-4 z-10">
+                    <MessageInbox />
                 </div>
             </div>
         </div>
@@ -113,6 +118,9 @@ function Layout() {
                     <div className="w-full">
                         <Outlet />
                     </div>
+                    <div className="fixed right-4 bottom-4 z-10">
+                        <MessageInbox />
+                    </div>
                 </div>
             </div>
         );
@@ -163,6 +171,65 @@ function Layout() {
                         <SideNavWishlist />
                     </div>
                     <div className="w-full">
+                        <Outlet />
+                    </div>
+                    <div className="fixed right-4 bottom-4 z-10">
+                        <MessageInbox />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    if (pathname === "/inbox") {
+        sideNav = (
+            <div className="flex flex-col h-full w-full">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                    <Header />
+                </div>
+                <div className="flex w-full">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                        <SideNav />
+                    </div>
+                    <div className="w-full">
+                        <div className="h-16"></div>
+                        <Outlet />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (pathname === `/messager/seller/${params.productId}/${params.receiverId}`) {
+        sideNav = (
+            <div className="flex flex-col h-full w-full">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                    <Header />
+                </div>
+                <div className="flex w-full">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                        <SideNav />
+                    </div>
+                    <div className="w-full">
+                        <div className="h-16"></div>
+                        <Outlet />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (pathname === `/messager/${params.productId}/${params.receiverId}`) {
+        sideNav = (
+            <div className="flex flex-col h-full w-full">
+                <div className="fixed w-full top-0 bg-dark-night h-16 z-10">
+                    <Header />
+                </div>
+                <div className="flex w-full">
+                    <div className="fixed top-0 pt-12 bg-second-light min-w-[360px]">
+                        <SideNav />
+                    </div>
+                    <div className="w-full">
+                        <div className="h-16"></div>
                         <Outlet />
                     </div>
                 </div>
