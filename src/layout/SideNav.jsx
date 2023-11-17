@@ -14,6 +14,7 @@ import CategorieItem from "../features/filter/CategorieItem";
 function SideNav() {
     const [isOpen, setIsOpen] = useState(false);
 
+    const { inputLocation, loading, inputSubLocation } = useSelector((state) => state.product);
     const { pathname } = useLocation();
     const { authUserData } = useSelector((state) => state.auth);
 
@@ -56,7 +57,7 @@ function SideNav() {
                     <>
                         <div className="px-4 cursor-pointer" onClick={handleOnClickFilter}>
                             <p className="text-lg font-semibold">Filters</p>
-                            <div className="text-main-dark">Bangkok</div>
+                            <p className="truncate font-semibold text-main-dark">{inputSubLocation}</p>
                         </div>
 
                         <ProfileModal open={isOpen}>

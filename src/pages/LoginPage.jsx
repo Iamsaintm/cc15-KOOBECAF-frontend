@@ -9,7 +9,7 @@ function LoginPage() {
                 <div className="flex flex-col items-center ">
                     <div className="text-center">
                         <div className="text-6xl font-fontHeader pb-8 mx-auto h-10 ">KOOBECAF</div>
-                        <div className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                        <div className="mt-10 text-center text-2xl font-bold leading-9 text-gray-900">
                             LOG IN TO KOOBECAF
                         </div>
                         <LoginForm />

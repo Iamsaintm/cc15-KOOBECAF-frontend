@@ -27,7 +27,7 @@ function LoginForm() {
                         placeholder={"Email address or phone number"}
                         value={input.emailOrMobile}
                         onChange={onChangeInput}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                     <InputForm
                         name={"password"}
@@ -35,11 +35,11 @@ function LoginForm() {
                         placeholder={"Password"}
                         value={input.password}
                         onChange={onChangeInput}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                 </div>
                 <div className="flex justify-center ">
-                    <div className="flex rounded-md border-0 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm w-48">
+                    <div className="flex rounded-md border-0 py-1.5 text-sm font-semibold leading-6 text-white w-48">
                         <Button type={"submit"} text={"Log in"} />
                     </div>
                 </div>

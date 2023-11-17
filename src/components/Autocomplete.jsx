@@ -18,7 +18,7 @@ export default function Autocomplete({ onChange, placeholder, handleSearchLocati
         clearSuggestions();
 
         const results = await getGeocode({ address });
-        
+
         const { lat, lng } = getLatLng(results[0]);
         let fieldName = "latitude";
         let fieldValue = lat;
@@ -38,7 +38,9 @@ export default function Autocomplete({ onChange, placeholder, handleSearchLocati
             <input
                 className={`z-10 w-full px-4 py-2 bg-white rounded-full shadow-md border-2 focus:border-1 border-main focus:ring-2 focus:ring-main-dark ${className}`}
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => {
+                    setValue(e.target.value);
+                }}
                 placeholder={placeholder}
             />
             <div className="bg-white">

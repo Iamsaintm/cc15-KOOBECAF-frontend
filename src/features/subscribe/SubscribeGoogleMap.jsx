@@ -19,9 +19,6 @@ const SubscribeGoogleMap = ({ className }) => {
         return <div>Loading</div>;
     }
 
-    // useEffect(() => {
-    //     console.log("product data: ", productData)
-    // }, [])
     return (
         <div className={className}>
             <GoogleMap zoom={13} center={geometry} mapContainerStyle={{ width: "100%", height: 300 }}>

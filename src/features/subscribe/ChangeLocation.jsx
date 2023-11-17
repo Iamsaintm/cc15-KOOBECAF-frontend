@@ -1,14 +1,21 @@
+import { fetchAllProduct, setInputSubLocation } from "../../stores/slices/productSlice";
+import { useDispatch, useSelector } from "react-redux";
 import InputForm from "../../components/InputForm";
 import Autocomplete from "../../components/Autocomplete";
 import SubscriptGoogleMap from "../../features/subscribe/SubscribeGoogleMap";
 import Button from "../../components/Button";
-import { Link } from "react-router-dom";
 
 export default function ChangeLocation({ onClose }) {
+    const { inputSubLocation, inputLocation } = useSelector((state) => state.product);
+    const dispatch = useDispatch();
+
     const handleApply = () => {
-        onclose();
+        dispatch(setInputSubLocation(inputLocation));
+        onClose();
+        dispatch(fetchAllProduct());
+        // window.location.reload();
     };
-    
+
     const handleOnClick = () => {
         onClose();
     };
@@ -33,7 +40,10 @@ export default function ChangeLocation({ onClose }) {
                     <div className="gap-y-4">
                         <p>Search by city</p>
                         <Autocomplete placeholder={"Location"} className={"rounded-md"} />
-                        <InputForm placeholder="Radius" />
+                        <InputForm
+                            styles="focus:border-1 border-main focus:ring-2 focus:ring-main-dark rounded-md"
+                            placeholder="Radius 5 km"
+                        />
                         <div className="py-4">
                             <SubscriptGoogleMap />
                         </div>
