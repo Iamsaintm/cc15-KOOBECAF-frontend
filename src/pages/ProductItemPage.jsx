@@ -23,7 +23,7 @@ function ProductItemPage() {
     const dispatch = useDispatch();
 
     const { productId } = useParams();
-    const { isWishList, inputLocation } = useSelector((state) => state.product);
+    const { isWishList } = useSelector((state) => state.product);
     const { state } = useLocation();
 
     const [location, setLocation] = useState("");
@@ -36,7 +36,7 @@ function ProductItemPage() {
         dispatch(fetchProductByProductId(productId))
             .unwrap()
             .then((res) => {
-                const result = googleAxios
+                googleAxios
                     .get(
                         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${res.product.latitude},${res.product.longitude}&key=${GOOGLE_MAPS_API_KEY}`,
                     )
@@ -89,8 +89,6 @@ function ProductItemPage() {
             </div>
         );
     }
-
-    console.log(location);
 
     const settings = {
         customPaging: function (i) {
