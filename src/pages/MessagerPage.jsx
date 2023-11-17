@@ -69,26 +69,28 @@ function MessagerPage() {
     }, [socket]);
 
     return (
-        <div className="flex w-full">
-            <div className="min-w-[360px]"></div>
-            <div className="flex flex-col justify-center items-center w-full h-full bg-main-light">
-                <div className="w-4/5">
-                    <ChatBar socket={socket} authUserData={authUserData} productDetail={state.productDetail} />
-                </div>
-                <div className="h-full w-full">
-                    <ChatBody
-                        messages={messages}
-                        lastMessageRef={lastMessageRef}
-                        typingStatus={typingStatus}
-                        authUserData={authUserData}
-                    />
-                    <ChatFooter
-                        socket={socket}
-                        setTypingStatus={setTypingStatus}
-                        authUserData={authUserData}
-                        productDetail={state.productDetail}
-                        setMessages={setMessages}
-                    />
+        <div className="flex w-full mt-16">
+            <div className="flex w-full pt-4">
+                <div className="min-w-[360px]"></div>
+                <div className="flex flex-col justify-center items-center w-full h-full bg-main-light">
+                    <div className="w-4/5">
+                        <ChatBar socket={socket} authUserData={authUserData} productDetail={state.productDetail} />
+                    </div>
+                    <div className="w-4/5">
+                        <ChatBody
+                            messages={messages}
+                            lastMessageRef={lastMessageRef}
+                            typingStatus={typingStatus}
+                            authUserData={authUserData}
+                        />
+                        <ChatFooter
+                            socket={socket}
+                            setTypingStatus={setTypingStatus}
+                            authUserData={authUserData}
+                            productDetail={state.productDetail}
+                            setMessages={setMessages}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
