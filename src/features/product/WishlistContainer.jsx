@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
-import Loading from "../../components/Loading";
-import ProductCard from "./ProductCard";
 import { Link, useLocation } from "react-router-dom";
 import { addPath } from "../../utils/local-storage";
+import ProductCard from "./ProductCard";
 
 function WishlistContainer() {
     const { pathname } = useLocation();
@@ -11,7 +10,7 @@ function WishlistContainer() {
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <>
                     {wishlistProduct?.map((data) => (

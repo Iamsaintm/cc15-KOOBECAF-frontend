@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Button from "../../components/Button";
 import { MdAnnouncement } from "react-icons/md";
+import Button from "../../components/Button";
 
 export default function PaymentFailed() {
     return (

@@ -9,7 +9,7 @@ export default function InputForm({
     className = "pt-4",
 }) {
     return (
-        <div className={`w-full text-lg  font-light ${className} `}>
+        <div className={`w-full text-lg font-light ${className} `}>
             <input
                 name={name}
                 type={type}

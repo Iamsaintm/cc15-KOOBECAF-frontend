@@ -1,30 +1,53 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
 import { BsFillChatDotsFill, BsFillBookmarkFill } from "react-icons/bs";
 import { fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
 import { FaArrowLeft, FaArrowRight, FaClock, FaHouse, FaWarehouse, FaX } from "react-icons/fa6";
 import { HiMiniBuildingOffice2 } from "react-icons/hi2";
 import { BiSolidBuildingHouse } from "react-icons/bi";
+import { GOOGLE_MAPS_API_KEY } from "../config/env";
+import { getPath, removePath } from "../utils/local-storage";
 
 import Slider from "react-slick";
 import formatTimeAgo from "../utils/time-ago";
 import GoogleMap from "../features/product/GoogleMap";
 import Avatar from "../components/Avatar";
+import googleAxios from "../config/googleAxios";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getPath, removePath } from "../utils/local-storage";
 
 function ProductItemPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const { productId } = useParams();
     const { isWishList } = useSelector((state) => state.product);
+    const { authUserData } = useSelector((state) => state?.auth);
     const { state } = useLocation();
+
+    const [location, setLocation] = useState("");
     const [isActive, setIsActive] = useState(false);
-    const category = state.productDetail.categoryId;
     const [images, setImages] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const category = state.productDetail.categoryId;
+    const seller = state.productDetail.userId;
+    const client = authUserData?.id;
+
+    useEffect(() => {
+        dispatch(fetchProductByProductId(productId))
+            .unwrap()
+            .then((res) => {
+                googleAxios
+                    .get(
+                        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${res.product.latitude},${res.product.longitude}&key=${GOOGLE_MAPS_API_KEY}`,
+                    )
+                    .then((res) => {
+                        setLocation(res.data.results[0].formatted_address);
+                    });
+            });
+    }, []);
 
     useEffect(() => {
         setIsActive(isWishList);
@@ -125,7 +148,7 @@ function ProductItemPage() {
                     {category == 1 ? (
                         <div className="flex justify-between font-bold text-2xl">
                             <div>
-                                {state.productDetail?.vehicleYears} {state.productDetail?.vehicleBrand}{" "}
+                                {state.productDetail?.vehicleYears} {state.productDetail?.vehicleBrand}
                                 {state.productDetail?.vehicleModel}
                             </div>
                             <div
@@ -156,26 +179,35 @@ function ProductItemPage() {
                         <FaClock />
                         Listed {formatTimeAgo(state.productDetail?.createdAt)}
                     </div>
-                    <div className="inline-flex gap-4 py-2" role="group">
-                        <button className="text-lg rounded-2xl border-2 py-2 px-8 bg-second hover:bg-second-dark">
-                            <div className=" flex flex-row justify-center items-center">
-                                <div>
-                                    <BsFillChatDotsFill />
+                    {client === seller ? (
+                        <div className="hidden"></div>
+                    ) : (
+                        <div className="inline-flex gap-4 py-2" role="group">
+                            <Link
+                                to={`/messager/${state.productDetail.id}/${state.productDetail.userId}`}
+                                state={state}
+                            >
+                                <button className="text-lg rounded-2xl border-2 py-2 px-8 bg-second hover:bg-second-dark">
+                                    <div className=" flex flex-row justify-center items-center">
+                                        <div>
+                                            <BsFillChatDotsFill />
+                                        </div>
+                                        <div className="px-1">Message</div>
+                                    </div>
+                                </button>
+                            </Link>
+                            <button
+                                className={`text-lg rounded-xl border-2 py-2 px-3 ${
+                                    isActive ? "bg-sky-400 hover:bg-sky-700" : "bg-white"
+                                } `}
+                                onClick={handleClick}
+                            >
+                                <div className="flex justify-center">
+                                    <BsFillBookmarkFill />
                                 </div>
-                                <div className="px-1">Message</div>
-                            </div>
-                        </button>
-                        <button
-                            className={`text-lg rounded-xl border-2 py-2 px-3 ${
-                                isActive ? "bg-sky-400 hover:bg-sky-700" : "bg-white"
-                            } `}
-                            onClick={handleClick}
-                        >
-                            <div className="flex justify-center">
-                                <BsFillBookmarkFill />
-                            </div>
-                        </button>
-                    </div>
+                            </button>
+                        </div>
+                    )}
                     {category == 2 ? (
                         <div>
                             <div className="font-semibold text-lg">Property details</div>
@@ -202,7 +234,9 @@ function ProductItemPage() {
                         <div className="font-bold text-xl">Description</div>
                         <div className="w-full">{state.productDetail.description}</div>
                     </div>
-                    <GoogleMap />
+                    <GoogleMap type={"productPage"} />
+                    <p className="truncate font-thin">{location}</p>
+
                     <div className="flex flex-col py-4 gap-3 border-t mt-4">
                         <div className="font-bold text-xl">Seller information</div>
                         <div className="flex gap-3 items-center ">

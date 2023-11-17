@@ -4,12 +4,11 @@ import { MdOutlineFamilyRestroom, MdOutlineSmartToy, MdSportsMartialArts } from 
 import { PiShirtFoldedFill } from "react-icons/pi";
 import { BiCameraMovie } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { LuToyBrick } from "react-icons/lu";
 import CategorieItem from "./CategorieItem";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import Loading from "../../components/Loading";
 
 function Categories() {
     const { pathname } = useLocation();
@@ -50,7 +49,7 @@ function Categories() {
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <div className="flex flex-col pb-60">
                     <div className="text-lg font-semibold pt-2">Categories</div>

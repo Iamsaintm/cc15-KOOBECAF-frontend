@@ -1,6 +1,4 @@
 import { useSelector } from "react-redux";
-
-import Loading from "../../components/Loading";
 import DeleteProductCard from "./DeleteProductCard";
 
 function DeleteContainer({ productDetail, productId, onClose }) {
@@ -9,7 +7,7 @@ function DeleteContainer({ productDetail, productId, onClose }) {
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <>
                     <DeleteProductCard productDetail={productDetail} productId={productId} onClose={onClose} />

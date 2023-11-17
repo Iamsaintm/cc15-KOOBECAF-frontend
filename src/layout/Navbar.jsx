@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { MdLibraryAddCheck } from "react-icons/md";
 import { Link } from "react-router-dom";
-import DropdownUser from "../components/DropdownUser";
 import { removePath } from "../utils/local-storage";
+import { resetInputProduct, resetLocation } from "../stores/slices/productSlice";
+import DropdownUser from "../components/DropdownUser";
 
 export default function Navbar() {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export default function Navbar() {
             <Link
                 onClick={() => {
                     dispatch(resetInputProduct());
+                    dispatch(resetLocation());
                     removePath();
                 }}
                 to="/"

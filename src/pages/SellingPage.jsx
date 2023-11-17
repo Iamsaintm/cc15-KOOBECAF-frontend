@@ -7,7 +7,6 @@ import { fetchAllCategory } from "../stores/slices/categorySlice";
 import Skeleton from "react-loading-skeleton";
 import Button from "../components/Button";
 import ListProductContainer from "../features/product/ListProductContainer";
-import Loading from "../components/Loading";
 import Search from "../features/filter/Search";
 
 function SellingPage() {
@@ -32,7 +31,7 @@ function SellingPage() {
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <>
                     <div className="flex flex-col w-full bg-main-light min-h-screen ">

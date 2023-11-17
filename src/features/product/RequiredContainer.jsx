@@ -1,14 +1,13 @@
-import { useCallback, useMemo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setInputProduct, setInputProductCategory } from "../../stores/slices/productSlice";
-import { fetchGeocoding } from "../../stores/slices/productSlice";
-import { debounce } from "lodash";
 import { DatePicker, ConfigProvider } from "antd";
 import { fetchAllCategory } from "../../stores/slices/categorySlice";
 import { useNavigate } from "react-router-dom";
 import InputForm from "../../components/InputForm";
 import InputDropdown from "../../components/InputDropdown";
 import InputErrorMessage from "../auth/InputErrorMessage";
+import Autocomplete from "../../components/Autocomplete";
 import Skeleton from "react-loading-skeleton";
 
 function RequiredContainer({ type, error }) {
@@ -98,20 +97,6 @@ function RequiredContainer({ type, error }) {
         }
     };
 
-    const onChangeInputLocation = useCallback(
-        async (e) => {
-            if (typeof e.target.value === "undefined") return;
-            if (e.target.value === "") return;
-            dispatch(fetchGeocoding(e.target.value));
-        },
-        [dispatch],
-    );
-
-    const handleDebounceInputLocation = useMemo(
-        () => debounce(onChangeInputLocation, 3000, { leading: false }),
-        [onChangeInputLocation],
-    );
-
     let inputForm = (
         <>
             {skeleton && !loading ? (
@@ -150,8 +135,9 @@ function RequiredContainer({ type, error }) {
                 <Skeleton containerClassName="flex-1" height={50} />
             )}
             {error.typeOfCategory && <InputErrorMessage message={"Category is required"} />}
+
             {skeleton && !loading ? (
-                <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+                <Autocomplete placeholder={"Location"} />
             ) : (
                 <Skeleton containerClassName="flex-1" height={50} />
             )}
@@ -226,7 +212,7 @@ function RequiredContainer({ type, error }) {
                 )}
                 {error.vehicleBrand && <InputErrorMessage message={"Brand is required."} />}
                 {skeleton && !loading ? (
-                    <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+                    <Autocomplete placeholder={"Location"} />
                 ) : (
                     <Skeleton containerClassName="flex-1" height={50} />
                 )}
@@ -320,7 +306,7 @@ function RequiredContainer({ type, error }) {
                 )}
                 {error.productPrice && <InputErrorMessage message={"Price is required, should be a number."} />}
                 {skeleton && !loading ? (
-                    <InputForm placeholder={"Location"} onChange={handleDebounceInputLocation} />
+                    <Autocomplete placeholder={"Location"} />
                 ) : (
                     <Skeleton containerClassName="flex-1" height={50} />
                 )}

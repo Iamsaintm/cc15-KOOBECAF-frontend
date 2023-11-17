@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { fetchAllCategory } from "../stores/slices/categorySlice";
 import { useDispatch } from "react-redux";
 import { fetchDataUser } from "../stores/slices/authSlice";
-import CreateProductCard from "../features/product/CreateProductCard";
 import { fetchAllProduct, fetchProductByUserId } from "../stores/slices/productSlice";
 import item from "../assets/Images/item.png";
 import vehicle from "../assets/Images/vehicle.png";
 import home from "../assets/Images/home.png";
 import Skeleton from "react-loading-skeleton";
 
+import CreateProductCard from "../features/product/CreateProductCard";
+
 function CreateProductPage() {
+
     const dispatch = useDispatch();
     const [skeleton, setSkeleton] = useState(false);
 

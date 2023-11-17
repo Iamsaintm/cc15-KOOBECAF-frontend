@@ -14,7 +14,7 @@ function ProductCard({ src = defaultProduct, productPrice = "1,050,000", product
 
     return (
         <>
-            <div className="w-52 h-[300px] bg-white rounded-md shadow-main shadow-md">
+            <div className=" h-[300px] bg-white rounded-md shadow-main shadow-md">
                 <div className="w-full overflow-hidden bg-gray-200 group-hover:opacity-75 h-48 rounded-t-md">
                     {skeleton ? (
                         <img className="h-full w-full object-cover object-center rounded-t-md" src={src} alt="" />

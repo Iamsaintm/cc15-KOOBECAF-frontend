@@ -1,8 +1,8 @@
 import { FaCamera } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { setInputProduct } from "../../stores/slices/productSlice";
-import Skeleton from "react-loading-skeleton";
 import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
 function PhotoUpload() {
     const dispatch = useDispatch();
@@ -48,7 +48,6 @@ function PhotoUpload() {
         if (fieldValue.length === productImageAmount.length) {
             fieldName = "image";
             fieldValue = inputProduct.image.filter((x) => x.id !== id);
-            console.log(fieldValue, "fieldValue in...");
         }
 
         dispatch(setInputProduct({ fieldName, fieldValue }));

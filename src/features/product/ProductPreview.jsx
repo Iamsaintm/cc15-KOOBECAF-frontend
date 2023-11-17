@@ -1,22 +1,45 @@
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { setInputProductCategory } from "../../stores/slices/productSlice";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { fetchProductByProductId } from "../../stores/slices/productSlice";
+import { GOOGLE_MAPS_API_KEY } from "../../config/env";
+
 import Avatar from "../../components/Avatar";
-import userImage from "../../assets/Images/user.jpg";
 import Button from "../../components/Button";
 import GoogleMapInput from "../../features/product/GoogleMap";
 import Slider from "react-slick";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { setInputProductCategory } from "../../stores/slices/productSlice";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
+import googleAxios from "../../config/googleAxios";
 
 function ProductPreview() {
     const dispatch = useDispatch();
-    const { authUserData } = useSelector((state) => state.auth);
+
+    const [location, setLocation] = useState("");
+
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [skeleton, setSkeleton] = useState(false);
+    const { productId } = useParams();
+    const { authUserData } = useSelector((state) => state.auth);
     const { inputProduct, inputLocation, loading } = useSelector((state) => state.product);
     const { pathname } = useLocation();
-    const [skeleton, setSkeleton] = useState(false);
+
+    useEffect(() => {
+        if (productId) {
+            dispatch(fetchProductByProductId(productId))
+                .unwrap()
+                .then((res) => {
+                    googleAxios
+                        .get(
+                            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${res.product.latitude},${res.product.longitude}&key=${GOOGLE_MAPS_API_KEY}`,
+                        )
+                        .then((res) => {
+                            setLocation(res.data.results[0].formatted_address);
+                        });
+                });
+        }
+    }, []);
 
     useEffect(() => {
         const id = setTimeout(() => {
@@ -191,7 +214,9 @@ function ProductPreview() {
                                 {skeleton && !loading ? (
                                     <>
                                         <GoogleMapInput className="py-2" />
-                                        <p className="truncate font-thin">{inputLocation[0]?.formatted_address}</p>
+                                        <p className="truncate font-thin">
+                                            {inputLocation.length !== 0 ? inputLocation : location}
+                                        </p>
                                     </>
                                 ) : (
                                     <Skeleton containerClassName="flex-1" height={120} />

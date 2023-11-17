@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { ImBin2 } from "react-icons/im";
 import { FaEdit } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 import Modal from "../../components/Modal";
 import DeleteProductForm from "./DeleteProductForm";
 import InputAvailable from "../../components/InputAvailable";
-import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
 function ListProductCard({ src, productPrice, productName, status, productDetail, productId }) {
-    const [isOpenDelete, setIsOpenDelete] = useState(false);
     const navigate = useNavigate();
-    const [page, setPage] = useState(1);
+
+    const [isOpenDelete, setIsOpenDelete] = useState(false);
     const [skeleton, setSkeleton] = useState(false);
 
     useEffect(() => {
@@ -18,7 +19,7 @@ function ListProductCard({ src, productPrice, productName, status, productDetail
             setSkeleton(true);
         }, 1000);
         return () => clearTimeout(id);
-    }, [page]);
+    }, []);
 
     const handleUpdateClick = async () => {
         if (productDetail.categoryId === 1) {
@@ -54,10 +55,9 @@ function ListProductCard({ src, productPrice, productName, status, productDetail
                                 {skeleton ? productName : <Skeleton width={200} />}
                             </div>
                             <div className="">
-                                {" "}
                                 {skeleton ? <> &#3647; {productPrice} </> : <Skeleton width={200} />}
                             </div>
-                            <div className="text-sm">{skeleton ? "กรุงเทพมหานคร" : <Skeleton width={200} />}</div>
+                            <div className="text-sm">{skeleton ? <></> : <Skeleton width={200} />}</div>
                         </div>
                         <div className="flex justify-between ">
                             {skeleton ? (

@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
-import Loading from "../../components/Loading";
 import ListProductCard from "./ListProductCard";
 import NotFoundProduct from "../../components/NotFoundProduct";
 
 function ListProductContainer() {
-    const { productByUserId, loading, searchProduct } = useSelector((state) => state.product);
+    const { productByUserId, searchProduct, loading } = useSelector((state) => state.product);
 
     let product = productByUserId;
     if (searchProduct.length !== 0) {
@@ -16,7 +15,7 @@ function ListProductContainer() {
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <>
                     {product && product?.length > 0 ? (

@@ -140,7 +140,7 @@ export default function EditUser({ onClose, setIsOpen }) {
                         <FaEdit className="w-6 h-6 cursor-pointer hover:text-[#959595]" onClick={() => setOpen(true)} />
                     </div>
 
-                    {loading && <div>Loading</div>}
+                    {loading && <></>}
 
                     <PictureForm
                         title="Profile Image"

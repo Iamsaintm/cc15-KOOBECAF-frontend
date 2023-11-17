@@ -162,6 +162,7 @@ const productSlice = createSlice({
     name: "product",
     initialState: {
         inputLocation: [],
+        inputSubLocation: "",
         inputProduct,
         searchProduct,
         searchProductProfile,
@@ -180,6 +181,12 @@ const productSlice = createSlice({
         errorMessage: false,
     },
     reducers: {
+        setInputSubLocation: (state, { payload }) => {
+            state.inputSubLocation = payload;
+        },
+        setInputLocation: (state, { payload }) => {
+            state.inputLocation = payload.fieldLocation;
+        },
         logoutProduct: (state, { payload }) => {
             state.productData = null;
         },
@@ -220,6 +227,9 @@ const productSlice = createSlice({
         },
         resetProductPrice: (state, { payload }) => {
             state.productPrice = productPrice;
+        },
+        resetLocation: () => {
+            state.inputLocation = [];
         },
     },
     extraReducers: (builder) => {
@@ -412,7 +422,7 @@ const productSlice = createSlice({
 });
 
 export const {
-    logoutProduct,
+    inputLocation: logoutProduct,
     setInputProduct,
     setInputProductCategory,
     setInputProductImage,
@@ -424,6 +434,9 @@ export const {
     updateInputProduct,
     setSearchProductProfile,
     resetSearchProductProfile,
+    setInputSubLocation,
+    setInputLocation,
+    resetLocation,
 } = productSlice.actions;
 
 export default productSlice.reducer;

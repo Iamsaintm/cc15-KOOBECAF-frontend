@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import ProductCard from "./ProductCard";
-import Loading from "../../components/Loading";
 import { addPath } from "../../utils/local-storage";
 import NotFoundProduct from "../../components/NotFoundProduct";
+import ProductCard from "./ProductCard";
 
 function ProductByCategoryContainer() {
     const { pathname } = useLocation();
@@ -32,7 +31,7 @@ function ProductByCategoryContainer() {
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <>
                     <div className="flex mt-16 w-full bg-second-light">

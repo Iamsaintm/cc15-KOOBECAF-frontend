@@ -1,7 +1,7 @@
 import { BsFillPersonFill } from "react-icons/bs";
-import Button from "../components/Button";
 import { useDispatch } from "react-redux";
 import { subscribe } from "../stores/slices/paymentSlice";
+import Button from "../components/Button";
 
 function SubscribePage() {
     const dispatch = useDispatch();
