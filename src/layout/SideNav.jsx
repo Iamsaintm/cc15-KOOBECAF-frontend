@@ -57,7 +57,9 @@ function SideNav() {
                     <>
                         <div className="px-4 cursor-pointer" onClick={handleOnClickFilter}>
                             <p className="text-lg font-semibold">Filters</p>
-                            <p className="truncate font-semibold text-main-dark">{inputSubLocation}</p>
+                            <p className="truncate font-semibold text-main-dark">
+                                {inputSubLocation || "filter by location"}
+                            </p>
                         </div>
 
                         <ProfileModal open={isOpen}>
