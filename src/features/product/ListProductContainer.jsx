@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import ListProductCard from "./ListProductCard";
+import NotFoundProduct from "../../components/NotFoundProduct";
 
 function ListProductContainer() {
     const { productByUserId, searchProduct, loading } = useSelector((state) => state.product);
@@ -30,7 +31,7 @@ function ListProductContainer() {
                             />
                         ))
                     ) : (
-                        <div>Product Not Found</div>
+                        <NotFoundProduct />
                     )}
                 </>
             )}
