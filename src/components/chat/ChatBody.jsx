@@ -29,8 +29,8 @@ function ChatBody({ messages, lastMessageRef, typingStatus, authUserData }) {
                 )}
 
                 {/* Trigger when typing message  */}
-                <div className="fixed bottom-14 text-xs">
-                    <p> {typingStatus} </p>
+                <div className="fixed bottom-[124px] text-xs">
+                    <p className="text-base"> {typingStatus}</p>
                 </div>
                 <div ref={lastMessageRef} />
             </div>
