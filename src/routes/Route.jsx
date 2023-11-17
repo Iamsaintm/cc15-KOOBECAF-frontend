@@ -10,6 +10,8 @@ import SellingPage from "../pages/SellingPage";
 import CategoryPage from "../pages/CategoryPage";
 import ProductItemPage from "../pages/ProductItemPage";
 import WishlistPage from "../pages/WishlistPage";
+import MessagerPage from "../pages/MessagerPage";
+import InboxPage from "../pages/InboxPage";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +33,9 @@ const router = createBrowserRouter([
             { path: "/create/vehicle", element: <CreateItemProductPage /> },
             { path: "/create/rental", element: <CreateItemProductPage /> },
             { path: "/product/:productId", element: <ProductItemPage /> },
+            { path: "/messager/:productId/:receiverId", element: <MessagerPage /> },
+            { path: "/messager/seller/:productId/:receiverId", element: <MessagerPage /> },
+            { path: "/inbox", element: <InboxPage /> },
         ],
     },
     {
