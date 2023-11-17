@@ -1,7 +1,6 @@
 import React from "react";
 
 function ChatBar({ productDetail }) {
-    console.log(productDetail.status);
     return (
         <div className="w-full h-[100px] bg-white rounded-md flex pl-24 border border-dark-night">
             <div className="aspect-square rounded-md p-3">
