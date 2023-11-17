@@ -10,6 +10,8 @@ import SellingPage from "../pages/SellingPage";
 import CategoryPage from "../pages/CategoryPage";
 import ProductItemPage from "../pages/ProductItemPage";
 import WishlistPage from "../pages/WishlistPage";
+import MessagerPage from "../pages/MessagerPage";
+import InboxPage from "../pages/InboxPage";
 // import ErrorPage from "../features/product/ErrorPage";
 import SubscribePage from "../pages/SubscribePage";
 import PaymentSuccessful from "../features/subscribe/PaymentSuccessful";
@@ -24,7 +26,6 @@ const router = createBrowserRouter([
                     <Layout />
                 </div>
             </Authenticated>
-            
         ),
         children: [
             { path: "", element: <HomePage /> },
@@ -39,6 +40,9 @@ const router = createBrowserRouter([
             { path: "/update/vehicle/:productId", element: <CreateItemProductPage /> },
             { path: "/update/rental/:productId", element: <CreateItemProductPage /> },
             { path: "/product/:productId", element: <ProductItemPage /> },
+            { path: "/messager/:productId/:receiverId", element: <MessagerPage /> },
+            { path: "/messager/seller/:productId/:receiverId", element: <MessagerPage /> },
+            { path: "/inbox", element: <InboxPage /> },
             { path: "/subscribe", element: <SubscribePage /> },
             { path: "/paymentSuccessful", element: <PaymentSuccessful /> },
             { path: "/paymentFailed", element: <PaymentFailed /> },
