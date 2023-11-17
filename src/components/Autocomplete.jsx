@@ -34,6 +34,7 @@ export default function Autocomplete({ onChange, placeholder, handleSearchLocati
         dispatch(setInputLocation({ fieldLocation }));
     };
 
+    
     return (
         <div className="pt-4">
             <input
