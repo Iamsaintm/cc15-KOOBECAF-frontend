@@ -5,7 +5,6 @@ import ChatFooter from "../components/chat/ChatFooter";
 import socket from "../config/socket-config";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { getAllMessage } from "../stores/slices/chatSlice";
 
 function MessagerPage() {
@@ -41,7 +40,6 @@ function MessagerPage() {
     useEffect(() => {
         socket.on("receiveMessage", (data) => {
             setMessages((messages) => [...messages, data]);
-            toast.success("messages");
         });
 
         return () => {

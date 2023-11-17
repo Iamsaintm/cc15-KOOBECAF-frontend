@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../components/Loading";
 import ListChatCard from "./ListChatCard";
 import { getInbox } from "../../stores/slices/chatSlice";
 import { useEffect } from "react";
@@ -15,7 +14,7 @@ function ListChatContainer() {
     return (
         <>
             {loading ? (
-                <Loading />
+                <></>
             ) : (
                 <>
                     {userInbox && userInbox?.length > 0 ? (
