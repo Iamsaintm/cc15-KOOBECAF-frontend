@@ -12,6 +12,7 @@ import { resetSearchProductProfile } from "../../stores/slices/productSlice";
 import { useState, useEffect } from "react";
 
 import Skeleton from "react-loading-skeleton";
+import NotFoundProduct from "../../components/NotFoundProduct";
 
 export default function ProfileUser({ onClose, setEditUser }) {
     const [status, setStatus] = useState("ALL_PRODUCTS");
@@ -153,7 +154,7 @@ export default function ProfileUser({ onClose, setEditUser }) {
                                 </Link>
                             ))
                         ) : (
-                            <div>Product not Found</div>
+                            <NotFoundProduct />
                         )}
                     </div>
                 </div>

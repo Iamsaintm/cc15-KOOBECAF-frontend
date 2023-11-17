@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
 import { BsFillBookmarkFill } from "react-icons/bs";
@@ -10,12 +9,22 @@ import Button from "../components/Button";
 import Search from "../features/filter/Search";
 import Categories from "../features/filter/Categories";
 import CategorieItem from "../features/filter/CategorieItem";
+import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
 function SideNav() {
     const [isOpen, setIsOpen] = useState(false);
 
     const { inputLocation, loading, inputSubLocation } = useSelector((state) => state.product);
     const { pathname } = useLocation();
+    const [skeleton, setSkeleton] = useState(false);
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setSkeleton(true);
+        }, 1200);
+        return () => clearTimeout(id);
+    }, []);
     const { authUserData } = useSelector((state) => state.auth);
 
     const handleOnClickFilter = () => {
@@ -26,7 +35,8 @@ function SideNav() {
         <>
             <div className="flex flex-col gap-2 pb-4 border-b-2">
                 <div className="sticky">
-                    <Search div={"pt-10 pb-2"} />
+                    <div className="text-2xl font-semibold pl-5 mt-9">Marketplace</div>
+                    <Search nameTagSearch="" div={" "} />
                     <div className="px-4  ">
                         <CategorieItem icons={<FaStore />} title={"Browse All"} isActive={pathname === "/"} />
                     </div>
@@ -49,7 +59,7 @@ function SideNav() {
                 </div>
                 <div className="flex justify-center w-full">
                     <Link to={"/create"}>
-                        <Button text={"Create new listing"} />
+                        {skeleton ? <Button text={"Create new listing"} /> : <Skeleton width={200} height={45} />}
                     </Link>
                 </div>
 

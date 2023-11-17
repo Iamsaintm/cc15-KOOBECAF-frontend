@@ -38,7 +38,7 @@ function SideNavSelling() {
                 </div>
                 <div className="flex justify-center my-3">
                     <Link to={"/create"}>
-                        <Button text={"Create new listing"} />
+                        {skeleton ? <Button text={"Create new listing"} /> : <Skeleton width={200} height={45} />}
                     </Link>
                 </div>
                 <div>
