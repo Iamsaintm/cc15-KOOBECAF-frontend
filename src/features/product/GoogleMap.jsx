@@ -1,12 +1,10 @@
 import { useSelector } from "react-redux";
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import { useMemo } from "react";
-import { GOOGLE_MAPS_API_KEY, GOOGLE_MAPS_CONFIG } from "../../config/env";
-import { useEffect } from "react";
-import { useRef } from "react";
+import { GOOGLE_MAPS_CONFIG } from "../../config/env";
 
 const GoogleMapInput = ({ className, type }) => {
-    const { inputProduct, productByProductId, loading } = useSelector((state) => state.product);
+    const { inputProduct, productByProductId } = useSelector((state) => state.product);
 
     const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_CONFIG);
 

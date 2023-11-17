@@ -13,7 +13,7 @@ function ProductContainer() {
     return (
         <>
             {loading ? (
-                <>ABC</>
+                <></>
             ) : (
                 <>
                     {product && product.length > 0 ? (

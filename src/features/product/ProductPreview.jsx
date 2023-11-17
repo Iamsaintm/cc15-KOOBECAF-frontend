@@ -25,10 +25,6 @@ function ProductPreview() {
     const { inputProduct, inputLocation, loading } = useSelector((state) => state.product);
     const { pathname } = useLocation();
 
-    console.log(pathname);
-    console.log(productId);
-    console.log(inputLocation);
-
     useEffect(() => {
         if (productId) {
             dispatch(fetchProductByProductId(productId))
