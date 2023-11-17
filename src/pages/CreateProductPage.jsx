@@ -4,14 +4,12 @@ import { useDispatch } from "react-redux";
 import { fetchDataUser } from "../stores/slices/authSlice";
 import CreateProductCard from "../features/product/CreateProductCard";
 import { fetchAllProduct, fetchProductByUserId } from "../stores/slices/productSlice";
-import Skeleton from "react-loading-skeleton";
 import item from "../assets/Images/item.png";
 import vehicle from "../assets/Images/vehicle.png";
 import home from "../assets/Images/home.png";
 
 function CreateProductPage() {
     const dispatch = useDispatch();
-    const [skeleton, setSkeleton] = useState(false);
 
     useEffect(() => {
         const id = setTimeout(() => {
@@ -73,11 +71,8 @@ function CreateProductPage() {
                 <div className="min-w-[300px]"></div>
                 <div className="flex justify-center items-center w-full">
                     <div className="flex gap-3 flex-col">
-                        {skeleton ? (
-                            <div className="text-xl font-bold">Choose Listing Type</div>
-                        ) : (
-                            <Skeleton width={180} />
-                        )}
+                        <div className="text-xl font-bold">Choose Listing Type</div>
+
                         <div className="grid grid-cols-3 m-auto gap-8 w-[600px] h-[222px]">
                             {menu.map((x) => (
                                 <CreateProductCard key={x.id} {...x} />

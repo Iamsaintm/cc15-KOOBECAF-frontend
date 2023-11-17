@@ -40,24 +40,25 @@ function SubscribePage() {
                             )}
                         </div>
                         <div className="px-8 py-4">
-                        {skeleton ? (
+                            {skeleton ? (
                                 <div className="text-xl ">Monthly</div>
                             ) : (
                                 <Skeleton containerClassName="flex-1" height={20} width={80} />
                             )}
-                             {skeleton ? (
-                                <div className="font-semibold text-2xl py-2">THB 159.00/year</div>
+                            {skeleton ? (
+                                <div className="font-semibold text-2xl py-2">THB 159.00/month</div>
                             ) : (
                                 <Skeleton containerClassName="flex-1" height={30} width={200} />
                             )}
-                            {skeleton ?(
-
-                            <div className="">
-                                You will be charged the monthly subscription fee starting on the first billing date. The
-                                subscription will not automatically renew each month. If you wish to continue, please
-                                subscribe again at your convenience.
-                            </div>
-                            ) :(  <Skeleton containerClassName="flex-1" count={5} height={15}  /> )}
+                            {skeleton ? (
+                                <div className="">
+                                    You will be charged the monthly subscription fee starting on the first billing date.
+                                    The subscription will not automatically renew each month. If you wish to continue,
+                                    please subscribe again at your convenience.
+                                </div>
+                            ) : (
+                                <Skeleton containerClassName="flex-1" count={5} height={15} />
+                            )}
                         </div>
                         <div className="flex justify-center pb-4">
                             <div className="flex justify-center w-1/2">
@@ -97,7 +98,7 @@ function SubscribePage() {
                                     please subscribe again at your convenience.
                                 </div>
                             ) : (
-                                <Skeleton containerClassName="flex-1" count={5} height={15}  />
+                                <Skeleton containerClassName="flex-1" count={5} height={15} />
                             )}
                         </div>
                         <div className="flex justify-center pb-4">
