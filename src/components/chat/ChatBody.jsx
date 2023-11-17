@@ -1,11 +1,13 @@
 import React from "react";
-import formatTimeAgo from "../../utils/time-ago";
-import { useSelector } from "react-redux";
+import bgChat from "../../assets/Images/bgChat.png";
 
 function ChatBody({ messages, lastMessageRef, typingStatus, authUserData }) {
     return (
         <>
-            <div className="w-full max-h-[570px] h-screen p-5 overflow-y-scroll bg-white">
+            <div
+                className="w-full max-h-[570px] h-screen p-5 overflow-y-scroll bg-empty mt-4 rounded-t-xl bg-cover"
+                style={{ backgroundImage: `url(${bgChat})` }}
+            >
                 {/* Message sent from you  */}
                 {messages?.map((message) =>
                     message.senderId === authUserData?.id ? (
