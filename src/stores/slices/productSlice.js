@@ -162,6 +162,7 @@ const productSlice = createSlice({
     name: "product",
     initialState: {
         inputLocation: [],
+        inputSubLocation: "",
         inputProduct,
         searchProduct,
         searchProductProfile,
@@ -180,6 +181,9 @@ const productSlice = createSlice({
         errorMessage: false,
     },
     reducers: {
+        setInputSubLocation: (state, { payload }) => {
+            state.inputSubLocation = payload;
+        },
         setInputLocation: (state, { payload }) => {
             state.inputLocation = payload.fieldLocation;
         },
@@ -430,6 +434,7 @@ export const {
     updateInputProduct,
     setSearchProductProfile,
     resetSearchProductProfile,
+    setInputSubLocation,
     setInputLocation,
     resetLocation,
 } = productSlice.actions;

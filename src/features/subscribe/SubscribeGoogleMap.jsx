@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleMap, useJsApiLoader, MarkerF, CircleF } from "@react-google-maps/api";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
 import { GOOGLE_MAPS_CONFIG } from "../../config/env";
 
 const SubscribeGoogleMap = ({ className }) => {
-    const { inputProduct, loading } = useSelector((state) => state.product);
+    const { inputProduct, loading, productData } = useSelector((state) => state.product);
     const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_CONFIG);
 
     const geometry = useMemo(() => {

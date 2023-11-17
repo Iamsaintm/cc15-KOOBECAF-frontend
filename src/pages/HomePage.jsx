@@ -27,7 +27,7 @@ function HomePage() {
             dispatch(unSubscribe());
         }
     }
-
+    
     return (
         <>
             <div className="flex w-full bg-second-light h-screen">

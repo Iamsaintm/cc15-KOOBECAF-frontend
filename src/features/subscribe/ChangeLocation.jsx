@@ -1,13 +1,25 @@
+import { fetchAllProduct, setInputSubLocation } from "../../stores/slices/productSlice";
+import { useDispatch, useSelector } from "react-redux";
 import InputForm from "../../components/InputForm";
 import Autocomplete from "../../components/Autocomplete";
 import SubscriptGoogleMap from "../../features/subscribe/SubscribeGoogleMap";
 import Button from "../../components/Button";
 
-export default function ChangeLocation({ onClose, setIsOpen }) {
-    const handleOnClose = () => {
+export default function ChangeLocation({ onClose }) {
+    const { inputSubLocation, inputLocation } = useSelector((state) => state.product);
+    const dispatch = useDispatch();
+
+    const handleApply = () => {
+        dispatch(setInputSubLocation(inputLocation));
         onClose();
-        setIsOpen(true);
+        dispatch(fetchAllProduct());
+        // window.location.reload();
     };
+
+    const handleOnClick = () => {
+        onClose();
+    };
+
     return (
         <>
             <div className="bg-white rounded-lg">
@@ -16,7 +28,7 @@ export default function ChangeLocation({ onClose, setIsOpen }) {
                         <p className="text-2xl font-bold">Change Location</p>
                         <div
                             className="absolute bottom-1 left-[370px] text-2xl hover:text-[#959595] cursor-pointer"
-                            onClick={handleOnClose}
+                            onClick={handleOnClick}
                         >
                             X
                         </div>
@@ -28,7 +40,10 @@ export default function ChangeLocation({ onClose, setIsOpen }) {
                     <div className="gap-y-4">
                         <p>Search by city</p>
                         <Autocomplete placeholder={"Location"} className={"rounded-md"} />
-                        <InputForm placeholder="Radius" />
+                        <InputForm
+                            styles="focus:border-1 border-main focus:ring-2 focus:ring-main-dark rounded-md"
+                            placeholder="Radius 5 km"
+                        />
                         <div className="py-4">
                             <SubscriptGoogleMap />
                         </div>
@@ -37,6 +52,7 @@ export default function ChangeLocation({ onClose, setIsOpen }) {
                     <div className="flex justify-end">
                         <div className="w-20 pt-4">
                             <Button
+                                onClick={handleApply}
                                 text="Apply"
                                 className="rounded-md text-white bg-main hover:bg-main-dark text-sm font-semibold"
                             />
