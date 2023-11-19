@@ -5,6 +5,23 @@ export const addAccessToken = (token) => localStorage.setItem(ACCESS_TOKEN, toke
 export const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
 export const removeAccessToken = () => localStorage.removeItem(ACCESS_TOKEN);
 
-export const addPath = (path) => localStorage.setItem(PATHNAME, path);
-export const getPath = () => localStorage.getItem(PATHNAME);
-export const removePath = () => localStorage.removeItem(PATHNAME);
+let pathArr = [];
+
+export const getPath = () => JSON.parse(localStorage.getItem(PATHNAME));
+
+export const addPath = (path) => {
+    if (getPath()) pathArr = getPath();
+    pathArr = [...pathArr, path];
+    localStorage.setItem(PATHNAME, JSON.stringify(pathArr));
+};
+
+export const removeLastPath = () => {
+    pathArr = getPath();
+    pathArr.pop();
+    localStorage.setItem(PATHNAME, JSON.stringify(pathArr));
+};
+
+export const removePath = () => {
+    pathArr = [];
+    localStorage.removeItem(PATHNAME);
+};

@@ -13,9 +13,9 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-full px-6 text-white">
             <Link
                 onClick={() => {
+                    removePath();
                     dispatch(resetInputProduct());
                     dispatch(resetLocation());
-                    removePath();
                 }}
                 to="/"
             >

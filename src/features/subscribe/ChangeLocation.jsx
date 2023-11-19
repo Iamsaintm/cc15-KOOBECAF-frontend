@@ -6,14 +6,13 @@ import SubscriptGoogleMap from "../../features/subscribe/SubscribeGoogleMap";
 import Button from "../../components/Button";
 
 export default function ChangeLocation({ onClose }) {
-    const { inputSubLocation, inputLocation } = useSelector((state) => state.product);
+    const { inputLocation } = useSelector((state) => state.product);
     const dispatch = useDispatch();
 
     const handleApply = () => {
         dispatch(setInputSubLocation(inputLocation));
         onClose();
         dispatch(fetchAllProduct());
-        // window.location.reload();
     };
 
     const handleOnClick = () => {
