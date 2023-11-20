@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { FaTags, FaArrowLeft } from "react-icons/fa6";
 
@@ -10,8 +10,10 @@ import EditUser from "../features/profile/EditUser";
 import ProfileModal from "../components/ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
 import Skeleton from "react-loading-skeleton";
+import { setInputSubLocation } from "../stores/slices/productSlice";
 
 function SideNavSelling() {
+    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
     const [editUser, setEditUser] = useState(false);
     const { authUserData } = useSelector((state) => state.auth);
@@ -25,12 +27,16 @@ function SideNavSelling() {
         return () => clearTimeout(id);
     }, []);
 
+    const handleClick = () => {
+        dispatch(setInputSubLocation(""));
+    };
+
     return (
         <>
             <div className="flex flex-col gap-2 px-4">
                 <div className="flex items-center pt-10">
                     <div className=" rounded-full p-2 hover:bg-main">
-                        <Link to="/">
+                        <Link onClick={handleClick} to="/">
                             <FaArrowLeft />
                         </Link>
                     </div>

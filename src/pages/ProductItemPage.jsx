@@ -2,7 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
 import { BsFillChatDotsFill, BsFillBookmarkFill } from "react-icons/bs";
-import { fetchAllProduct, fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
+import {
+    fetchAllProduct,
+    fetchProductByProductId,
+    setInputSubLocation,
+    wishListProduct,
+} from "../stores/slices/productSlice";
 import { FaArrowLeft, FaArrowRight, FaClock, FaHouse, FaWarehouse, FaX } from "react-icons/fa6";
 import { HiMiniBuildingOffice2 } from "react-icons/hi2";
 import { BiSolidBuildingHouse } from "react-icons/bi";
@@ -124,9 +129,11 @@ function ProductItemPage() {
         if (getPath().length - 1 === 0) {
             navigate(getPath()[getPath().length - 1] || "/");
             removePath();
+            dispatch(setInputSubLocation(""));
         } else {
             navigate(getPath()[getPath().length - 1] || "/");
             removeLastPath();
+            dispatch(setInputSubLocation(""));
         }
     };
 
