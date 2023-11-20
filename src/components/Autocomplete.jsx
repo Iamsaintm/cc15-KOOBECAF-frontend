@@ -2,7 +2,7 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocom
 import { setInputProduct, setInputLocation } from "../stores/slices/productSlice";
 import { useDispatch } from "react-redux";
 
-export default function Autocomplete({ onChange, placeholder, handleSearchLocation, className }) {
+export default function Autocomplete({ placeholder, className }) {
     const dispatch = useDispatch();
 
     const {
@@ -34,7 +34,6 @@ export default function Autocomplete({ onChange, placeholder, handleSearchLocati
         dispatch(setInputLocation({ fieldLocation }));
     };
 
-    
     return (
         <div className="pt-4">
             <input

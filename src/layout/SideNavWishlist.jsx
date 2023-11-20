@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaArrowLeft } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
 import { BsFillBookmarkFill } from "react-icons/bs";
@@ -10,13 +10,14 @@ import ProfileModal from "../components/ProfileModal";
 import ProfileUser from "../features/profile/ProfileUser";
 import EditUser from "../features/profile/EditUser";
 import Skeleton from "react-loading-skeleton";
+import { setInputSubLocation } from "../stores/slices/productSlice";
 
 function SideNavWishlist() {
+    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
     const [editUser, setEditUser] = useState(false);
     const { authUserData } = useSelector((state) => state.auth);
     const { pathname } = useLocation();
-    const [page, setPage] = useState(1);
     const [skeleton, setSkeleton] = useState(false);
 
     useEffect(() => {
@@ -24,14 +25,18 @@ function SideNavWishlist() {
             setSkeleton(true);
         }, 1000);
         return () => clearTimeout(id);
-    }, [page]);
+    }, []);
+
+    const handleClick = () => {
+        dispatch(setInputSubLocation(""));
+    };
 
     return (
         <>
             <div className="flex flex-col gap-2 px-4">
                 <div className="flex pt-10 items-center">
                     <div className=" rounded-full p-2 hover:bg-main">
-                        <Link to="/">
+                        <Link onClick={handleClick} to="/">
                             <FaArrowLeft />
                         </Link>
                     </div>

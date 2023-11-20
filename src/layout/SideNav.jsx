@@ -15,7 +15,7 @@ import Skeleton from "react-loading-skeleton";
 function SideNav() {
     const [isOpen, setIsOpen] = useState(false);
 
-    const { inputLocation, loading, inputSubLocation } = useSelector((state) => state.product);
+    const { inputSubLocation } = useSelector((state) => state.product);
     const { pathname } = useLocation();
     const [skeleton, setSkeleton] = useState(false);
 

@@ -158,6 +158,32 @@ const productPrice = {
     maxPrice: "",
 };
 
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const earthRadius = 6371;
+
+    lat1 = toRadians(lat1);
+    lon1 = toRadians(lon1);
+    lat2 = toRadians(lat2);
+    lon2 = toRadians(lon2);
+
+    const dLat = lat2 - lat1;
+    const dLon = lon2 - lon1;
+
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = earthRadius * c;
+
+    return distance;
+}
+
+function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+}
+
 const productSlice = createSlice({
     name: "product",
     initialState: {
@@ -181,6 +207,11 @@ const productSlice = createSlice({
         errorMessage: false,
     },
     reducers: {
+        filterByLocation: (state, { payload }) => {
+            state.productData = state.productData.filter(
+                (x) => calculateDistance(payload.latitude, payload.longitude, x.latitude, x.longitude) < 5,
+            );
+        },
         setInputSubLocation: (state, { payload }) => {
             state.inputSubLocation = payload;
         },
@@ -437,6 +468,7 @@ export const {
     setInputSubLocation,
     setInputLocation,
     resetLocation,
+    filterByLocation,
 } = productSlice.actions;
 
 export default productSlice.reducer;
