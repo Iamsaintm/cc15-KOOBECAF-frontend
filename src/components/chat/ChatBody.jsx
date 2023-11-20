@@ -5,7 +5,7 @@ function ChatBody({ messages, lastMessageRef, typingStatus, authUserData }) {
     return (
         <>
             <div
-                className="w-full max-h-[570px] h-screen p-5 overflow-y-scroll bg-empty mt-4 rounded-t-xl bg-cover"
+                className="w-full max-h-[570px] h-screen px-5 overflow-y-scroll bg-empty mt-4 rounded-t-xl bg-cover"
                 style={{ backgroundImage: `url(${bgChat})` }}
             >
                 {/* Message sent from you  */}
@@ -29,8 +29,8 @@ function ChatBody({ messages, lastMessageRef, typingStatus, authUserData }) {
                 )}
 
                 {/* Trigger when typing message  */}
-                <div className="fixed bottom-14 text-xs">
-                    <p> {typingStatus} </p>
+                <div className="text-xs h-6">
+                    <p className="text-base"> {typingStatus}</p>
                 </div>
                 <div ref={lastMessageRef} />
             </div>

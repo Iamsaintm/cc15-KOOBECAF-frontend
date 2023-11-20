@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
 import { BsFillChatDotsFill, BsFillBookmarkFill } from "react-icons/bs";
-import { fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
+import { fetchAllProduct, fetchProductByProductId, wishListProduct } from "../stores/slices/productSlice";
 import { FaArrowLeft, FaArrowRight, FaClock, FaHouse, FaWarehouse, FaX } from "react-icons/fa6";
 import { HiMiniBuildingOffice2 } from "react-icons/hi2";
 import { BiSolidBuildingHouse } from "react-icons/bi";
 import { GOOGLE_MAPS_API_KEY } from "../config/env";
-import { getPath, removePath } from "../utils/local-storage";
+import { getPath, removeLastPath, removePath } from "../utils/local-storage";
 
 import Slider from "react-slick";
 import formatTimeAgo from "../utils/time-ago";
@@ -23,7 +23,7 @@ function ProductItemPage() {
     const dispatch = useDispatch();
 
     const { productId } = useParams();
-    const { isWishList } = useSelector((state) => state.product);
+    const { isWishList, productData } = useSelector((state) => state.product);
     const { authUserData } = useSelector((state) => state?.auth);
     const { state } = useLocation();
 
@@ -34,6 +34,12 @@ function ProductItemPage() {
     const category = state.productDetail.categoryId;
     const seller = state.productDetail.userId;
     const client = authUserData?.id;
+
+    let prevProduct = productData?.find((x) => x.id === +getPath()[getPath().length - 1].split("/")[2]);
+
+    useEffect(() => {
+        dispatch(fetchAllProduct());
+    }, []);
 
     useEffect(() => {
         dispatch(fetchProductByProductId(productId))
@@ -47,7 +53,7 @@ function ProductItemPage() {
                         setLocation(res.data.results[0].formatted_address);
                     });
             });
-    }, []);
+    }, [productId]);
 
     useEffect(() => {
         setIsActive(isWishList);
@@ -115,8 +121,13 @@ function ProductItemPage() {
     };
 
     const closePage = () => {
-        navigate(getPath());
-        removePath();
+        if (getPath().length - 1 === 0) {
+            navigate(getPath()[getPath().length - 1] || "/");
+            removePath();
+        } else {
+            navigate(getPath()[getPath().length - 1] || "/");
+            removeLastPath();
+        }
     };
 
     return (
@@ -151,22 +162,24 @@ function ProductItemPage() {
                                 {state.productDetail?.vehicleYears} {state.productDetail?.vehicleBrand}
                                 {state.productDetail?.vehicleModel}
                             </div>
-                            <div
+                            <Link
                                 onClick={closePage}
                                 className="flex justify-center mr-2 items-center bg-black/50 min-w-[40px] max-h-[40px] aspect-square rounded-full text-white text-lg cursor-pointer"
+                                state={{ productDetail: prevProduct }}
                             >
                                 <FaX />
-                            </div>
+                            </Link>
                         </div>
                     ) : (
                         <div className="flex justify-between">
                             <div className="font-bold text-2xl">{state.productDetail?.productName}</div>
-                            <div
+                            <Link
                                 onClick={closePage}
                                 className="flex justify-center mr-2 items-center bg-black/50 min-w-[40px] max-h-[40px] aspect-square rounded-full text-white text-lg cursor-pointer"
+                                state={{ productDetail: prevProduct }}
                             >
                                 <FaX />
-                            </div>
+                            </Link>
                         </div>
                     )}
                     <div className="text-lg">&#3647; {state.productDetail?.productPrice}</div>
