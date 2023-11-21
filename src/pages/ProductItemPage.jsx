@@ -40,7 +40,13 @@ function ProductItemPage() {
     const seller = state.productDetail.userId;
     const client = authUserData?.id;
 
-    let prevProduct = productData?.find((x) => x.id === +getPath()[getPath().length - 1].split("/")[2]);
+    let prevProduct = null;
+
+    if (getPath().length === 1 && getPath()[0].includes("/messager")) {
+        prevProduct = productData?.find((x) => x.id === +getPath()[getPath().length - 1].split("/")[4]);
+    } else {
+        prevProduct = productData?.find((x) => x.id === +getPath()[getPath().length - 1].split("/")[2]);
+    }
 
     useEffect(() => {
         dispatch(fetchAllProduct());
