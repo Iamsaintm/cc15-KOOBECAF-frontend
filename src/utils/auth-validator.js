@@ -8,7 +8,7 @@ const registerSchema = Joi.object({
         Joi.string().pattern(/^[0-9]{10}$/),
     ]).required(),
     password: Joi.string()
-        .pattern(/^[a-zA-Z0-9]{6,30}$/)
+        .pattern(/^[a-zA-Z0-9]{8,30}$/)
         .trim()
         .required(),
     confirmPassword: Joi.string().valid(Joi.ref("password")).trim().required(),
