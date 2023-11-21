@@ -47,7 +47,7 @@ function RegisterForm() {
                         onChange={onChangeInput}
                         isError={error.firstName}
                     />
-                    {error.firstName && <InputErrorMessage message={error.firstName} />}
+                    {error.firstName && <InputErrorMessage message={"First Name is not allowed to be empty"} />}
                 </div>
                 <div>
                     <InputForm
@@ -57,7 +57,7 @@ function RegisterForm() {
                         onChange={onChangeInput}
                         isError={error.lastName}
                     />
-                    {error.lastName && <InputErrorMessage message={error.lastName} />}
+                    {error.lastName && <InputErrorMessage message={"Last Name is not allowed to be empty"} />}
                 </div>
                 <div>
                     <InputForm
@@ -67,7 +67,9 @@ function RegisterForm() {
                         onChange={onChangeInput}
                         isError={error.emailOrMobile}
                     />
-                    {error.emailOrMobile && <InputErrorMessage message={error.emailOrMobile} />}
+                    {error.emailOrMobile && (
+                        <InputErrorMessage message={"Mobile is not allowed to be empty, should be a number"} />
+                    )}
                 </div>
                 <div>
                     <InputForm
@@ -78,7 +80,7 @@ function RegisterForm() {
                         onChange={onChangeInput}
                         isError={error.password}
                     />
-                    {error.password && <InputErrorMessage message={error.password} />}
+                    {error.password && <InputErrorMessage message={"Password is not allowed to be empty"} />}
                 </div>
                 <div>
                     <InputForm
@@ -89,7 +91,9 @@ function RegisterForm() {
                         onChange={onChangeInput}
                         isError={error.confirmPassword}
                     />
-                    {error.confirmPassword && <InputErrorMessage message={error.confirmPassword} />}
+                    {error.confirmPassword && (
+                        <InputErrorMessage message={"Confirm Password is not match the original password"} />
+                    )}
                 </div>
                 <div className="flex justify-end">
                     <div className="pt-4">
