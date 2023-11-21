@@ -29,7 +29,6 @@ function ListProductCard({ src, productPrice, productName, status, productDetail
         } else {
             navigate(`/update/item/${productDetail.id}`);
         }
-        window.location.reload();
     };
 
     const statusAvailable = [

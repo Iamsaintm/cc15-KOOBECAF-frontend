@@ -19,6 +19,8 @@ function SideNav() {
     const { pathname } = useLocation();
     const [skeleton, setSkeleton] = useState(false);
 
+    console.log(pathname.includes("/messager"));
+
     useEffect(() => {
         const id = setTimeout(() => {
             setSkeleton(true);
@@ -65,20 +67,23 @@ function SideNav() {
 
                 {authUserData?.isSubscribe ? (
                     <>
-                        <div className="px-4 cursor-pointer" onClick={handleOnClickFilter}>
-                            <p className="text-lg font-semibold">Filters</p>
-                            <p className="truncate font-semibold text-main-dark">
-                                {inputSubLocation || "filter by location"}
-                            </p>
-                        </div>
-
-                        <ProfileModal open={isOpen}>
-                            <ChangeLocation
-                                onClose={() => {
-                                    setIsOpen(false);
-                                }}
-                            />
-                        </ProfileModal>
+                        {pathname.includes("/messager") || pathname.includes("/inbox") ? null : (
+                            <>
+                                <div className="px-4 cursor-pointer" onClick={handleOnClickFilter}>
+                                    <p className="text-lg font-semibold">Filters</p>
+                                    <p className="truncate font-semibold text-main-dark">
+                                        {inputSubLocation || "filter by location"}
+                                    </p>
+                                </div>
+                                <ProfileModal open={isOpen}>
+                                    <ChangeLocation
+                                        onClose={() => {
+                                            setIsOpen(false);
+                                        }}
+                                    />
+                                </ProfileModal>
+                            </>
+                        )}
                     </>
                 ) : null}
             </div>
