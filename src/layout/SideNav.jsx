@@ -19,8 +19,6 @@ function SideNav() {
     const { pathname } = useLocation();
     const [skeleton, setSkeleton] = useState(false);
 
-    console.log(pathname.includes("/messager"));
-
     useEffect(() => {
         const id = setTimeout(() => {
             setSkeleton(true);
