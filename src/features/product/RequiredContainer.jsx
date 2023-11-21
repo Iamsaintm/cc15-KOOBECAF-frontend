@@ -89,11 +89,9 @@ function RequiredContainer({ type, error }) {
         dispatch(setInputProductCategory({ id, fieldValue }));
         if (id === 1) {
             navigate("/create/vehicle");
-            window.location.reload();
         }
         if (id === 2) {
             navigate("/create/rental");
-            window.location.reload();
         }
     };
 

@@ -1,13 +1,21 @@
-import { filterByLocation, setInputSubLocation } from "../../stores/slices/productSlice";
+import { fetchAllProduct, filterByLocation, setInputSubLocation } from "../../stores/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import InputForm from "../../components/InputForm";
 import Autocomplete from "../../components/Autocomplete";
 import SubscriptGoogleMap from "../../features/subscribe/SubscribeGoogleMap";
 import Button from "../../components/Button";
+import { useEffect } from "react";
 
 export default function ChangeLocation({ onClose }) {
-    const { inputLocation, inputProduct } = useSelector((state) => state.product);
+    const { inputLocation, inputProduct, inputSubLocation } = useSelector((state) => state.product);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchAllProduct());
+        const latitude = inputProduct.latitude;
+        const longitude = inputProduct.longitude;
+        dispatch(filterByLocation({ latitude, longitude }));
+    }, [inputSubLocation]);
 
     const handleApply = () => {
         dispatch(setInputSubLocation(inputLocation));
